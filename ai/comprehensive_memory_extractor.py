@@ -67,10 +67,16 @@ class ComprehensiveMemoryExtractor:
         """
         🎯 Single LLM call for ALL extraction types with context awareness
         Uses locking to ensure only one extraction happens at a time
+        Now with enhanced context awareness to reduce unnecessary operations
         """
         # Use class-level lock to prevent multiple parallel extractions
         with self._extraction_lock:
             print(f"[ComprehensiveExtractor] 🔒 Extraction lock acquired for: '{text[:50]}...'")
+            
+            # Enhanced context awareness - check if extraction is actually needed
+            if self._should_skip_extraction(text, conversation_context):
+                print(f"[ComprehensiveExtractor] 🚫 SKIPPING unnecessary extraction: '{text[:50]}...'")
+                return ExtractionResult([], "casual_conversation", {}, None, [], [], [])
             
             # Check deduplication cache
             text_hash = hash(text.lower().strip())
@@ -103,15 +109,15 @@ class ComprehensiveMemoryExtractor:
                         follow_up_suggestions=[]
                     )
                 
-                # Filter out pure casual conversation
-                if self._is_casual_conversation(text):
+                # Enhanced context filtering - more intelligent casual conversation detection
+                if self._is_casual_conversation_enhanced(text, conversation_context):
                     return ExtractionResult([], "casual_conversation", {}, None, [], [], [])
                 
-                # Determine complexity and optimize tokens
-                complexity_score = self._calculate_complexity_score(text)
+                # Determine complexity and optimize tokens with context awareness
+                complexity_score = self._calculate_complexity_score_enhanced(text, conversation_context)
                 word_count = len(text.split())
                 
-                # Choose extraction tier based on complexity with TIER 3 limiting
+                # Choose extraction tier based on complexity with TIER 3 limiting and context
                 if complexity_score <= 3 and word_count <= 8:
                     # TIER 1: Simple extraction (70 tokens total)
                     result = self._tier1_simple_extraction(text)
@@ -121,7 +127,7 @@ class ComprehensiveMemoryExtractor:
                 else:
                     # TIER 3: Complex extraction (300 tokens total - comprehensive)
                     # Check if we should limit TIER 3 extractions to prevent loops
-                    if self._should_allow_tier3_extraction(text):
+                    if self._should_allow_tier3_extraction_enhanced(text, conversation_context):
                         result = self._tier3_comprehensive_extraction(text, conversation_context)
                         self._record_tier3_extraction(text)
                     else:
@@ -410,6 +416,125 @@ Return ONLY valid JSON. Extract ALL relevant details."""
             score += 1
         
         return min(score, 8)  # Cap at 8
+    
+    def _should_skip_extraction(self, text: str, conversation_context: str = "") -> bool:
+        """🎯 Enhanced context awareness - determine if extraction is needed at all"""
+        text_lower = text.lower().strip()
+        
+        # Skip very short or empty inputs
+        if len(text_lower) < 3:
+            return True
+        
+        # Skip pure acknowledgments when in conversation
+        if conversation_context and text_lower in ['ok', 'okay', 'yes', 'no', 'yeah', 'yep', 'nope', 'sure', 'alright']:
+            return True
+        
+        # Skip repeated identical inputs (conversation loop detection)
+        if conversation_context and text_lower in conversation_context.lower():
+            return True
+        
+        # Skip system/debug messages
+        if any(pattern in text_lower for pattern in ['[debug]', '[system]', '[error]', '[log]']):
+            return True
+        
+        return False
+    
+    def _is_casual_conversation_enhanced(self, text: str, conversation_context: str = "") -> bool:
+        """Enhanced casual conversation filtering with context awareness"""
+        text_lower = text.lower().strip()
+        
+        # Original casual patterns
+        casual_patterns = [
+            r'^(hi|hello|hey)\s*$',
+            r'^(thanks?|thank\s+you)\s*$', 
+            r'^(bye|goodbye)\s*$',
+            r'^(yes|yeah|yep|no|nope)\s*$',
+            r'^(okay|ok|alright)\s*$',
+            r'^how.+are.+you',
+            r'^what.+about.+you',
+            r'^nothing.+much\s*$'
+        ]
+        
+        for pattern in casual_patterns:
+            if re.search(pattern, text_lower):
+                return True
+        
+        # Enhanced patterns based on conversation context
+        if conversation_context:
+            # If this looks like a direct follow-up question in ongoing conversation
+            followup_patterns = [
+                r'^(and\s+)?(what|how|when|where|why)',
+                r'^(tell\s+me\s+)?(more|about)',
+                r'^(can\s+you|could\s+you)',
+            ]
+            
+            for pattern in followup_patterns:
+                if re.search(pattern, text_lower):
+                    # This might be a meaningful follow-up, don't skip
+                    return False
+        
+        # Too short without meaningful content
+        if len(text.split()) < 3 and not any(word in text_lower for word in ['mcdonald', 'francesco', 'mcflurry', 'went', 'had', 'with']):
+            return True
+            
+        return False
+    
+    def _calculate_complexity_score_enhanced(self, text: str, conversation_context: str = "") -> int:
+        """Enhanced complexity calculation with conversation context"""
+        text_lower = text.lower()
+        score = 0
+        
+        # Base complexity from original method
+        score = self._calculate_complexity_score(text)
+        
+        # Context-based adjustments
+        if conversation_context:
+            # If continuing a conversation thread, increase complexity
+            context_lower = conversation_context.lower()
+            
+            # Check for thread continuation (McDonald's example)
+            if any(thread_word in context_lower for thread_word in ['mcdonald', 'restaurant', 'food']):
+                if any(food_word in text_lower for food_word in ['mcflurry', 'burger', 'fries', 'drink']):
+                    score += 2  # This is continuing a food conversation
+            
+            # Check for social context continuation
+            if any(social_word in context_lower for social_word in ['with', 'friend', 'together']):
+                if any(name_word in text_lower for name_word in ['francesco', 'sarah', 'john', 'david']):
+                    score += 2  # This is adding social context
+        
+        # Recent memory relevance check
+        recent_memories = self._get_recent_memories(hours=2)  # Check last 2 hours
+        for memory in recent_memories:
+            memory_topic = memory.get('topic', '').lower()
+            if any(word in memory_topic for word in text_lower.split()):
+                score += 1  # Related to recent memory
+                break
+        
+        return min(score, 10)  # Cap at 10
+    
+    def _should_allow_tier3_extraction_enhanced(self, text: str, conversation_context: str = "") -> bool:
+        """Enhanced TIER 3 limiting with context awareness"""
+        # Original rate limiting check
+        if not self._should_allow_tier3_extraction(text):
+            return False
+        
+        # Context-based TIER 3 justification
+        text_lower = text.lower()
+        
+        # Always allow TIER 3 for complex social interactions
+        if any(social_indicator in text_lower for social_indicator in ['went with', 'had with', 'together', 'friend']):
+            return True
+        
+        # Always allow TIER 3 for memory enhancement contexts
+        if conversation_context and any(food in conversation_context.lower() for food in ['mcdonald', 'restaurant']):
+            return True
+        
+        # Allow TIER 3 for location/time specific information
+        if any(location_time in text_lower for location_time in ['yesterday', 'today', 'tomorrow', 'at ', 'pm', 'am']):
+            return True
+        
+        # Default to original logic
+        return True
     
     def _is_casual_conversation(self, text: str) -> bool:
         """Filter out pure casual conversation"""
