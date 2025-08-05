@@ -1,0 +1,102 @@
+{
+  "room_baseline": {
+    "volume_mean": 146.8136625,
+    "volume_max": 7962.0,
+    "volume_rms": 271.27402163218653,
+    "peak_frequency": 304.1666666666667,
+    "voice_energy_ratio": 0.4976807424515609,
+    "sample_count": 480000,
+    "duration": 30.0,
+    "label": "room_baseline"
+  },
+  "voice_distances": {
+    "50cm": {
+      "volume_mean": 1796.6033125,
+      "volume_max": 15832.0,
+      "volume_rms": 2612.3381203770314,
+      "peak_frequency": 465.90000000000003,
+      "voice_energy_ratio": 0.4976726678555892,
+      "sample_count": 160000,
+      "duration": 10.0,
+      "label": "voice_50cm",
+      "snr_ratio": 12.2373032720984
+    },
+    "1m": {
+      "volume_mean": 796.90784375,
+      "volume_max": 6873.0,
+      "volume_rms": 1111.9964623903936,
+      "peak_frequency": 461.6,
+      "voice_energy_ratio": 0.4984110604470932,
+      "sample_count": 160000,
+      "duration": 10.0,
+      "label": "voice_1m",
+      "snr_ratio": 5.428022366446992
+    },
+    "1.5m": {
+      "volume_mean": 641.74584375,
+      "volume_max": 6030.0,
+      "volume_rms": 923.1168261147935,
+      "peak_frequency": 580.2,
+      "voice_energy_ratio": 0.49928548201494843,
+      "sample_count": 160000,
+      "duration": 10.0,
+      "label": "voice_1.5m",
+      "snr_ratio": 4.371158874604058
+    },
+    "2m": {
+      "volume_mean": 451.5170875,
+      "volume_max": 4271.0,
+      "volume_rms": 662.0097518352732,
+      "peak_frequency": 562.0,
+      "voice_energy_ratio": 0.49894235332099857,
+      "sample_count": 160000,
+      "duration": 10.0,
+      "label": "voice_2m",
+      "snr_ratio": 3.075443251066637
+    },
+    "3m": {
+      "volume_mean": 523.37634375,
+      "volume_max": 4677.0,
+      "volume_rms": 742.1996590077699,
+      "peak_frequency": 590.3000000000001,
+      "voice_energy_ratio": 0.4992039238865617,
+      "sample_count": 160000,
+      "duration": 10.0,
+      "label": "voice_3m",
+      "snr_ratio": 3.564902168079896
+    },
+    "4m+": {
+      "volume_mean": 423.2980125,
+      "volume_max": 3896.0,
+      "volume_rms": 606.6672402458369,
+      "peak_frequency": 418.1,
+      "voice_energy_ratio": 0.4991071628722021,
+      "sample_count": 160000,
+      "duration": 10.0,
+      "label": "voice_4m+",
+      "snr_ratio": 2.8832331084990135
+    }
+  },
+  "analysis_results": {
+    "current_threshold": 800,
+    "baseline_noise": 146.8136625,
+    "distance_thresholds": {
+      "50cm": 1077,
+      "1m": 478,
+      "1.5m": 385,
+      "2m": 270,
+      "3m": 314,
+      "4m+": 253
+    },
+    "quality_thresholds": {
+      "50cm": 0.34837086749891244,
+      "1m": 0.3488877423129652,
+      "1.5m": 0.34949983741046386,
+      "2m": 0.349259647324699,
+      "3m": 0.34944274672059317,
+      "4m+": 0.34937501401054144
+    }
+  },
+  "timestamp": "2025-07-16T16:55:25.812544",
+  "microphone": "Razer Seiren V3 (Device 1)"
+}

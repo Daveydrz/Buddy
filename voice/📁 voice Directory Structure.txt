@@ -1,0 +1,188 @@
+📁 voice/ Directory Structure
+plaintext
+Copy
+Edit
+voice/
+├── database.py
+├── identity_helpers.py
+├── manager.py
+├── manager_context.py
+├── manager_core.py
+├── manager_names.py
+├── recognition.py
+├── smart_voice_recognition.py
+├── speaker_profiles.py
+└── training.py
+🔍 File-by-File Summary
+📄 database.py
+🔧 Purpose: Manages the voice profile database.
+
+Loads/saves known user profiles and anonymous clusters.
+
+Tracks false positives in voice recognition.
+
+Handles file I/O (cross-platform, Windows-safe).
+
+Converts numpy arrays to JSON-compatible structures.
+
+🧠 Functions:
+
+load_known_users() → Load all voice data.
+
+save_known_users() → Save current voice data.
+
+convert_numpy_for_json() → Serialize embeddings.
+
+📄 identity_helpers.py
+🔧 Purpose: Provides utility functions to get a user's identity and display name from voice.
+
+Routes recognition to smart_voice_recognition or recognition.
+
+Provides display-friendly responses.
+
+🧠 Functions:
+
+get_voice_based_identity(audio) → Returns voice-based identity string.
+
+get_voice_based_display_name(user) → Human-friendly name lookup.
+
+get_voice_based_name_response(user, display) → Phrase like “You are David.”
+
+📄 manager.py
+🔧 Purpose: Core intelligent voice learning manager.
+
+Learns and clusters voices over time.
+
+Tracks and adapts to voice changes.
+
+Handles new/unknown speaker logic.
+
+🧠 Class: IntelligentVoiceManager
+
+handle_voice_identification() → Core recognition + clustering logic.
+
+get_last_audio_sample() → Return latest audio buffer.
+
+get_current_speaker_identity() → Current known identity.
+
+📄 manager_context.py
+🔧 Purpose: Context-aware behavioral and clustering analysis.
+
+Understands user behavior, time patterns, noise, voice transitions.
+
+Predicts speaker based on historical context.
+
+🧠 Class: AdvancedContextAnalyzer
+
+analyze_comprehensive_context(audio, text) → Full context analysis.
+
+analyze_clustering_context() → Cluster tracking/aging.
+
+analyze_behavioral_context() → Mood, tone, intent.
+
+generate_predictive_context() → Guess likely user from context.
+
+📄 manager_core.py
+🔧 Purpose: Master brain of voice identification (Alexa-level).
+
+Coordinates context, name recognition, cluster logic.
+
+Fallback if advanced modules not present.
+
+🧠 Class: AdvancedAIAssistantCore
+
+handle_voice_identification() → Master logic for audio → speaker.
+
+_analyze_with_clustering() → Uses embeddings for match.
+
+Manages session data, audio buffers, adaptation history.
+
+📄 manager_names.py
+🔧 Purpose: Handles natural name recognition and conflict resolution.
+
+Uses LLMs (like Hermes) to extract real names from speech.
+
+Filters fake names and Whisper mishears.
+
+🧠 Key Features:
+
+KoboldCppNameExtractor → Calls LLM to extract names.
+
+FAKE_NAME_TRAPS → Prevents silly/misheard names.
+
+NLP & phoneme filters for robust accuracy.
+
+📄 recognition.py
+🔧 Purpose: Voice embedding + speaker recognition.
+
+Generates embeddings with fallback support.
+
+Identifies known or anonymous speakers.
+
+🧠 Functions:
+
+generate_voice_embedding() → Use Resemblyzer or dual models.
+
+identify_speaker_with_confidence() → Voice → name + confidence.
+
+check_known_users() / check_anonymous_clusters() → Lookup logic.
+
+📄 smart_voice_recognition.py
+🔧 Purpose: Enhanced recognition system (cluster-aware).
+
+Wraps around dual_voice_model_manager.
+
+Tracks recognition counts, voice states, similarities.
+
+🧠 Classes:
+
+SmartVoiceCluster → Stores and scores embeddings.
+
+SmartVoiceRecognition → Runs session recognition with thresholding.
+
+📄 speaker_profiles.py
+🔧 Purpose: AI-level voice profiling and audio quality assessment.
+
+Judges recordings by SNR, volume, duration, clarity.
+
+Stores raw samples and embeddings for clustering.
+
+🧠 Class: AdvancedSpeakerProfiles
+
+assess_audio_quality_advanced() → Full voice quality metrics.
+
+Auto-discards bad samples.
+
+Prepares data for clustering & learning.
+
+📄 training.py
+🔧 Purpose: Interactive voice training.
+
+Uses fixed sentence patterns for training.
+
+Saves embeddings for known user with clustering context.
+
+🧠 Functions:
+
+advanced_voice_training_mode() → Main training loop.
+
+get_name_with_clustering_validation() → Asks for speaker name and validates it.
+
+Uses phrases optimized for accurate voice print generation.
+
+✅ Summary Tree with Purpose
+plaintext
+Copy
+Edit
+voice/
+├── database.py                 → Loads/saves voice profiles and clusters
+├── identity_helpers.py         → Gets friendly name/identity from voice
+├── manager.py                  → Intelligent learning & cluster assignment
+├── manager_context.py          → Behavior/context analysis (mood, time, etc.)
+├── manager_core.py             → Master recognition engine, Alexa-level logic
+├── manager_names.py            → Advanced name detection + fake name filtering
+├── recognition.py              → Embedding generation + speaker identification
+├── smart_voice_recognition.py  → Real-time clustering + smart embedding logic
+├── speaker_profiles.py         → Audio quality analysis + clustering suitability
+└── training.py                 → Interactive training and profile creation
+Let me know if you want me to visually represent this as a mindmap or generate individual flowcharts for each module.
