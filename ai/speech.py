@@ -177,10 +177,20 @@ def identify_user(spoken_input: str, system_username: str) -> str:
 def transcribe_audio(audio):
     """Synchronous wrapper for Whisper STT with proper event loop handling"""
     try:
-        # Check if there's already an event loop running
-        loop = asyncio.get_event_loop()
-        if loop.is_running():
-            # Create a new event loop in a thread to avoid conflicts
+        # ✅ FIXED: Better event loop detection and handling
+        current_loop = None
+        loop_is_running = False
+        
+        try:
+            # Try to get the current running loop (Python 3.7+)
+            current_loop = asyncio.get_running_loop()
+            loop_is_running = True
+        except RuntimeError:
+            # No running loop, which is fine
+            pass
+        
+        if loop_is_running:
+            # Running in an async context, use thread executor to avoid conflicts
             import concurrent.futures
             with concurrent.futures.ThreadPoolExecutor() as executor:
                 future = executor.submit(lambda: asyncio.run(whisper_stt_async(audio)))
@@ -188,13 +198,43 @@ def transcribe_audio(audio):
         else:
             # No running loop, safe to use asyncio.run
             return asyncio.run(whisper_stt_async(audio))
+            
     except Exception as e:
         print(f"[Speech] ❌ Async event loop error: {e}")
+        print(f"[Speech] 🔍 Error details: {type(e).__name__}: {str(e)}")
         # Fallback to sync processing if async fails
         return _transcribe_audio_fallback(audio)
 
 def _transcribe_audio_fallback(audio):
     """Fallback transcription method when async fails"""
     print("[Speech] ⚠️ Using fallback transcription method")
-    # Simple fallback - could be enhanced with local transcription
+    
+    # ✅ ENHANCED: Try basic audio validation first
+    try:
+        import numpy as np
+        
+        if audio is None:
+            print("[Speech] ❌ Fallback: Audio data is None")
+            return "Audio transcription unavailable"
+            
+        if len(audio) == 0:
+            print("[Speech] ❌ Fallback: Audio data is empty")
+            return "Audio transcription unavailable"
+            
+        # Basic audio stats for debugging
+        if hasattr(audio, '__len__'):
+            duration_estimate = len(audio) / 16000  # Assuming 16kHz sample rate
+            print(f"[Speech] 📊 Fallback: Audio length ~{duration_estimate:.1f}s")
+            
+            if hasattr(audio, 'mean'):
+                volume = np.abs(audio).mean()
+                print(f"[Speech] 📊 Fallback: Audio volume ~{volume:.1f}")
+        
+        # TODO: Could implement local transcription here
+        # For now, return descriptive message
+        print("[Speech] 💡 Fallback: Consider implementing local transcription (e.g., OpenAI Whisper local)")
+        
+    except Exception as fallback_error:
+        print(f"[Speech] ⚠️ Fallback audio analysis error: {fallback_error}")
+    
     return "Audio transcription unavailable"
