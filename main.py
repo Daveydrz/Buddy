@@ -40,6 +40,24 @@ except ImportError as e:
     print(f"[Main] ⚠️ Entropy system not available: {e}")
     ENTROPY_SYSTEM_AVAILABLE = False
 
+# ✅ NEW: Import consciousness system fixes for stability and performance
+try:
+    from ai.async_manager import async_manager, run_async_safe
+    from ai.circuit_breaker import llm_circuit_breaker, fallback_manager
+    from ai.consciousness_timeout_manager import timeout_manager, safe_consciousness_call
+    from ai.comprehensive_data_parser import parse_json_robust
+    from ai.latency_optimizer import generate_optimized_buddy_response, get_latency_stats
+    print("[Main] 🔧 Consciousness system fixes loaded:")
+    print("[Main]   - AsyncManager for event loop handling")
+    print("[Main]   - Enhanced CircuitBreaker with connection pooling")
+    print("[Main]   - Timeout manager for consciousness modules")
+    print("[Main]   - Comprehensive data parser for error handling")
+    print("[Main]   - Latency optimizer for response generation")
+    CONSCIOUSNESS_FIXES_AVAILABLE = True
+except ImportError as e:
+    print(f"[Main] ⚠️ Consciousness fixes not available: {e}")
+    CONSCIOUSNESS_FIXES_AVAILABLE = False
+
 # ✅ NEW: Import full consciousness architecture modules with blank slate support
 try:
     from ai.global_workspace import global_workspace, AttentionPriority, ProcessingMode

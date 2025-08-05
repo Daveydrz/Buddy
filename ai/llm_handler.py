@@ -27,6 +27,18 @@ except ImportError:
     USER_PROFILE_MANAGEMENT_AVAILABLE = False
     print("[LLMHandler] ⚠️ User profile management not available")
 
+# Import new consciousness system fixes
+try:
+    from ai.async_manager import async_manager, run_async_safe
+    from ai.circuit_breaker import llm_circuit_breaker, fallback_manager
+    from ai.consciousness_timeout_manager import timeout_manager, safe_consciousness_call
+    from ai.comprehensive_data_parser import parse_json_robust, comprehensive_extractor
+    CONSCIOUSNESS_FIXES_AVAILABLE = True
+    print("[LLMHandler] ✅ Consciousness system fixes loaded")
+except ImportError as e:
+    CONSCIOUSNESS_FIXES_AVAILABLE = False
+    print(f"[LLMHandler] ⚠️ Consciousness fixes not available: {e}")
+
 # Import all the new modules
 try:
     # Try relative imports first (when run from ai/ directory)
