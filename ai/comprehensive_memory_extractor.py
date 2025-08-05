@@ -7,6 +7,7 @@ Purpose: Replace multiple extraction systems with one unified, context-aware sys
 import json
 import os
 import re
+import threading
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Tuple
 from dataclasses import dataclass, asdict
@@ -36,6 +37,9 @@ class ComprehensiveMemoryExtractor:
     - Context keywords
     """
     
+    # Class-level lock to ensure only one extraction happens at a time
+    _extraction_lock = threading.Lock()
+    
     def __init__(self, username: str):
         self.username = username
         self.memory_dir = f"memory/{username}"
@@ -57,65 +61,77 @@ class ComprehensiveMemoryExtractor:
     def extract_all_from_text(self, text: str, conversation_context: str = "") -> ExtractionResult:
         """
         🎯 Single LLM call for ALL extraction types with context awareness
+        Uses locking to ensure only one extraction happens at a time
         """
-        # Check deduplication cache
-        text_hash = hash(text.lower().strip())
-        current_time = datetime.now().timestamp()
-        
-        self._clean_extraction_cache(current_time)
-        
-        if text_hash in self.extraction_cache:
-            last_extraction_time = self.extraction_cache[text_hash]
-            time_since_last = current_time - last_extraction_time
-            if time_since_last < self.cache_timeout:
-                print(f"[ComprehensiveExtractor] 🔄 SKIPPING duplicate extraction: '{text[:50]}...'")
-                return ExtractionResult([], "casual_conversation", {}, None, [], [], [])
-        
-        # Mark as processing
-        self.extraction_cache[text_hash] = current_time
-        
-        # Check if this is a memory enhancement (follow-up to existing memory)
-        enhancement_result = self._check_memory_enhancement(text)
-        if enhancement_result:
-            print(f"[ComprehensiveExtractor] 🔗 Enhanced existing memory: {enhancement_result['enhanced_memory']}")
-            return ExtractionResult(
-                memory_events=[],
-                intent_classification="memory_enhancement", 
-                emotional_state={"emotion": "casual", "confidence": 0.8},
-                conversation_thread_id=enhancement_result['thread_id'],
-                memory_enhancements=[enhancement_result],
-                context_keywords=enhancement_result.get('keywords', []),
-                follow_up_suggestions=[]
-            )
-        
-        # Filter out pure casual conversation
-        if self._is_casual_conversation(text):
-            return ExtractionResult([], "casual_conversation", {}, None, [], [], [])
-        
-        # Determine complexity and optimize tokens
-        complexity_score = self._calculate_complexity_score(text)
-        word_count = len(text.split())
-        
-        # Choose extraction tier based on complexity
-        if complexity_score <= 3 and word_count <= 8:
-            # TIER 1: Simple extraction (70 tokens total)
-            result = self._tier1_simple_extraction(text)
-        elif complexity_score <= 6 and word_count <= 20:
-            # TIER 2: Medium extraction (150 tokens total)  
-            result = self._tier2_medium_extraction(text)
-        else:
-            # TIER 3: Complex extraction (300 tokens total - comprehensive)
-            result = self._tier3_comprehensive_extraction(text, conversation_context)
-        
-        # Store any memory events in regular memory system
-        for event in result.memory_events:
-            self._add_to_regular_memory(event)
-        
-        # Save conversation threading data
-        if result.conversation_thread_id or result.memory_enhancements:
-            self._save_threading_data(result)
-        
-        return result
+        # Use class-level lock to prevent multiple parallel extractions
+        with self._extraction_lock:
+            print(f"[ComprehensiveExtractor] 🔒 Extraction lock acquired for: '{text[:50]}...'")
+            
+            # Check deduplication cache
+            text_hash = hash(text.lower().strip())
+            current_time = datetime.now().timestamp()
+            
+            self._clean_extraction_cache(current_time)
+            
+            if text_hash in self.extraction_cache:
+                last_extraction_time = self.extraction_cache[text_hash]
+                time_since_last = current_time - last_extraction_time
+                if time_since_last < self.cache_timeout:
+                    print(f"[ComprehensiveExtractor] 🔄 SKIPPING duplicate extraction: '{text[:50]}...'")
+                    return ExtractionResult([], "casual_conversation", {}, None, [], [], [])
+            
+            # Mark as processing
+            self.extraction_cache[text_hash] = current_time
+            
+            try:
+                # Check if this is a memory enhancement (follow-up to existing memory)
+                enhancement_result = self._check_memory_enhancement(text)
+                if enhancement_result:
+                    print(f"[ComprehensiveExtractor] 🔗 Enhanced existing memory: {enhancement_result['enhanced_memory']}")
+                    return ExtractionResult(
+                        memory_events=[],
+                        intent_classification="memory_enhancement", 
+                        emotional_state={"emotion": "casual", "confidence": 0.8},
+                        conversation_thread_id=enhancement_result['thread_id'],
+                        memory_enhancements=[enhancement_result],
+                        context_keywords=enhancement_result.get('keywords', []),
+                        follow_up_suggestions=[]
+                    )
+                
+                # Filter out pure casual conversation
+                if self._is_casual_conversation(text):
+                    return ExtractionResult([], "casual_conversation", {}, None, [], [], [])
+                
+                # Determine complexity and optimize tokens
+                complexity_score = self._calculate_complexity_score(text)
+                word_count = len(text.split())
+                
+                # Choose extraction tier based on complexity
+                if complexity_score <= 3 and word_count <= 8:
+                    # TIER 1: Simple extraction (70 tokens total)
+                    result = self._tier1_simple_extraction(text)
+                elif complexity_score <= 6 and word_count <= 20:
+                    # TIER 2: Medium extraction (150 tokens total)  
+                    result = self._tier2_medium_extraction(text)
+                else:
+                    # TIER 3: Complex extraction (300 tokens total - comprehensive)
+                    result = self._tier3_comprehensive_extraction(text, conversation_context)
+                
+                # Store any memory events in regular memory system
+                for event in result.memory_events:
+                    self._add_to_regular_memory(event)
+                
+                # Save conversation threading data
+                if result.conversation_thread_id or result.memory_enhancements:
+                    self._save_threading_data(result)
+                
+                print(f"[ComprehensiveExtractor] ✅ Extraction completed for: '{text[:50]}...'")
+                return result
+                
+            except Exception as e:
+                print(f"[ComprehensiveExtractor] ❌ Extraction error: {e}")
+                # Return fallback result on error
+                return ExtractionResult([], "error", {"primary_emotion": "neutral"}, None, [], [], [])
     
     def _tier1_simple_extraction(self, text: str) -> ExtractionResult:
         """Simple extraction for basic inputs (70 tokens)"""
@@ -457,18 +473,46 @@ Return ONLY valid JSON. Extract ALL relevant details."""
         return ' '.join(memory_parts)
     
     def _clean_json_response(self, response: str) -> str:
-        """Clean LLM response to valid JSON"""
+        """Clean LLM response to valid JSON with enhanced error handling"""
+        if not response or not response.strip():
+            return '{"events": [], "intent": "casual_conversation", "emotion": "neutral"}'
+        
         # Remove any text before first {
         start = response.find('{')
         if start > 0:
             response = response[start:]
+        elif start == -1:
+            # No JSON found, return fallback
+            return '{"events": [], "intent": "casual_conversation", "emotion": "neutral"}'
         
         # Remove any text after last }
         end = response.rfind('}')
         if end > 0:
             response = response[:end + 1]
+        elif end == -1:
+            # No closing brace, try to fix
+            response = response + '}'
         
-        return response.strip()
+        # Additional cleaning for common JSON issues
+        response = response.strip()
+        
+        # Fix trailing commas that break JSON parsing
+        response = re.sub(r',(\s*[}\]])', r'\1', response)
+        
+        # Fix missing quotes around keys
+        response = re.sub(r'(\w+)(\s*:)', r'"\1"\2', response)
+        
+        # Fix single quotes (should be double quotes in JSON)
+        response = response.replace("'", '"')
+        
+        # Validate the JSON by attempting to parse it
+        try:
+            json.loads(response)
+            return response
+        except json.JSONDecodeError as e:
+            print(f"[ComprehensiveExtractor] ⚠️ JSON validation failed: {e}")
+            # Return a safe fallback response
+            return '{"events": [], "intent": "casual_conversation", "emotion": "neutral", "confidence": 0.5}'
     
     def _clean_extraction_cache(self, current_time: float):
         """Clean expired cache entries"""
