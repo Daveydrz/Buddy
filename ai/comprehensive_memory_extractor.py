@@ -52,9 +52,14 @@ class ComprehensiveMemoryExtractor:
         self.conversation_threads = self.load_memory('conversation_threads.json')
         self.memory_enhancements = self.load_memory('memory_enhancements.json')
         
-        # Deduplication cache (30-second window)
+        # Enhanced deduplication cache (60-second window)
         self.extraction_cache = {}
-        self.cache_timeout = 30
+        self.cache_timeout = 60
+        
+        # TIER 3 extraction limiting (prevent excessive comprehensive extractions)
+        self.tier3_cache = {}
+        self.tier3_limit_window = 120  # 2 minutes between TIER 3 extractions
+        self.max_tier3_per_minute = 1
         
         print(f"[ComprehensiveExtractor] 🧠 Initialized unified extraction for {username}")
     
@@ -106,7 +111,7 @@ class ComprehensiveMemoryExtractor:
                 complexity_score = self._calculate_complexity_score(text)
                 word_count = len(text.split())
                 
-                # Choose extraction tier based on complexity
+                # Choose extraction tier based on complexity with TIER 3 limiting
                 if complexity_score <= 3 and word_count <= 8:
                     # TIER 1: Simple extraction (70 tokens total)
                     result = self._tier1_simple_extraction(text)
@@ -115,7 +120,14 @@ class ComprehensiveMemoryExtractor:
                     result = self._tier2_medium_extraction(text)
                 else:
                     # TIER 3: Complex extraction (300 tokens total - comprehensive)
-                    result = self._tier3_comprehensive_extraction(text, conversation_context)
+                    # Check if we should limit TIER 3 extractions to prevent loops
+                    if self._should_allow_tier3_extraction(text):
+                        result = self._tier3_comprehensive_extraction(text, conversation_context)
+                        self._record_tier3_extraction(text)
+                    else:
+                        # Fallback to TIER 2 if TIER 3 is being overused
+                        print(f"[ComprehensiveExtractor] 🚫 TIER 3 limited - using TIER 2 fallback")
+                        result = self._tier2_medium_extraction(text)
                 
                 # Store any memory events in regular memory system
                 for event in result.memory_events:
@@ -559,4 +571,53 @@ Return ONLY valid JSON. Extract ALL relevant details."""
             with open(filepath, 'w', encoding='utf-8') as f:
                 json.dump(data, f, indent=2, ensure_ascii=False)
         except Exception as e:
+            print(f"[ComprehensiveExtractor] ⚠️ Save error: {e}")
+    
+    def _should_allow_tier3_extraction(self, text: str) -> bool:
+        """Check if TIER 3 extraction should be allowed to prevent loops"""
+        current_time = datetime.now().timestamp()
+        
+        # Clean old TIER 3 cache entries
+        self._clean_tier3_cache(current_time)
+        
+        # Create a hash for this text
+        text_hash = hash(text.lower().strip())
+        
+        # Check if this exact text was recently processed with TIER 3
+        if text_hash in self.tier3_cache:
+            last_time = self.tier3_cache[text_hash]
+            if current_time - last_time < self.tier3_limit_window:
+                print(f"[ComprehensiveExtractor] 🚫 TIER 3 blocked: Recent extraction for similar text")
+                return False
+        
+        # Check rate limiting: max 1 TIER 3 per minute
+        recent_extractions = sum(1 for timestamp in self.tier3_cache.values() 
+                               if current_time - timestamp < 60)
+        
+        if recent_extractions >= self.max_tier3_per_minute:
+            print(f"[ComprehensiveExtractor] 🚫 TIER 3 rate limited: {recent_extractions} extractions in last minute")
+            return False
+        
+        return True
+    
+    def _record_tier3_extraction(self, text: str):
+        """Record that a TIER 3 extraction was performed"""
+        text_hash = hash(text.lower().strip())
+        self.tier3_cache[text_hash] = datetime.now().timestamp()
+    
+    def _clean_tier3_cache(self, current_time: float):
+        """Clean old TIER 3 cache entries"""
+        cutoff_time = current_time - self.tier3_limit_window
+        keys_to_remove = [key for key, timestamp in self.tier3_cache.items() 
+                         if timestamp < cutoff_time]
+        for key in keys_to_remove:
+            del self.tier3_cache[key]
+    
+    def _clean_extraction_cache(self, current_time: float):
+        """Clean old extraction cache entries"""
+        cutoff_time = current_time - self.cache_timeout
+        keys_to_remove = [key for key, timestamp in self.extraction_cache.items() 
+                         if timestamp < cutoff_time]
+        for key in keys_to_remove:
+            del self.extraction_cache[key]
             print(f"[ComprehensiveExtractor] ⚠️ Save error: {e}")

@@ -210,9 +210,17 @@ class EnhancedKoboldCPPManager:
             if not self.health_monitor.check_health(self.kobold_url):
                 raise ConnectionError("KoboldCPP server health check failed")
             
-            # Wait for available slot
+            # Wait for available slot with timeout to prevent queue deadlock
+            wait_timeout = 30  # 30 seconds max wait
+            wait_start = time.time()
+            
             with self.request_lock:
                 while self.active_requests >= self.max_concurrent:
+                    if time.time() - wait_start > wait_timeout:
+                        # Clean up any stuck requests before failing
+                        self._cleanup_stuck_requests()
+                        raise TimeoutError(f"Request {request_id} timed out waiting for queue slot")
+                    
                     print(f"[KoboldManager] 🚦 Request {request_id} waiting - {self.active_requests} active")
                     time.sleep(0.1)
                 
@@ -339,6 +347,41 @@ class EnhancedKoboldCPPManager:
                 'connection_errors': self.metrics.connection_errors
             }
         }
+    
+    def _cleanup_stuck_requests(self):
+        """Clean up any stuck requests to prevent queue deadlock"""
+        try:
+            # Reset active requests counter if it seems stuck
+            if self.active_requests > 0:
+                print(f"[KoboldManager] 🧹 Cleaning up {self.active_requests} potentially stuck requests")
+                self.active_requests = 0
+                
+            # Clear any session issues
+            with self._session_lock:
+                if self._session:
+                    self._session.close()
+                    self._session = None
+                    print("[KoboldManager] 🔄 Session reset for cleanup")
+                    
+        except Exception as e:
+            print(f"[KoboldManager] ⚠️ Cleanup error: {e}")
+    
+    def force_reset_queue(self):
+        """Force reset the request queue and active counters"""
+        try:
+            with self.request_lock:
+                self.active_requests = 0
+                
+            # Clear any stale session
+            with self._session_lock:
+                if self._session:
+                    self._session.close()
+                    self._session = None
+                    
+            print("[KoboldManager] 🔄 Force reset completed")
+            
+        except Exception as e:
+            print(f"[KoboldManager] ❌ Force reset error: {e}")
 
 
 def maintain_consciousness_during_error(error_context: Dict[str, Any]) -> bool:
