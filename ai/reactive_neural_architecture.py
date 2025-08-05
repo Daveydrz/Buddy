@@ -421,12 +421,31 @@ class AsyncNeuralPathways:
                     self.operation_stats['avg_duration'] = ((current_avg * (total_ops - 1)) + duration) / total_ops
     
     async def _run_async_operation(self, func: Callable, *args, **kwargs) -> Any:
-        """Run operation, converting sync functions to async if needed"""
-        if asyncio.iscoroutinefunction(func):
-            return await func(*args, **kwargs)
-        else:
-            # Run in thread pool for sync functions
-            return await self.loop.run_in_executor(None, func, *args, **kwargs)
+        """Run operation, converting sync functions to async if needed with proper event loop handling"""
+        try:
+            # Get the current event loop or create a new one
+            try:
+                loop = asyncio.get_running_loop()
+            except RuntimeError:
+                # No event loop running in current thread, create one
+                loop = asyncio.new_event_loop()
+                asyncio.set_event_loop(loop)
+            
+            if asyncio.iscoroutinefunction(func):
+                # Ensure the coroutine runs in the correct event loop
+                if loop != self.loop:
+                    # Use asyncio.run_coroutine_threadsafe to run in the correct loop
+                    future = asyncio.run_coroutine_threadsafe(func(*args, **kwargs), self.loop)
+                    return await asyncio.wrap_future(future)
+                else:
+                    return await func(*args, **kwargs)
+            else:
+                # Run in thread pool for sync functions
+                return await loop.run_in_executor(None, func, *args, **kwargs)
+                
+        except Exception as e:
+            logger.error(f"[AsyncNeuralPathways] ❌ Operation execution error: {e}")
+            raise
     
     async def get_stats(self) -> Dict[str, Any]:
         """Get async pathway statistics"""

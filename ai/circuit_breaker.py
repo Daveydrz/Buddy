@@ -38,7 +38,7 @@ class CircuitBreaker:
         self.failure_history = deque(maxlen=100)  # Keep last 100 failures for analysis
         
     def call(self, func: Callable, *args, **kwargs):
-        """Execute function through circuit breaker"""
+        """Execute function through circuit breaker with enhanced error handling"""
         with self.lock:
             if self.state == CircuitState.OPEN:
                 if self._should_attempt_reset():
@@ -48,17 +48,39 @@ class CircuitBreaker:
                 else:
                     raise CircuitBreakerOpenError(f"Circuit breaker {self.name} is OPEN")
         
-        try:
-            start_time = time.time()
-            result = func(*args, **kwargs)
-            execution_time = time.time() - start_time
-            
-            self._on_success(execution_time)
-            return result
-            
-        except Exception as e:
-            self._on_failure(e)
-            raise
+        # Apply timeout to the function call
+        import threading
+        import signal
+        
+        result = None
+        exception = None
+        
+        def target():
+            nonlocal result, exception
+            try:
+                start_time = time.time()
+                result = func(*args, **kwargs)
+                execution_time = time.time() - start_time
+                self._on_success(execution_time)
+            except Exception as e:
+                exception = e
+                self._on_failure(e)
+        
+        thread = threading.Thread(target=target)
+        thread.daemon = True
+        thread.start()
+        thread.join(timeout=self.config.timeout)
+        
+        if thread.is_alive():
+            # Thread is still running, consider it a timeout
+            timeout_exception = TimeoutError(f"Function call timed out after {self.config.timeout} seconds")
+            self._on_failure(timeout_exception)
+            raise timeout_exception
+        
+        if exception:
+            raise exception
+        
+        return result
     
     def _should_attempt_reset(self) -> bool:
         """Check if enough time has passed to attempt reset"""
@@ -229,10 +251,13 @@ class LLMConnectionPool:
                 if 'endpoint' in kwargs:
                     kwargs['endpoint'] = endpoint
                 
+                # Handle different types of connection errors
                 result = func(*args, **kwargs)
                 return result
                 
-            except Exception as e:
+            except (ConnectionError, requests.exceptions.ConnectionError, 
+                   requests.exceptions.ChunkedEncodingError, 
+                   requests.exceptions.HTTPError) as e:
                 last_exception = e
                 wait_time = (2 ** attempt) * 0.5  # Exponential backoff: 0.5s, 1s, 2s
                 if attempt < self.retry_attempts - 1:
@@ -240,6 +265,16 @@ class LLMConnectionPool:
                     time.sleep(wait_time)
                 else:
                     print(f"[ConnectionPool] All {self.retry_attempts} attempts failed")
+            except Exception as e:
+                # For non-connection errors, don't retry as much
+                last_exception = e
+                if attempt < min(2, self.retry_attempts - 1):  # Max 2 retries for other errors
+                    wait_time = 0.5
+                    print(f"[ConnectionPool] Non-connection error on attempt {attempt + 1}: {e}. Retrying in {wait_time}s...")
+                    time.sleep(wait_time)
+                else:
+                    print(f"[ConnectionPool] Giving up after {attempt + 1} attempts")
+                    break
         
         raise last_exception
 

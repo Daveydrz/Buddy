@@ -42,15 +42,15 @@ def _get_http_session():
             if _http_session is None:
                 _http_session = requests.Session()
                 
-                # Configure retry strategy
+                # Configure retry strategy with better handling for incomplete reads
                 retry_strategy = Retry(
                     total=3,
                     status_forcelist=[429, 500, 502, 503, 504],
-                    method_whitelist=["HEAD", "GET", "POST"],
+                    allowed_methods=["HEAD", "GET", "POST"],  # Updated for newer urllib3
                     backoff_factor=1  # Will retry with delays of 1, 2, 4 seconds
                 )
                 
-                # Mount adapters with retry strategy
+                # Mount adapters with retry strategy and better connection handling
                 adapter = HTTPAdapter(
                     max_retries=retry_strategy,
                     pool_connections=10,
@@ -62,10 +62,12 @@ def _get_http_session():
                 # Set headers for better connection handling
                 _http_session.headers.update({
                     'Connection': 'keep-alive',
-                    'User-Agent': 'Buddy-AI-Assistant/1.0'
+                    'User-Agent': 'Buddy-AI-Assistant/1.0',
+                    'Accept-Encoding': 'gzip, deflate',
+                    'Content-Type': 'application/json'
                 })
                 
-                print("[Chat] ✅ HTTP session with connection pooling initialized")
+                print("[Chat] ✅ HTTP session with enhanced connection pooling initialized")
     
     return _http_session
 
@@ -389,9 +391,24 @@ def ask_kobold(messages, max_tokens=MAX_TOKENS):
         print(f"[KoboldCpp] 📤 Sending payload: {json.dumps(payload, indent=2)}")
         
         def _make_kobold_request():
-            """Internal function to make KoboldCpp request"""
+            """Internal function to make KoboldCpp request with enhanced error handling"""
             session = _get_http_session()
-            return session.post(KOBOLD_URL, json=payload, timeout=KOBOLD_TIMEOUT)
+            try:
+                return session.post(KOBOLD_URL, json=payload, timeout=KOBOLD_TIMEOUT)
+            except requests.exceptions.ChunkedEncodingError as e:
+                print(f"[KoboldCpp] ⚠️ Chunked encoding error (incomplete read): {e}")
+                # Retry with different approach for chunked encoding issues
+                session.headers.update({'Connection': 'close'})
+                try:
+                    response = session.post(KOBOLD_URL, json=payload, timeout=KOBOLD_TIMEOUT)
+                    session.headers.update({'Connection': 'keep-alive'})
+                    return response
+                except Exception as retry_error:
+                    session.headers.update({'Connection': 'keep-alive'})
+                    raise retry_error
+            except (requests.exceptions.ConnectionError, requests.exceptions.HTTPError) as e:
+                print(f"[KoboldCpp] ⚠️ Connection/HTTP error: {e}")
+                raise
         
         # Use circuit breaker if available
         if CIRCUIT_BREAKER_AVAILABLE:
@@ -429,6 +446,22 @@ def ask_kobold(messages, max_tokens=MAX_TOKENS):
             except json.JSONDecodeError as e:
                 print(f"[KoboldCpp] ❌ JSON Decode Error: {e}")
                 print(f"[KoboldCpp] 📄 Raw Response: {response.text[:500]}")
+                
+                # Try to extract partial content if response is partially readable
+                try:
+                    # Look for partial JSON content
+                    text = response.text.strip()
+                    if text and '"content"' in text:
+                        # Try to extract just the content field
+                        import re
+                        content_match = re.search(r'"content"\s*:\s*"([^"]*)"', text)
+                        if content_match:
+                            partial_content = content_match.group(1)
+                            print(f"[KoboldCpp] 🔧 Extracted partial content: {partial_content}")
+                            return partial_content
+                except Exception as extract_error:
+                    print(f"[KoboldCpp] ⚠️ Could not extract partial content: {extract_error}")
+                
                 # Generate dynamic error response
                 error_context = {
                     'error_type': 'json_decode_error',
@@ -454,8 +487,16 @@ def ask_kobold(messages, max_tokens=MAX_TOKENS):
             'situation': 'kobold_connection'
         }
         return _generate_dynamic_error_response(error_context)
+    except requests.exceptions.ChunkedEncodingError as e:
+        print(f"[KoboldCpp] ❌ Incomplete Read Error: {e}")
+        # Generate dynamic error response for incomplete reads
+        error_context = {
+            'error_type': 'incomplete_read_error',
+            'situation': 'kobold_streaming'
+        }
+        return _generate_dynamic_error_response(error_context)
     except requests.exceptions.Timeout:
-        print(f"[KoboldCpp] ❌ Timeout after 30 seconds")
+        print(f"[KoboldCpp] ❌ Timeout after {KOBOLD_TIMEOUT} seconds")
         # Generate dynamic error response
         error_context = {
             'error_type': 'timeout_error',
