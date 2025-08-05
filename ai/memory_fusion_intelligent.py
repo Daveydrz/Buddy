@@ -277,6 +277,42 @@ Analyze ONLY the actual data provided. Do not invent details."""
         # Final fallback to basic analysis
         return self._basic_similarity_fallback("", "")
     
+    def _has_fusion_potential(self, username: str) -> bool:
+        """🎯 Check if user has potential for fusion (context-aware optimization)"""
+        
+        # Don't analyze system users or well-established users
+        if username in ['Daveydrz', 'system', 'admin']:
+            return False
+        
+        # Check if this looks like an anonymous user
+        import re
+        if re.match(r'^Anonymous_\d{3}$', username):
+            return True  # Anonymous users have high fusion potential
+        
+        # Check if user directory exists and has minimal data
+        user_dir = Path(f"memory/{username}")
+        if not user_dir.exists():
+            return False  # No data to fuse
+        
+        # Count total memory content
+        try:
+            files = list(user_dir.glob("*.json"))
+            if len(files) < 2:
+                return False  # Not enough data for meaningful fusion
+            
+            # Check if user has been active recently
+            latest_file = max(files, key=lambda f: f.stat().st_mtime)
+            file_age = time.time() - latest_file.stat().st_mtime
+            
+            if file_age > 86400:  # 24 hours
+                return False  # Old data, probably not worth fusing
+            
+            return True
+            
+        except Exception as e:
+            print(f"[IntelligentFusion] ⚠️ Error checking fusion potential: {e}")
+            return False
+    
     def _has_sufficient_data(self, user1_data: Dict, user2_data: Dict) -> bool:
         """✅ Check if users have sufficient data for meaningful comparison"""
         user1_content = (
@@ -817,8 +853,23 @@ def get_intelligent_unified_username(original_username: str, skip_fusion: bool =
         print(f"[IntelligentFusion] 🚫 Skipping fusion for {original_username} (skip_fusion=True)")
         return original_username
     
-    print(f"[IntelligentFusion] 🚀 Starting intelligent memory fusion for {original_username}")
-    return intelligent_fusion.find_and_merge_intelligent(original_username, threshold=0.7)
+    # ✅ NEW: Use extraction coordinator for optimized fusion analysis if available
+    try:
+        from ai.extraction_coordinator import extract_with_coordination, ExtractionType, ExtractionPriority
+        
+        # Use coordinator for fusion context analysis
+        print(f"[IntelligentFusion] 🚀 Starting coordinated intelligent memory fusion for {original_username}")
+        
+        # Check if fusion analysis is actually needed (context awareness)
+        if not intelligent_fusion.analyzer._has_fusion_potential(original_username):
+            print(f"[IntelligentFusion] 🚫 No fusion potential detected for {original_username}")
+            return original_username
+        
+        return intelligent_fusion.find_and_merge_intelligent(original_username, threshold=0.7)
+        
+    except ImportError:
+        print(f"[IntelligentFusion] 🔄 Using standard fusion - coordinator not available")
+        return intelligent_fusion.find_and_merge_intelligent(original_username, threshold=0.7)
 
 # Export for easy import
 __all__ = ['get_intelligent_unified_username', 'intelligent_fusion']

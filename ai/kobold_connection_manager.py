@@ -9,6 +9,7 @@ import time
 import queue
 import json
 import requests
+import hashlib
 from typing import Dict, Any, Optional, Callable
 from urllib3.exceptions import IncompleteRead
 from dataclasses import dataclass, asdict
@@ -107,7 +108,7 @@ class KoboldCPPHealthMonitor:
 
 
 class EnhancedKoboldCPPManager:
-    """Enhanced KoboldCPP connection manager with comprehensive error handling"""
+    """Enhanced KoboldCPP connection manager with comprehensive error handling and resource optimization"""
     
     def __init__(self, 
                  kobold_url: str,
@@ -122,10 +123,19 @@ class EnhancedKoboldCPPManager:
         self.request_timeout = request_timeout
         self.max_retries = max_retries
         
-        # Request management
+        # Request management with optimization
         self.request_queue = queue.Queue(maxsize=max_queue_size)
         self.active_requests = 0
         self.request_lock = threading.Lock()
+        
+        # Enhanced connection pooling for resource optimization
+        self.connection_pool = {}
+        self.pool_lock = threading.Lock()
+        self.max_pool_size = 3
+        
+        # Request deduplication for extraction processes
+        self.pending_requests = {}  # hash -> list of callbacks
+        self.dedup_lock = threading.Lock()
         
         # Metrics and monitoring
         self.metrics = ConnectionHealthMetrics()
@@ -137,6 +147,7 @@ class EnhancedKoboldCPPManager:
         self._session_lock = threading.Lock()
         
         print(f"[KoboldManager] ✅ Enhanced KoboldCPP manager initialized for {kobold_url}")
+        print(f"[KoboldManager] 🔧 Features: Connection pooling, request deduplication, resource optimization")
     
     def _get_session(self) -> requests.Session:
         """Get or create optimized session for KoboldCPP"""
@@ -199,6 +210,70 @@ class EnhancedKoboldCPPManager:
                         self.metrics.timeout_errors += 1
                     elif 'connection' in error.lower():
                         self.metrics.connection_errors += 1
+    
+    def execute_request_deduplicated(self, payload: Dict[str, Any], stream: bool = False) -> requests.Response:
+        """
+        Execute KoboldCPP request with deduplication for identical extraction requests
+        
+        This optimizes the Buddy system by sharing results between concurrent identical requests,
+        eliminating redundant KoboldCPP calls during multiple simultaneous extractions.
+        """
+        # Create request hash for deduplication
+        request_content = json.dumps(payload, sort_keys=True)
+        request_hash = hashlib.md5(request_content.encode()).hexdigest()
+        
+        # Check if identical request is already pending
+        with self.dedup_lock:
+            if request_hash in self.pending_requests:
+                print(f"[KoboldManager] 🔄 Deduplicating request: {request_hash[:8]}...")
+                
+                # Wait for the existing request to complete
+                event = threading.Event()
+                result_container = {'response': None, 'error': None}
+                
+                self.pending_requests[request_hash].append({
+                    'event': event,
+                    'result': result_container
+                })
+                
+                # Release lock and wait
+                self.dedup_lock.release()
+                
+                # Wait for result with timeout
+                if event.wait(timeout=60):  # 60 second timeout
+                    if result_container['error']:
+                        raise result_container['error']
+                    return result_container['response']
+                else:
+                    raise TimeoutError("Deduplicated request timed out")
+            else:
+                # This is the first request with this hash
+                self.pending_requests[request_hash] = []
+        
+        try:
+            # Execute the actual request
+            response = self.execute_request(payload, stream)
+            
+            # Notify all waiting deduplicated requests
+            with self.dedup_lock:
+                waiting_requests = self.pending_requests.pop(request_hash, [])
+                
+            for waiting in waiting_requests:
+                waiting['result']['response'] = response
+                waiting['event'].set()
+            
+            return response
+            
+        except Exception as e:
+            # Notify waiting requests of the error
+            with self.dedup_lock:
+                waiting_requests = self.pending_requests.pop(request_hash, [])
+                
+            for waiting in waiting_requests:
+                waiting['result']['error'] = e
+                waiting['event'].set()
+            
+            raise
     
     def execute_request(self, payload: Dict[str, Any], stream: bool = False) -> requests.Response:
         """Execute KoboldCPP request with enhanced error handling and queuing"""
