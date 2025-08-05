@@ -194,7 +194,7 @@ class FallbackManager:
             }
 
 class LLMConnectionPool:
-    """Connection pool for LLM services with retry and failover capabilities"""
+    """Enhanced connection pool for LLM services with retry and failover capabilities"""
     
     def __init__(self, max_connections: int = 5, retry_attempts: int = 3):
         self.max_connections = max_connections
@@ -202,6 +202,10 @@ class LLMConnectionPool:
         self.connections = []
         self.failed_connections = []
         self.connection_lock = threading.Lock()
+        self.endpoint_health = {}  # Track endpoint health
+        self.last_health_check = {}  # Track last health check time
+        self.health_check_interval = 60  # Check every 60 seconds
+        
         self.primary_endpoints = [
             "http://localhost:5001/v1/chat/completions",  # KoboldCpp
             "http://localhost:8080/v1/chat/completions",  # Text Generation WebUI
@@ -212,15 +216,66 @@ class LLMConnectionPool:
             "http://127.0.0.1:8080/v1/chat/completions",
         ]
         
+        # Enhanced retry configuration with exponential backoff
+        self.base_retry_delay = 1.0  # Start with 1 second
+        self.max_retry_delay = 30.0  # Max 30 seconds
+        self.backoff_multiplier = 2.0
+        
     def get_healthy_endpoint(self) -> Optional[str]:
-        """Get a healthy endpoint for LLM requests"""
+        """Get a healthy endpoint for LLM requests with enhanced health checking"""
+        import requests
+        current_time = time.time()
+        
+        # Check if we need to update health status
+        for endpoint in self.primary_endpoints + self.backup_endpoints:
+            last_check = self.last_health_check.get(endpoint, 0)
+            if current_time - last_check > self.health_check_interval:
+                self._check_endpoint_health(endpoint)
+        
+        # Return the first healthy endpoint, prioritizing primary endpoints
+        for endpoint in self.primary_endpoints:
+            if self.endpoint_health.get(endpoint, False):
+                return endpoint
+                
+        # Try backup endpoints if primary are unhealthy
+        for endpoint in self.backup_endpoints:
+            if self.endpoint_health.get(endpoint, False):
+                return endpoint
+                
+        # If no cached healthy endpoints, try direct check
+        return self._find_healthy_endpoint_direct()
+    
+    def _check_endpoint_health(self, endpoint: str):
+        """Check health of a specific endpoint"""
+        import requests
+        try:
+            test_url = endpoint.replace("/chat/completions", "/models").replace("/api/chat", "/api/tags")
+            response = requests.get(test_url, timeout=5)
+            is_healthy = response.status_code == 200
+            self.endpoint_health[endpoint] = is_healthy
+            self.last_health_check[endpoint] = time.time()
+            
+            if is_healthy:
+                print(f"[ConnectionPool] ✅ Endpoint healthy: {endpoint}")
+            else:
+                print(f"[ConnectionPool] ❌ Endpoint unhealthy: {endpoint} (status: {response.status_code})")
+                
+        except Exception as e:
+            self.endpoint_health[endpoint] = False
+            self.last_health_check[endpoint] = time.time()
+            print(f"[ConnectionPool] ❌ Endpoint check failed: {endpoint} ({e})")
+    
+    def _find_healthy_endpoint_direct(self) -> Optional[str]:
+        """Direct health check as fallback"""
         import requests
         
         # Try primary endpoints first
         for endpoint in self.primary_endpoints:
             try:
-                response = requests.get(endpoint.replace("/chat/completions", "/models").replace("/api/chat", "/api/tags"), timeout=5)
+                test_url = endpoint.replace("/chat/completions", "/models").replace("/api/chat", "/api/tags")
+                response = requests.get(test_url, timeout=5)
                 if response.status_code == 200:
+                    self.endpoint_health[endpoint] = True
                     return endpoint
             except Exception:
                 continue
@@ -228,8 +283,10 @@ class LLMConnectionPool:
         # Try backup endpoints
         for endpoint in self.backup_endpoints:
             try:
-                response = requests.get(endpoint.replace("/chat/completions", "/models"), timeout=5)
+                test_url = endpoint.replace("/chat/completions", "/models")
+                response = requests.get(test_url, timeout=5)
                 if response.status_code == 200:
+                    self.endpoint_health[endpoint] = True
                     return endpoint
             except Exception:
                 continue
@@ -237,7 +294,7 @@ class LLMConnectionPool:
         return None
     
     def execute_with_retry(self, func: Callable, *args, **kwargs):
-        """Execute function with retry logic and endpoint failover"""
+        """Execute function with exponential backoff retry logic and endpoint failover"""
         last_exception = None
         
         for attempt in range(self.retry_attempts):
@@ -251,32 +308,57 @@ class LLMConnectionPool:
                 if 'endpoint' in kwargs:
                     kwargs['endpoint'] = endpoint
                 
-                # Handle different types of connection errors
+                # Execute function
                 result = func(*args, **kwargs)
+                
+                # Success - reset failed connections for this endpoint
+                with self.connection_lock:
+                    if endpoint in self.failed_connections:
+                        self.failed_connections.remove(endpoint)
+                
                 return result
                 
-            except (ConnectionError, requests.exceptions.ConnectionError, 
-                   requests.exceptions.ChunkedEncodingError, 
-                   requests.exceptions.HTTPError) as e:
-                last_exception = e
-                wait_time = (2 ** attempt) * 0.5  # Exponential backoff: 0.5s, 1s, 2s
-                if attempt < self.retry_attempts - 1:
-                    print(f"[ConnectionPool] Attempt {attempt + 1} failed: {e}. Retrying in {wait_time}s...")
-                    time.sleep(wait_time)
-                else:
-                    print(f"[ConnectionPool] All {self.retry_attempts} attempts failed")
             except Exception as e:
-                # For non-connection errors, don't retry as much
                 last_exception = e
-                if attempt < min(2, self.retry_attempts - 1):  # Max 2 retries for other errors
-                    wait_time = 0.5
-                    print(f"[ConnectionPool] Non-connection error on attempt {attempt + 1}: {e}. Retrying in {wait_time}s...")
-                    time.sleep(wait_time)
+                
+                # Mark endpoint as failed
+                if 'endpoint' in locals():
+                    with self.connection_lock:
+                        if endpoint not in self.failed_connections:
+                            self.failed_connections.append(endpoint)
+                        self.endpoint_health[endpoint] = False
+                
+                # Calculate exponential backoff delay
+                if attempt < self.retry_attempts - 1:  # Don't delay on last attempt
+                    delay = min(
+                        self.base_retry_delay * (self.backoff_multiplier ** attempt),
+                        self.max_retry_delay
+                    )
+                    print(f"[ConnectionPool] ⏳ Attempt {attempt + 1} failed, retrying in {delay:.1f}s: {e}")
+                    time.sleep(delay)
                 else:
-                    print(f"[ConnectionPool] Giving up after {attempt + 1} attempts")
-                    break
+                    print(f"[ConnectionPool] ❌ All {self.retry_attempts} attempts failed")
         
-        raise last_exception
+        # All attempts failed
+        raise last_exception or ConnectionError("Connection pool exhausted")
+    
+    def get_pool_stats(self) -> Dict[str, Any]:
+        """Get comprehensive connection pool statistics"""
+        with self.connection_lock:
+            return {
+                "max_connections": self.max_connections,
+                "active_connections": len(self.connections),
+                "failed_connections": len(self.failed_connections),
+                "endpoint_health": dict(self.endpoint_health),
+                "primary_endpoints": self.primary_endpoints,
+                "backup_endpoints": self.backup_endpoints,
+                "retry_config": {
+                    "retry_attempts": self.retry_attempts,
+                    "base_retry_delay": self.base_retry_delay,
+                    "max_retry_delay": self.max_retry_delay,
+                    "backoff_multiplier": self.backoff_multiplier
+                }
+            }
 
 class EnhancedCircuitBreaker(CircuitBreaker):
     """Enhanced circuit breaker with connection pooling and advanced recovery"""
