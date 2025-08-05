@@ -19,6 +19,16 @@ from datetime import datetime, timedelta
 from enum import Enum
 from pathlib import Path
 
+# Import consciousness system fixes
+try:
+    from ai.consciousness_timeout_manager import timeout_manager, with_consciousness_timeout, safe_consciousness_call
+    from ai.async_manager import async_manager, run_async_safe
+    CONSCIOUSNESS_FIXES_AVAILABLE = True
+    print("[ConsciousnessManager] ✅ Consciousness fixes integrated")
+except ImportError as e:
+    CONSCIOUSNESS_FIXES_AVAILABLE = False
+    print(f"[ConsciousnessManager] ⚠️ Consciousness fixes not available: {e}")
+
 class ConsciousnessState(Enum):
     """States of consciousness"""
     ASLEEP = "asleep"           # Minimal processing, basic functions only
