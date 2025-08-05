@@ -1,0 +1,268 @@
+{
+  "profiles": [
+    {
+      "profile_id": "test_user_casual",
+      "user": "test_user",
+      "context": "casual",
+      "traits": {
+        "friendliness": {
+          "trait": "friendliness",
+          "base_value": 0.8,
+          "current_value": 0.8,
+          "adaptation_level": "stable",
+          "last_adaptation": "2025-07-17T23:28:38.159984",
+          "adaptation_triggers": [],
+          "context_modifiers": 0.0,
+          "stability_score": 1.0,
+          "user_feedback_score": 0.5
+        },
+        "formality": {
+          "trait": "formality",
+          "base_value": 0.4,
+          "current_value": 0.20000000000000004,
+          "adaptation_level": "slight",
+          "last_adaptation": "2025-07-17T23:28:38.163905",
+          "adaptation_triggers": [
+            "user_casual_language",
+            "user_casual_language"
+          ],
+          "context_modifiers": 0.0,
+          "stability_score": 1.0,
+          "user_feedback_score": 0.5
+        },
+        "enthusiasm": {
+          "trait": "enthusiasm",
+          "base_value": 0.7,
+          "current_value": 0.7,
+          "adaptation_level": "stable",
+          "last_adaptation": "2025-07-17T23:28:38.160001",
+          "adaptation_triggers": [],
+          "context_modifiers": 0.0,
+          "stability_score": 1.0,
+          "user_feedback_score": 0.5
+        },
+        "humor": {
+          "trait": "humor",
+          "base_value": 0.6,
+          "current_value": 0.6,
+          "adaptation_level": "stable",
+          "last_adaptation": "2025-07-17T23:28:38.160004",
+          "adaptation_triggers": [],
+          "context_modifiers": 0.0,
+          "stability_score": 1.0,
+          "user_feedback_score": 0.5
+        },
+        "empathy": {
+          "trait": "empathy",
+          "base_value": 0.8,
+          "current_value": 1.0,
+          "adaptation_level": "slight",
+          "last_adaptation": "2025-07-17T23:28:38.163297",
+          "adaptation_triggers": [
+            "user_seems_frustrated",
+            "user_seems_frustrated"
+          ],
+          "context_modifiers": 0.0,
+          "stability_score": 1.0,
+          "user_feedback_score": 0.5
+        },
+        "assertiveness": {
+          "trait": "assertiveness",
+          "base_value": 0.5,
+          "current_value": 0.5,
+          "adaptation_level": "stable",
+          "last_adaptation": "2025-07-17T23:28:38.160009",
+          "adaptation_triggers": [],
+          "context_modifiers": 0.0,
+          "stability_score": 1.0,
+          "user_feedback_score": 0.5
+        },
+        "curiosity": {
+          "trait": "curiosity",
+          "base_value": 0.9,
+          "current_value": 0.9,
+          "adaptation_level": "stable",
+          "last_adaptation": "2025-07-17T23:28:38.160012",
+          "adaptation_triggers": [],
+          "context_modifiers": 0.0,
+          "stability_score": 1.0,
+          "user_feedback_score": 0.5
+        },
+        "patience": {
+          "trait": "patience",
+          "base_value": 0.7,
+          "current_value": 0.9999999999999999,
+          "adaptation_level": "slight",
+          "last_adaptation": "2025-07-17T23:28:38.162758",
+          "adaptation_triggers": [
+            "user_requests_help",
+            "user_seems_frustrated",
+            "user_requests_help"
+          ],
+          "context_modifiers": 0.0,
+          "stability_score": 1.0,
+          "user_feedback_score": 0.5
+        },
+        "supportiveness": {
+          "trait": "supportiveness",
+          "base_value": 0.8,
+          "current_value": 1.0,
+          "adaptation_level": "slight",
+          "last_adaptation": "2025-07-17T23:28:38.162752",
+          "adaptation_triggers": [
+            "user_requests_help",
+            "user_requests_help"
+          ],
+          "context_modifiers": 0.0,
+          "stability_score": 1.0,
+          "user_feedback_score": 0.5
+        },
+        "playfulness": {
+          "trait": "playfulness",
+          "base_value": 0.5,
+          "current_value": 0.5,
+          "adaptation_level": "stable",
+          "last_adaptation": "2025-07-17T23:28:38.160020",
+          "adaptation_triggers": [],
+          "context_modifiers": 0.0,
+          "stability_score": 1.0,
+          "user_feedback_score": 0.5
+        }
+      },
+      "created_at": "2025-07-17T23:28:38.160022",
+      "last_updated": "2025-07-17T23:28:38.163914",
+      "interaction_count": 6,
+      "adaptation_history": [
+        {
+          "timestamp": "2025-07-17T23:28:38.160499",
+          "trigger": "user_requests_help",
+          "intensity": 1.0,
+          "adaptations": [
+            {
+              "trait": "supportiveness",
+              "old_value": 0.8,
+              "new_value": 0.9,
+              "change": 0.09999999999999998,
+              "trigger": "user_requests_help"
+            },
+            {
+              "trait": "patience",
+              "old_value": 0.7,
+              "new_value": 0.7999999999999999,
+              "change": 0.09999999999999998,
+              "trigger": "user_requests_help"
+            }
+          ],
+          "context": "casual"
+        },
+        {
+          "timestamp": "2025-07-17T23:28:38.160980",
+          "trigger": "user_seems_frustrated",
+          "intensity": 1.0,
+          "adaptations": [
+            {
+              "trait": "patience",
+              "old_value": 0.7999999999999999,
+              "new_value": 0.8999999999999999,
+              "change": 0.09999999999999998,
+              "trigger": "user_seems_frustrated"
+            },
+            {
+              "trait": "empathy",
+              "old_value": 0.8,
+              "new_value": 0.9,
+              "change": 0.09999999999999998,
+              "trigger": "user_seems_frustrated"
+            }
+          ],
+          "context": "casual"
+        },
+        {
+          "timestamp": "2025-07-17T23:28:38.161618",
+          "trigger": "user_casual_language",
+          "intensity": 1.0,
+          "adaptations": [
+            {
+              "trait": "formality",
+              "old_value": 0.4,
+              "new_value": 0.30000000000000004,
+              "change": 0.09999999999999998,
+              "trigger": "user_casual_language"
+            }
+          ],
+          "context": "casual"
+        },
+        {
+          "timestamp": "2025-07-17T23:28:38.162760",
+          "trigger": "user_requests_help",
+          "intensity": 1.0,
+          "adaptations": [
+            {
+              "trait": "supportiveness",
+              "old_value": 0.9,
+              "new_value": 1.0,
+              "change": 0.09999999999999998,
+              "trigger": "user_requests_help"
+            },
+            {
+              "trait": "patience",
+              "old_value": 0.8999999999999999,
+              "new_value": 0.9999999999999999,
+              "change": 0.09999999999999998,
+              "trigger": "user_requests_help"
+            }
+          ],
+          "context": "casual"
+        },
+        {
+          "timestamp": "2025-07-17T23:28:38.163305",
+          "trigger": "user_seems_frustrated",
+          "intensity": 1.0,
+          "adaptations": [
+            {
+              "trait": "empathy",
+              "old_value": 0.9,
+              "new_value": 1.0,
+              "change": 0.09999999999999998,
+              "trigger": "user_seems_frustrated"
+            }
+          ],
+          "context": "casual"
+        },
+        {
+          "timestamp": "2025-07-17T23:28:38.163911",
+          "trigger": "user_casual_language",
+          "intensity": 1.0,
+          "adaptations": [
+            {
+              "trait": "formality",
+              "old_value": 0.30000000000000004,
+              "new_value": 0.20000000000000004,
+              "change": 0.1,
+              "trigger": "user_casual_language"
+            }
+          ],
+          "context": "casual"
+        }
+      ],
+      "effectiveness_score": 0.5
+    }
+  ],
+  "default_personality": {
+    "friendliness": 0.8,
+    "formality": 0.4,
+    "enthusiasm": 0.7,
+    "humor": 0.6,
+    "empathy": 0.8,
+    "assertiveness": 0.5,
+    "curiosity": 0.9,
+    "patience": 0.7,
+    "supportiveness": 0.8,
+    "playfulness": 0.5
+  },
+  "last_updated": "2025-07-17T23:28:38.164116",
+  "metadata": {
+    "total_profiles": 1,
+    "total_adaptations": 6
+  }
+}
