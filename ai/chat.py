@@ -46,7 +46,7 @@ def _get_http_session():
                 retry_strategy = Retry(
                     total=3,
                     status_forcelist=[429, 500, 502, 503, 504],
-                    method_whitelist=["HEAD", "GET", "POST"],
+                    allowed_methods=["HEAD", "GET", "POST"],  # Updated for newer urllib3
                     backoff_factor=1  # Will retry with delays of 1, 2, 4 seconds
                 )
                 
