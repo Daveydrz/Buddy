@@ -530,6 +530,11 @@ STREAMING_NATURAL_PAUSES = True               # Use natural speech pauses
 STREAMING_SENTENCE_AWARE = True               # Intelligent sentence detection
 STREAMING_PROFESSIONAL_MODE = True            # Professional speech delivery
 
+# ✅ ==== KOBOLD CPP CONNECTION SETTINGS ====
+KOBOLD_TIMEOUT = 60                           # KoboldCpp connection timeout (increased from 30s)
+KOBOLD_MAX_RETRIES = 3                        # Maximum connection retries
+KOBOLD_RETRY_DELAY = 2                        # Delay between retries in seconds
+
 # ✅ ==== SMART RESPONSE SETTINGS ====
 SMART_RESPONSE_TIMING = True                   # ✅ NEW: Smart response timing
 MIN_WORDS_FOR_FIRST_CHUNK = 8                 # ✅ NEW: Minimum words before first chunk

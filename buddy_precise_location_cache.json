@@ -1,27 +1,27 @@
 {
   "location": {
-    "latitude": -27.4683,
-    "longitude": 153.0322,
+    "latitude": -27.4698,
+    "longitude": 153.0251,
     "house_number": "",
-    "street_name": "City Reach Boardwalk",
-    "street_address": "City Reach Boardwalk",
+    "street_name": "",
+    "street_address": "",
     "suburb": "",
-    "district": "QLD",
+    "district": "",
     "city": "Brisbane",
     "state": "Queensland",
     "country": "Australia",
-    "postal_code": "4152",
-    "region": "OC",
-    "county": "Queensland",
+    "postal_code": "4000",
+    "region": "Oceania",
+    "county": "Brisbane",
     "timezone": "Australia/Brisbane",
     "timezone_offset": "+10:00",
-    "current_time": "2025-08-05 08:59:08 AEST",
-    "public_ip": "122.150.248.203",
-    "local_ip": "192.168.1.201",
-    "isp": "Vocus Retail",
-    "accuracy_meters": 1000.0,
-    "source": "ipapi.co",
-    "confidence": "HIGH"
+    "current_time": "2025-08-05 18:07:28 AEST",
+    "public_ip": "unknown",
+    "local_ip": "127.0.0.1",
+    "isp": "Unknown",
+    "accuracy_meters": 10000.0,
+    "source": "fallback",
+    "confidence": "LOW"
   },
-  "timestamp": 1754348348.546392
+  "timestamp": 1754381248.3841197
 }

@@ -11,6 +11,22 @@ import os
 from typing import Dict, List, Any, Optional, Tuple, Generator
 from datetime import datetime
 
+# Import performance monitoring
+try:
+    from ai.performance_monitor import performance_monitor, track_performance
+    PERFORMANCE_MONITORING_AVAILABLE = True
+except ImportError:
+    PERFORMANCE_MONITORING_AVAILABLE = False
+    print("[LLMHandler] ⚠️ Performance monitoring not available")
+
+# Import user profile manager
+try:
+    from ai.user_profile_manager import register_user_activity
+    USER_PROFILE_MANAGEMENT_AVAILABLE = True
+except ImportError:
+    USER_PROFILE_MANAGEMENT_AVAILABLE = False
+    print("[LLMHandler] ⚠️ User profile management not available")
+
 # Import all the new modules
 try:
     # Try relative imports first (when run from ai/ directory)
@@ -451,18 +467,44 @@ class LLMHandler:
         
         Yields response chunks if streaming, otherwise returns complete response
         """
+        # Start performance tracking and register user activity
+        perf_context = {'user': user, 'text_length': len(text), 'stream': stream}
+        
+        # Register user activity for profile management
+        if USER_PROFILE_MANAGEMENT_AVAILABLE:
+            register_user_activity(user, 'llm_interaction')
+        
+        if PERFORMANCE_MONITORING_AVAILABLE:
+            with track_performance('response_generation', perf_context):
+                yield from self._generate_response_internal(text, user, context, stream, use_optimization)
+        else:
+            yield from self._generate_response_internal(text, user, context, stream, use_optimization)
+    
+    def _generate_response_internal(self, text: str, user: str, context: Dict[str, Any] = None,
+                                  stream: bool = True, use_optimization: bool = True) -> Generator[str, None, None]:
+        """Internal response generation with performance tracking"""
         try:
             # 🚀 NEW LATENCY OPTIMIZATION SYSTEM
             if use_optimization:
                 try:
                     from ai.latency_optimizer import generate_optimized_buddy_response
                     print(f"[LLMHandler] ⚡ Using optimized response generation")
-                    yield from generate_optimized_buddy_response(
-                        user_input=text,
-                        user_id=user,
-                        context=context,
-                        stream=stream
-                    )
+                    
+                    if PERFORMANCE_MONITORING_AVAILABLE:
+                        with track_performance('latency_optimizer', {'user': user}):
+                            yield from generate_optimized_buddy_response(
+                                user_input=text,
+                                user_id=user,
+                                context=context,
+                                stream=stream
+                            )
+                    else:
+                        yield from generate_optimized_buddy_response(
+                            user_input=text,
+                            user_id=user,
+                            context=context,
+                            stream=stream
+                        )
                     return
                 except ImportError:
                     print(f"[LLMHandler] ⚠️ Latency optimizer not available, using standard processing")
@@ -546,13 +588,22 @@ class LLMHandler:
             
             full_response = ""
             
-            # Stream response while tracking tokens
+            # Stream response while tracking tokens with proper type validation
             for chunk in response_generator:
-                if chunk and chunk.strip():
+                # Validate chunk is a string before calling strip()
+                if chunk and isinstance(chunk, str) and chunk.strip():
                     chunk_text = chunk.strip()
                     full_response += chunk_text + " "
                     output_tokens += estimate_tokens_from_text(chunk_text)
                     yield chunk_text
+                elif chunk and not isinstance(chunk, str):
+                    # Handle non-string chunks gracefully
+                    print(f"[LLMHandler] ⚠️ Non-string chunk received: {type(chunk)} - {chunk}")
+                    chunk_text = str(chunk).strip()
+                    if chunk_text:
+                        full_response += chunk_text + " "
+                        output_tokens += estimate_tokens_from_text(chunk_text)
+                        yield chunk_text
             
             generation_time = time.time() - generation_start
             

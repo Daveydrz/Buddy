@@ -2,11 +2,72 @@
 import re
 import requests
 import json
+import time
+import threading
 from datetime import datetime
 import pytz
+from requests.adapters import HTTPAdapter
+from urllib3.util.retry import Retry
 from ai.memory import get_conversation_context, get_user_memory
 from config import *
 from typing import Dict, Any
+
+# Import circuit breaker for reliability
+try:
+    from ai.circuit_breaker import fallback_manager, CircuitBreakerConfig
+    CIRCUIT_BREAKER_AVAILABLE = True
+    
+    # Configure circuit breaker for KoboldCpp
+    kobold_config = CircuitBreakerConfig(
+        failure_threshold=3,    # Open after 3 failures
+        recovery_timeout=30,    # Try recovery after 30 seconds
+        success_threshold=2,    # Close after 2 successes
+        timeout=KOBOLD_TIMEOUT  # Use the configured timeout
+    )
+    fallback_manager.register_service('kobold_cpp', kobold_config)
+    
+except ImportError:
+    CIRCUIT_BREAKER_AVAILABLE = False
+    print("[Chat] ⚠️ Circuit breaker not available - using direct calls")
+
+# Global session with connection pooling and retry logic
+_http_session = None
+_session_lock = threading.Lock()
+
+def _get_http_session():
+    """Get or create HTTP session with connection pooling and retry logic"""
+    global _http_session
+    if _http_session is None:
+        with _session_lock:
+            if _http_session is None:
+                _http_session = requests.Session()
+                
+                # Configure retry strategy
+                retry_strategy = Retry(
+                    total=3,
+                    status_forcelist=[429, 500, 502, 503, 504],
+                    method_whitelist=["HEAD", "GET", "POST"],
+                    backoff_factor=1  # Will retry with delays of 1, 2, 4 seconds
+                )
+                
+                # Mount adapters with retry strategy
+                adapter = HTTPAdapter(
+                    max_retries=retry_strategy,
+                    pool_connections=10,
+                    pool_maxsize=20
+                )
+                _http_session.mount("http://", adapter)
+                _http_session.mount("https://", adapter)
+                
+                # Set headers for better connection handling
+                _http_session.headers.update({
+                    'Connection': 'keep-alive',
+                    'User-Agent': 'Buddy-AI-Assistant/1.0'
+                })
+                
+                print("[Chat] ✅ HTTP session with connection pooling initialized")
+    
+    return _http_session
 
 def _generate_dynamic_error_response(error_context: Dict[str, Any]) -> str:
     """Generate dynamic, personalized error responses using LLM instead of hardcoded messages"""
@@ -327,7 +388,21 @@ def ask_kobold(messages, max_tokens=MAX_TOKENS):
         print(f"[KoboldCpp] 🔗 Connecting to: {KOBOLD_URL}")
         print(f"[KoboldCpp] 📤 Sending payload: {json.dumps(payload, indent=2)}")
         
-        response = requests.post(KOBOLD_URL, json=payload, timeout=30)
+        def _make_kobold_request():
+            """Internal function to make KoboldCpp request"""
+            session = _get_http_session()
+            return session.post(KOBOLD_URL, json=payload, timeout=KOBOLD_TIMEOUT)
+        
+        # Use circuit breaker if available
+        if CIRCUIT_BREAKER_AVAILABLE:
+            try:
+                response = fallback_manager.call_with_fallback('kobold_cpp', _make_kobold_request)
+            except Exception as e:
+                print(f"[KoboldCpp] ❌ Circuit breaker failed: {e}")
+                # Fallback to direct call
+                response = _make_kobold_request()
+        else:
+            response = _make_kobold_request()
         
         print(f"[KoboldCpp] 📡 Response Status: {response.status_code}")
         print(f"[KoboldCpp] 📄 Response Headers: {dict(response.headers)}")

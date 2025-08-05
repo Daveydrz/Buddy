@@ -175,5 +175,26 @@ def identify_user(spoken_input: str, system_username: str) -> str:
     return system_username
 
 def transcribe_audio(audio):
-    """Synchronous wrapper for Whisper STT"""
-    return asyncio.run(whisper_stt_async(audio))
+    """Synchronous wrapper for Whisper STT with proper event loop handling"""
+    try:
+        # Check if there's already an event loop running
+        loop = asyncio.get_event_loop()
+        if loop.is_running():
+            # Create a new event loop in a thread to avoid conflicts
+            import concurrent.futures
+            with concurrent.futures.ThreadPoolExecutor() as executor:
+                future = executor.submit(lambda: asyncio.run(whisper_stt_async(audio)))
+                return future.result(timeout=30)  # 30 second timeout for safety
+        else:
+            # No running loop, safe to use asyncio.run
+            return asyncio.run(whisper_stt_async(audio))
+    except Exception as e:
+        print(f"[Speech] ❌ Async event loop error: {e}")
+        # Fallback to sync processing if async fails
+        return _transcribe_audio_fallback(audio)
+
+def _transcribe_audio_fallback(audio):
+    """Fallback transcription method when async fails"""
+    print("[Speech] ⚠️ Using fallback transcription method")
+    # Simple fallback - could be enhanced with local transcription
+    return "Audio transcription unavailable"

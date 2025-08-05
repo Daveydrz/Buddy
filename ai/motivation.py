@@ -259,6 +259,8 @@ class MotivationSystem:
         with self.lock:
             motivations = [(mt, ms.intensity) for mt, ms in self.motivation_states.items()]
             motivations.sort(key=lambda x: x[1], reverse=True)
+            # Add bounds checking to prevent slice indices errors
+            limit = max(0, min(limit, len(motivations))) if isinstance(limit, int) else 3
             return motivations[:limit]
     
     def get_priority_goals(self, limit: int = 5) -> List[Goal]:
@@ -274,6 +276,8 @@ class MotivationSystem:
         with self.lock:
             active_goals = [g for g in self.goals.values() if g.status == GoalStatus.ACTIVE]
             active_goals.sort(key=lambda g: g.priority, reverse=True)
+            # Add bounds checking to prevent slice indices errors
+            limit = max(0, min(limit, len(active_goals))) if isinstance(limit, int) else 5
             return active_goals[:limit]
     
     def suggest_actions_for_goal(self, goal_id: str) -> List[str]:
