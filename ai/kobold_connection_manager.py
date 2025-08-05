@@ -13,6 +13,7 @@ from typing import Dict, Any, Optional, Callable
 from urllib3.exceptions import IncompleteRead
 from dataclasses import dataclass, asdict
 from datetime import datetime, timedelta
+import urllib3
 
 
 @dataclass
@@ -259,29 +260,32 @@ class EnhancedKoboldCPPManager:
                 else:
                     raise requests.exceptions.HTTPError(f"HTTP {response.status_code}: {response.text}")
                     
-            except (IncompleteRead, requests.exceptions.ChunkedEncodingError) as e:
+            except (IncompleteRead, 
+                   requests.exceptions.ChunkedEncodingError,
+                   requests.exceptions.ConnectionError,
+                   urllib3.exceptions.ProtocolError) as e:
                 retry_delay = min(2 ** attempt, 16)  # Exponential backoff, max 16s
                 
-                print(f"[KoboldManager] ⚠️ IncompleteRead on attempt {attempt + 1}: {e}")
+                print(f"[KoboldManager] ⚠️ Connection/IncompleteRead error on attempt {attempt + 1}: {e}")
                 
                 if attempt < self.max_retries - 1:
                     print(f"[KoboldManager] 🔄 Resetting session and retrying in {retry_delay}s...")
                     self._reset_session()
                     time.sleep(retry_delay)
                 else:
-                    print(f"[KoboldManager] 💔 Max retries exceeded for IncompleteRead")
+                    print(f"[KoboldManager] 💔 Max retries exceeded for connection/IncompleteRead error")
                     raise
                     
             except (requests.exceptions.ConnectionError, requests.exceptions.Timeout) as e:
                 retry_delay = min(2 ** attempt, 8)  # Faster retry for connection issues
                 
-                print(f"[KoboldManager] ⚠️ Connection/Timeout error on attempt {attempt + 1}: {e}")
+                print(f"[KoboldManager] ⚠️ Timeout/Connection error on attempt {attempt + 1}: {e}")
                 
                 if attempt < self.max_retries - 1:
                     print(f"[KoboldManager] 🔄 Retrying connection in {retry_delay}s...")
                     time.sleep(retry_delay)
                 else:
-                    print(f"[KoboldManager] 💔 Max retries exceeded for connection error")
+                    print(f"[KoboldManager] 💔 Max retries exceeded for timeout/connection error")
                     raise
                     
             except Exception as e:

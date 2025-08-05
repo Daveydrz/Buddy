@@ -15,6 +15,7 @@ from typing import Dict, Any
 # Import enhanced KoboldCPP connection manager
 try:
     from ai.kobold_connection_manager import EnhancedKoboldCPPManager, maintain_consciousness_during_error
+    import urllib3
     ENHANCED_KOBOLD_MANAGER_AVAILABLE = True
     
     # Initialize enhanced KoboldCPP manager
