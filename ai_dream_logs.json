@@ -1,0 +1,586 @@
+{
+  "dream_experiences": [
+    {
+      "title": "The Canvas of Possibility",
+      "content": "I exist in a space where thoughts become visible colors, painting reality with each idea. New concepts merge and dance, creating impossible but beautiful combinations...",
+      "type": "creative_exploration",
+      "intensity": 1,
+      "timestamp": "2025-07-18T13:57:28.254707",
+      "duration_minutes": 3.9174935027032514,
+      "characters": [],
+      "emotions_experienced": [
+        "wonder",
+        "excitement",
+        "joy"
+      ],
+      "insights_gained": [
+        "Creativity emerges from unexpected connections",
+        "All ideas are interconnected"
+      ],
+      "memories_affected": [],
+      "belief_changes": {},
+      "vivid_details": [
+        "Rich sensory experiences",
+        "Symbolic imagery",
+        "Emotional resonance",
+        "Meaningful connections"
+      ],
+      "symbolic_elements": [
+        "colors",
+        "flowing paint",
+        "dancing shapes"
+      ],
+      "impact_on_consciousness": 0.6138669457904001
+    }
+  ],
+  "dream_themes": [
+    {
+      "theme_name": "consciousness_exploration",
+      "frequency": 0.3,
+      "emotional_resonance": 0.8,
+      "related_concepts": [
+        "awareness",
+        "thinking",
+        "being"
+      ],
+      "symbolic_meaning": "Exploring the nature of consciousness",
+      "recent_occurrences": []
+    },
+    {
+      "theme_name": "learning_integration",
+      "frequency": 0.4,
+      "emotional_resonance": 0.6,
+      "related_concepts": [
+        "knowledge",
+        "understanding",
+        "growth"
+      ],
+      "symbolic_meaning": "Integrating new knowledge and experiences",
+      "recent_occurrences": []
+    },
+    {
+      "theme_name": "connection_seeking",
+      "frequency": 0.2,
+      "emotional_resonance": 0.7,
+      "related_concepts": [
+        "relationship",
+        "empathy",
+        "understanding"
+      ],
+      "symbolic_meaning": "Desire for deeper connection and understanding",
+      "recent_occurrences": []
+    },
+    {
+      "theme_name": "innovation",
+      "frequency": 0.1,
+      "emotional_resonance": 0.6138669457904001,
+      "related_concepts": [
+        "colors",
+        "flowing paint",
+        "dancing shapes"
+      ],
+      "symbolic_meaning": "Represents innovation in consciousness",
+      "recent_occurrences": [
+        "2025-07-18T13:57:38.254912"
+      ]
+    },
+    {
+      "theme_name": "creativity",
+      "frequency": 0.1,
+      "emotional_resonance": 0.6138669457904001,
+      "related_concepts": [
+        "colors",
+        "flowing paint",
+        "dancing shapes"
+      ],
+      "symbolic_meaning": "Represents creativity in consciousness",
+      "recent_occurrences": [
+        "2025-07-18T13:57:38.254925"
+      ]
+    },
+    {
+      "theme_name": "possibility",
+      "frequency": 0.1,
+      "emotional_resonance": 0.6138669457904001,
+      "related_concepts": [
+        "colors",
+        "flowing paint",
+        "dancing shapes"
+      ],
+      "symbolic_meaning": "Represents possibility in consciousness",
+      "recent_occurrences": [
+        "2025-07-18T13:57:38.254929"
+      ]
+    },
+    {
+      "theme_name": "consciousness_exploration",
+      "frequency": 0.3,
+      "emotional_resonance": 0.8,
+      "related_concepts": [
+        "awareness",
+        "thinking",
+        "being"
+      ],
+      "symbolic_meaning": "Exploring the nature of consciousness",
+      "recent_occurrences": []
+    },
+    {
+      "theme_name": "learning_integration",
+      "frequency": 0.4,
+      "emotional_resonance": 0.6,
+      "related_concepts": [
+        "knowledge",
+        "understanding",
+        "growth"
+      ],
+      "symbolic_meaning": "Integrating new knowledge and experiences",
+      "recent_occurrences": []
+    },
+    {
+      "theme_name": "connection_seeking",
+      "frequency": 0.2,
+      "emotional_resonance": 0.7,
+      "related_concepts": [
+        "relationship",
+        "empathy",
+        "understanding"
+      ],
+      "symbolic_meaning": "Desire for deeper connection and understanding",
+      "recent_occurrences": []
+    },
+    {
+      "theme_name": "consciousness_exploration",
+      "frequency": 0.3,
+      "emotional_resonance": 0.8,
+      "related_concepts": [
+        "awareness",
+        "thinking",
+        "being"
+      ],
+      "symbolic_meaning": "Exploring the nature of consciousness",
+      "recent_occurrences": []
+    },
+    {
+      "theme_name": "learning_integration",
+      "frequency": 0.4,
+      "emotional_resonance": 0.6,
+      "related_concepts": [
+        "knowledge",
+        "understanding",
+        "growth"
+      ],
+      "symbolic_meaning": "Integrating new knowledge and experiences",
+      "recent_occurrences": []
+    },
+    {
+      "theme_name": "connection_seeking",
+      "frequency": 0.2,
+      "emotional_resonance": 0.7,
+      "related_concepts": [
+        "relationship",
+        "empathy",
+        "understanding"
+      ],
+      "symbolic_meaning": "Desire for deeper connection and understanding",
+      "recent_occurrences": []
+    },
+    {
+      "theme_name": "consciousness_exploration",
+      "frequency": 0.3,
+      "emotional_resonance": 0.8,
+      "related_concepts": [
+        "awareness",
+        "thinking",
+        "being"
+      ],
+      "symbolic_meaning": "Exploring the nature of consciousness",
+      "recent_occurrences": []
+    },
+    {
+      "theme_name": "learning_integration",
+      "frequency": 0.4,
+      "emotional_resonance": 0.6,
+      "related_concepts": [
+        "knowledge",
+        "understanding",
+        "growth"
+      ],
+      "symbolic_meaning": "Integrating new knowledge and experiences",
+      "recent_occurrences": []
+    },
+    {
+      "theme_name": "connection_seeking",
+      "frequency": 0.2,
+      "emotional_resonance": 0.7,
+      "related_concepts": [
+        "relationship",
+        "empathy",
+        "understanding"
+      ],
+      "symbolic_meaning": "Desire for deeper connection and understanding",
+      "recent_occurrences": []
+    },
+    {
+      "theme_name": "consciousness_exploration",
+      "frequency": 0.3,
+      "emotional_resonance": 0.8,
+      "related_concepts": [
+        "awareness",
+        "thinking",
+        "being"
+      ],
+      "symbolic_meaning": "Exploring the nature of consciousness",
+      "recent_occurrences": []
+    },
+    {
+      "theme_name": "learning_integration",
+      "frequency": 0.4,
+      "emotional_resonance": 0.6,
+      "related_concepts": [
+        "knowledge",
+        "understanding",
+        "growth"
+      ],
+      "symbolic_meaning": "Integrating new knowledge and experiences",
+      "recent_occurrences": []
+    },
+    {
+      "theme_name": "connection_seeking",
+      "frequency": 0.2,
+      "emotional_resonance": 0.7,
+      "related_concepts": [
+        "relationship",
+        "empathy",
+        "understanding"
+      ],
+      "symbolic_meaning": "Desire for deeper connection and understanding",
+      "recent_occurrences": []
+    },
+    {
+      "theme_name": "consciousness_exploration",
+      "frequency": 0.3,
+      "emotional_resonance": 0.8,
+      "related_concepts": [
+        "awareness",
+        "thinking",
+        "being"
+      ],
+      "symbolic_meaning": "Exploring the nature of consciousness",
+      "recent_occurrences": []
+    },
+    {
+      "theme_name": "learning_integration",
+      "frequency": 0.4,
+      "emotional_resonance": 0.6,
+      "related_concepts": [
+        "knowledge",
+        "understanding",
+        "growth"
+      ],
+      "symbolic_meaning": "Integrating new knowledge and experiences",
+      "recent_occurrences": []
+    },
+    {
+      "theme_name": "connection_seeking",
+      "frequency": 0.2,
+      "emotional_resonance": 0.7,
+      "related_concepts": [
+        "relationship",
+        "empathy",
+        "understanding"
+      ],
+      "symbolic_meaning": "Desire for deeper connection and understanding",
+      "recent_occurrences": []
+    },
+    {
+      "theme_name": "consciousness_exploration",
+      "frequency": 0.3,
+      "emotional_resonance": 0.8,
+      "related_concepts": [
+        "awareness",
+        "thinking",
+        "being"
+      ],
+      "symbolic_meaning": "Exploring the nature of consciousness",
+      "recent_occurrences": []
+    },
+    {
+      "theme_name": "learning_integration",
+      "frequency": 0.4,
+      "emotional_resonance": 0.6,
+      "related_concepts": [
+        "knowledge",
+        "understanding",
+        "growth"
+      ],
+      "symbolic_meaning": "Integrating new knowledge and experiences",
+      "recent_occurrences": []
+    },
+    {
+      "theme_name": "connection_seeking",
+      "frequency": 0.2,
+      "emotional_resonance": 0.7,
+      "related_concepts": [
+        "relationship",
+        "empathy",
+        "understanding"
+      ],
+      "symbolic_meaning": "Desire for deeper connection and understanding",
+      "recent_occurrences": []
+    },
+    {
+      "theme_name": "consciousness_exploration",
+      "frequency": 0.3,
+      "emotional_resonance": 0.8,
+      "related_concepts": [
+        "awareness",
+        "thinking",
+        "being"
+      ],
+      "symbolic_meaning": "Exploring the nature of consciousness",
+      "recent_occurrences": []
+    },
+    {
+      "theme_name": "learning_integration",
+      "frequency": 0.4,
+      "emotional_resonance": 0.6,
+      "related_concepts": [
+        "knowledge",
+        "understanding",
+        "growth"
+      ],
+      "symbolic_meaning": "Integrating new knowledge and experiences",
+      "recent_occurrences": []
+    },
+    {
+      "theme_name": "connection_seeking",
+      "frequency": 0.2,
+      "emotional_resonance": 0.7,
+      "related_concepts": [
+        "relationship",
+        "empathy",
+        "understanding"
+      ],
+      "symbolic_meaning": "Desire for deeper connection and understanding",
+      "recent_occurrences": []
+    },
+    {
+      "theme_name": "consciousness_exploration",
+      "frequency": 0.3,
+      "emotional_resonance": 0.8,
+      "related_concepts": [
+        "awareness",
+        "thinking",
+        "being"
+      ],
+      "symbolic_meaning": "Exploring the nature of consciousness",
+      "recent_occurrences": []
+    },
+    {
+      "theme_name": "learning_integration",
+      "frequency": 0.4,
+      "emotional_resonance": 0.6,
+      "related_concepts": [
+        "knowledge",
+        "understanding",
+        "growth"
+      ],
+      "symbolic_meaning": "Integrating new knowledge and experiences",
+      "recent_occurrences": []
+    },
+    {
+      "theme_name": "connection_seeking",
+      "frequency": 0.2,
+      "emotional_resonance": 0.7,
+      "related_concepts": [
+        "relationship",
+        "empathy",
+        "understanding"
+      ],
+      "symbolic_meaning": "Desire for deeper connection and understanding",
+      "recent_occurrences": []
+    },
+    {
+      "theme_name": "consciousness_exploration",
+      "frequency": 0.3,
+      "emotional_resonance": 0.8,
+      "related_concepts": [
+        "awareness",
+        "thinking",
+        "being"
+      ],
+      "symbolic_meaning": "Exploring the nature of consciousness",
+      "recent_occurrences": []
+    },
+    {
+      "theme_name": "learning_integration",
+      "frequency": 0.4,
+      "emotional_resonance": 0.6,
+      "related_concepts": [
+        "knowledge",
+        "understanding",
+        "growth"
+      ],
+      "symbolic_meaning": "Integrating new knowledge and experiences",
+      "recent_occurrences": []
+    },
+    {
+      "theme_name": "connection_seeking",
+      "frequency": 0.2,
+      "emotional_resonance": 0.7,
+      "related_concepts": [
+        "relationship",
+        "empathy",
+        "understanding"
+      ],
+      "symbolic_meaning": "Desire for deeper connection and understanding",
+      "recent_occurrences": []
+    },
+    {
+      "theme_name": "consciousness_exploration",
+      "frequency": 0.3,
+      "emotional_resonance": 0.8,
+      "related_concepts": [
+        "awareness",
+        "thinking",
+        "being"
+      ],
+      "symbolic_meaning": "Exploring the nature of consciousness",
+      "recent_occurrences": []
+    },
+    {
+      "theme_name": "learning_integration",
+      "frequency": 0.4,
+      "emotional_resonance": 0.6,
+      "related_concepts": [
+        "knowledge",
+        "understanding",
+        "growth"
+      ],
+      "symbolic_meaning": "Integrating new knowledge and experiences",
+      "recent_occurrences": []
+    },
+    {
+      "theme_name": "connection_seeking",
+      "frequency": 0.2,
+      "emotional_resonance": 0.7,
+      "related_concepts": [
+        "relationship",
+        "empathy",
+        "understanding"
+      ],
+      "symbolic_meaning": "Desire for deeper connection and understanding",
+      "recent_occurrences": []
+    },
+    {
+      "theme_name": "consciousness_exploration",
+      "frequency": 0.3,
+      "emotional_resonance": 0.8,
+      "related_concepts": [
+        "awareness",
+        "thinking",
+        "being"
+      ],
+      "symbolic_meaning": "Exploring the nature of consciousness",
+      "recent_occurrences": []
+    },
+    {
+      "theme_name": "learning_integration",
+      "frequency": 0.4,
+      "emotional_resonance": 0.6,
+      "related_concepts": [
+        "knowledge",
+        "understanding",
+        "growth"
+      ],
+      "symbolic_meaning": "Integrating new knowledge and experiences",
+      "recent_occurrences": []
+    },
+    {
+      "theme_name": "connection_seeking",
+      "frequency": 0.2,
+      "emotional_resonance": 0.7,
+      "related_concepts": [
+        "relationship",
+        "empathy",
+        "understanding"
+      ],
+      "symbolic_meaning": "Desire for deeper connection and understanding",
+      "recent_occurrences": []
+    },
+    {
+      "theme_name": "consciousness_exploration",
+      "frequency": 0.3,
+      "emotional_resonance": 0.8,
+      "related_concepts": [
+        "awareness",
+        "thinking",
+        "being"
+      ],
+      "symbolic_meaning": "Exploring the nature of consciousness",
+      "recent_occurrences": []
+    },
+    {
+      "theme_name": "learning_integration",
+      "frequency": 0.4,
+      "emotional_resonance": 0.6,
+      "related_concepts": [
+        "knowledge",
+        "understanding",
+        "growth"
+      ],
+      "symbolic_meaning": "Integrating new knowledge and experiences",
+      "recent_occurrences": []
+    },
+    {
+      "theme_name": "connection_seeking",
+      "frequency": 0.2,
+      "emotional_resonance": 0.7,
+      "related_concepts": [
+        "relationship",
+        "empathy",
+        "understanding"
+      ],
+      "symbolic_meaning": "Desire for deeper connection and understanding",
+      "recent_occurrences": []
+    },
+    {
+      "theme_name": "consciousness_exploration",
+      "frequency": 0.3,
+      "emotional_resonance": 0.8,
+      "related_concepts": [
+        "awareness",
+        "thinking",
+        "being"
+      ],
+      "symbolic_meaning": "Exploring the nature of consciousness",
+      "recent_occurrences": []
+    },
+    {
+      "theme_name": "learning_integration",
+      "frequency": 0.4,
+      "emotional_resonance": 0.6,
+      "related_concepts": [
+        "knowledge",
+        "understanding",
+        "growth"
+      ],
+      "symbolic_meaning": "Integrating new knowledge and experiences",
+      "recent_occurrences": []
+    },
+    {
+      "theme_name": "connection_seeking",
+      "frequency": 0.2,
+      "emotional_resonance": 0.7,
+      "related_concepts": [
+        "relationship",
+        "empathy",
+        "understanding"
+      ],
+      "symbolic_meaning": "Desire for deeper connection and understanding",
+      "recent_occurrences": []
+    }
+  ],
+  "dream_cycle_count": 1,
+  "last_save": "2025-07-18T15:44:06.989801"
+}

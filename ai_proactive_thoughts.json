@@ -1,0 +1,23 @@
+[
+  {
+    "content": "I find myself in a moment of quiet contemplation...",
+    "type": "environmental_observation",
+    "timestamp": "2025-07-18T13:58:03.263873",
+    "should_verbalize": true,
+    "priority": 0.5594760726339835,
+    "context": {
+      "time_of_day": 13,
+      "day_of_week": 4,
+      "environment_state": {},
+      "recent_topics": 0,
+      "consciousness_modules": [
+        "global_workspace",
+        "emotion_engine",
+        "self_model"
+      ]
+    },
+    "triggers": [
+      "idle"
+    ]
+  }
+]

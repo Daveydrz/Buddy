@@ -1,0 +1,113 @@
+{
+  "entropy_state": {
+    "global_entropy_level": 0.8,
+    "decision_uncertainty": 0.1,
+    "memory_fuzziness": 0.05,
+    "temporal_drift": 0.1,
+    "attention_scatter": 0.1,
+    "coherence_pressure": 0.7
+  },
+  "recent_events": [],
+  "entropy_patterns": {
+    "response_variation": {
+      "pattern_id": "response_variation",
+      "entropy_type": "response_variation",
+      "frequency": 3.0,
+      "intensity_range": [
+        0.1,
+        0.4
+      ],
+      "target_systems": [
+        "response_generation",
+        "language_model"
+      ],
+      "conditions": {}
+    },
+    "thought_spontaneity": {
+      "pattern_id": "thought_spontaneity",
+      "entropy_type": "thought_pattern",
+      "frequency": 6.0,
+      "intensity_range": [
+        0.2,
+        0.6
+      ],
+      "target_systems": [
+        "inner_monologue",
+        "self_model"
+      ],
+      "conditions": {}
+    },
+    "emotional_variation": {
+      "pattern_id": "emotional_variation",
+      "entropy_type": "emotional_flux",
+      "frequency": 2.0,
+      "intensity_range": [
+        0.1,
+        0.3
+      ],
+      "target_systems": [
+        "emotion_engine"
+      ],
+      "conditions": {}
+    },
+    "attention_drift": {
+      "pattern_id": "attention_drift",
+      "entropy_type": "attention_drift",
+      "frequency": 4.0,
+      "intensity_range": [
+        0.1,
+        0.5
+      ],
+      "target_systems": [
+        "global_workspace",
+        "attention_system"
+      ],
+      "conditions": {}
+    },
+    "creative_sparks": {
+      "pattern_id": "creative_sparks",
+      "entropy_type": "creativity_spark",
+      "frequency": 1.0,
+      "intensity_range": [
+        0.3,
+        0.7
+      ],
+      "target_systems": [
+        "inner_monologue",
+        "subjective_experience"
+      ],
+      "conditions": {}
+    },
+    "existential_moments": {
+      "pattern_id": "existential_moments",
+      "entropy_type": "existential_doubt",
+      "frequency": 0.5,
+      "intensity_range": [
+        0.2,
+        0.5
+      ],
+      "target_systems": [
+        "self_model",
+        "inner_monologue"
+      ],
+      "conditions": {}
+    }
+  },
+  "metrics": {
+    "total_entropy_events": 8,
+    "uncertainty_moments": 0,
+    "entropy_by_type": {
+      "response_variation": 1,
+      "thought_pattern": 4,
+      "emotional_flux": 2,
+      "attention_drift": 1,
+      "memory_uncertainty": 0,
+      "decision_noise": 0,
+      "timing_variation": 0,
+      "perspective_shift": 0,
+      "creativity_spark": 0,
+      "existential_doubt": 0
+    }
+  },
+  "last_updated": "2025-07-18T10:38:52.496894"
+}

@@ -1,0 +1,63 @@
+{
+  "snapshots": [
+    {
+      "timestamp": "2025-07-18T10:00:46.510359",
+      "dominant_qualia": "emotional",
+      "emotional_valence": 0.45,
+      "cognitive_clarity": 0.8500000000000001,
+      "intensity": "moderate",
+      "active_qualia_count": 2,
+      "qualia_types": [
+        "emotional",
+        "cognitive"
+      ],
+      "context": "testing",
+      "user_id": "test_user"
+    },
+    {
+      "timestamp": "2025-07-18T10:29:47.124857",
+      "dominant_qualia": "emotional",
+      "emotional_valence": 0.45,
+      "cognitive_clarity": 0.8500000000000001,
+      "intensity": "moderate",
+      "active_qualia_count": 2,
+      "qualia_types": [
+        "emotional",
+        "cognitive"
+      ],
+      "context": "testing",
+      "user_id": "test_user"
+    },
+    {
+      "timestamp": "2025-07-18T10:36:35.971862",
+      "dominant_qualia": "emotional",
+      "emotional_valence": 0.45,
+      "cognitive_clarity": 0.8500000000000001,
+      "intensity": "moderate",
+      "active_qualia_count": 2,
+      "qualia_types": [
+        "emotional",
+        "cognitive"
+      ],
+      "context": "testing",
+      "user_id": "test_user"
+    },
+    {
+      "timestamp": "2025-07-18T15:59:00.730090",
+      "dominant_qualia": null,
+      "emotional_valence": 0.0,
+      "cognitive_clarity": 0.0,
+      "intensity": null,
+      "active_qualia_count": 0,
+      "qualia_types": [],
+      "context": "verification",
+      "user_id": "test_user"
+    }
+  ],
+  "trends": [],
+  "patterns": [],
+  "last_updated": "2025-07-18T23:07:51.719326",
+  "total_snapshots": 4,
+  "total_trends": 0,
+  "total_patterns": 0
+}

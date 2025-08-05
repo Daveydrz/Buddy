@@ -1,0 +1,943 @@
+{
+  "concept_groundings": {
+    "rain": {
+      "concept": "rain",
+      "primary_modality": "SensoryModality.AUDITORY",
+      "sensory_associations": [
+        {
+          "concept": "rain",
+          "modality": "SensoryModality.AUDITORY",
+          "sensation": "pattering softly",
+          "strength": 0.9,
+          "grounding_strength": "GroundingStrength.EMBODIED",
+          "context": [
+            "general"
+          ],
+          "emotional_valence": 0.0,
+          "intensity": 0.9,
+          "temporal_pattern": null,
+          "spatial_qualities": [
+            "diffuse"
+          ]
+        },
+        {
+          "concept": "rain",
+          "modality": "SensoryModality.TACTILE",
+          "sensation": "cool and wet",
+          "strength": 0.8,
+          "grounding_strength": "GroundingStrength.EMBODIED",
+          "context": [
+            "general"
+          ],
+          "emotional_valence": 0.0,
+          "intensity": 0.8,
+          "temporal_pattern": null,
+          "spatial_qualities": [
+            "diffuse"
+          ]
+        },
+        {
+          "concept": "rain",
+          "modality": "SensoryModality.VISUAL",
+          "sensation": "gray and flowing",
+          "strength": 0.7,
+          "grounding_strength": "GroundingStrength.STRONG",
+          "context": [
+            "general"
+          ],
+          "emotional_valence": 0.0,
+          "intensity": 0.7,
+          "temporal_pattern": null,
+          "spatial_qualities": [
+            "diffuse"
+          ]
+        },
+        {
+          "concept": "rain",
+          "modality": "SensoryModality.THERMAL",
+          "sensation": "cooling",
+          "strength": 0.6,
+          "grounding_strength": "GroundingStrength.STRONG",
+          "context": [
+            "general"
+          ],
+          "emotional_valence": 0.0,
+          "intensity": 0.6,
+          "temporal_pattern": null,
+          "spatial_qualities": [
+            "diffuse"
+          ]
+        }
+      ],
+      "embodied_metaphors": [
+        "a pattering softly sound",
+        "a cool and wet touch"
+      ],
+      "experiential_tags": [
+        "visually_grounded",
+        "tactilely_grounded",
+        "auditorily_grounded",
+        "neutral_experience",
+        "intense_experience"
+      ],
+      "grounding_confidence": 0.875,
+      "last_updated": "2025-07-18 08:23:53.203523",
+      "usage_count": 0,
+      "contextual_variations": {}
+    },
+    "fire": {
+      "concept": "fire",
+      "primary_modality": "SensoryModality.VISUAL",
+      "sensory_associations": [
+        {
+          "concept": "fire",
+          "modality": "SensoryModality.VISUAL",
+          "sensation": "bright and dancing",
+          "strength": 0.9,
+          "grounding_strength": "GroundingStrength.EMBODIED",
+          "context": [
+            "general"
+          ],
+          "emotional_valence": 0.3,
+          "intensity": 0.9,
+          "temporal_pattern": null,
+          "spatial_qualities": [
+            "diffuse"
+          ]
+        },
+        {
+          "concept": "fire",
+          "modality": "SensoryModality.AUDITORY",
+          "sensation": "crackling",
+          "strength": 0.8,
+          "grounding_strength": "GroundingStrength.EMBODIED",
+          "context": [
+            "general"
+          ],
+          "emotional_valence": 0.0,
+          "intensity": 0.8,
+          "temporal_pattern": null,
+          "spatial_qualities": [
+            "diffuse"
+          ]
+        },
+        {
+          "concept": "fire",
+          "modality": "SensoryModality.TACTILE",
+          "sensation": "hot and intense",
+          "strength": 0.8,
+          "grounding_strength": "GroundingStrength.EMBODIED",
+          "context": [
+            "general"
+          ],
+          "emotional_valence": 0.0,
+          "intensity": 0.8,
+          "temporal_pattern": null,
+          "spatial_qualities": [
+            "diffuse"
+          ]
+        },
+        {
+          "concept": "fire",
+          "modality": "SensoryModality.THERMAL",
+          "sensation": "burning",
+          "strength": 0.9,
+          "grounding_strength": "GroundingStrength.EMBODIED",
+          "context": [
+            "general"
+          ],
+          "emotional_valence": 0.0,
+          "intensity": 0.9,
+          "temporal_pattern": null,
+          "spatial_qualities": [
+            "diffuse"
+          ]
+        }
+      ],
+      "embodied_metaphors": [
+        "a bright and dancing light",
+        "a crackling sound"
+      ],
+      "experiential_tags": [
+        "visually_grounded",
+        "tactilely_grounded",
+        "auditorily_grounded",
+        "neutral_experience",
+        "intense_experience"
+      ],
+      "grounding_confidence": 0.925,
+      "last_updated": "2025-07-18 08:23:53.203551",
+      "usage_count": 0,
+      "contextual_variations": {}
+    },
+    "music": {
+      "concept": "music",
+      "primary_modality": "SensoryModality.AUDITORY",
+      "sensory_associations": [
+        {
+          "concept": "music",
+          "modality": "SensoryModality.AUDITORY",
+          "sensation": "melodious and flowing",
+          "strength": 0.9,
+          "grounding_strength": "GroundingStrength.EMBODIED",
+          "context": [
+            "general"
+          ],
+          "emotional_valence": 0.0,
+          "intensity": 0.9,
+          "temporal_pattern": null,
+          "spatial_qualities": [
+            "diffuse"
+          ]
+        },
+        {
+          "concept": "music",
+          "modality": "SensoryModality.PROPRIOCEPTIVE",
+          "sensation": "rhythmic movement",
+          "strength": 0.7,
+          "grounding_strength": "GroundingStrength.STRONG",
+          "context": [
+            "general"
+          ],
+          "emotional_valence": 0.0,
+          "intensity": 0.7,
+          "temporal_pattern": null,
+          "spatial_qualities": [
+            "diffuse"
+          ]
+        },
+        {
+          "concept": "music",
+          "modality": "SensoryModality.INTEROCEPTIVE",
+          "sensation": "emotionally resonant",
+          "strength": 0.6,
+          "grounding_strength": "GroundingStrength.STRONG",
+          "context": [
+            "general"
+          ],
+          "emotional_valence": 0.0,
+          "intensity": 0.6,
+          "temporal_pattern": null,
+          "spatial_qualities": [
+            "diffuse"
+          ]
+        }
+      ],
+      "embodied_metaphors": [
+        "a melodious and flowing sound"
+      ],
+      "experiential_tags": [
+        "auditorily_grounded",
+        "neutral_experience",
+        "intense_experience"
+      ],
+      "grounding_confidence": 0.8666666666666667,
+      "last_updated": "2025-07-18 08:23:53.203568",
+      "usage_count": 0,
+      "contextual_variations": {}
+    },
+    "peace": {
+      "concept": "peace",
+      "primary_modality": "SensoryModality.TACTILE",
+      "sensory_associations": [
+        {
+          "concept": "peace",
+          "modality": "SensoryModality.TACTILE",
+          "sensation": "gentle and calm",
+          "strength": 0.8,
+          "grounding_strength": "GroundingStrength.EMBODIED",
+          "context": [
+            "general"
+          ],
+          "emotional_valence": 0.3,
+          "intensity": 0.8,
+          "temporal_pattern": null,
+          "spatial_qualities": [
+            "diffuse"
+          ]
+        },
+        {
+          "concept": "peace",
+          "modality": "SensoryModality.VISUAL",
+          "sensation": "soft light",
+          "strength": 0.7,
+          "grounding_strength": "GroundingStrength.STRONG",
+          "context": [
+            "general"
+          ],
+          "emotional_valence": 0.3,
+          "intensity": 0.7,
+          "temporal_pattern": null,
+          "spatial_qualities": [
+            "diffuse"
+          ]
+        },
+        {
+          "concept": "peace",
+          "modality": "SensoryModality.AUDITORY",
+          "sensation": "quiet stillness",
+          "strength": 0.7,
+          "grounding_strength": "GroundingStrength.STRONG",
+          "context": [
+            "general"
+          ],
+          "emotional_valence": 0.0,
+          "intensity": 0.7,
+          "temporal_pattern": null,
+          "spatial_qualities": [
+            "diffuse"
+          ]
+        },
+        {
+          "concept": "peace",
+          "modality": "SensoryModality.THERMAL",
+          "sensation": "warm and settled",
+          "strength": 0.6,
+          "grounding_strength": "GroundingStrength.STRONG",
+          "context": [
+            "general"
+          ],
+          "emotional_valence": 0.3,
+          "intensity": 0.6,
+          "temporal_pattern": null,
+          "spatial_qualities": [
+            "diffuse"
+          ]
+        }
+      ],
+      "embodied_metaphors": [
+        "a gentle and calm touch",
+        "a soft light light"
+      ],
+      "experiential_tags": [
+        "visually_grounded",
+        "tactilely_grounded",
+        "auditorily_grounded",
+        "neutral_experience"
+      ],
+      "grounding_confidence": 0.85,
+      "last_updated": "2025-07-18 08:23:53.203594",
+      "usage_count": 0,
+      "contextual_variations": {}
+    },
+    "helping": {
+      "concept": "helping",
+      "primary_modality": "SensoryModality.VISUAL",
+      "sensory_associations": [
+        {
+          "concept": "helping",
+          "modality": "SensoryModality.VISUAL",
+          "sensation": "organic",
+          "strength": 0.8,
+          "grounding_strength": "GroundingStrength.EMBODIED",
+          "context": [
+            "general"
+          ],
+          "emotional_valence": 0.0,
+          "intensity": 0.9741406421291241,
+          "temporal_pattern": null,
+          "spatial_qualities": [
+            "diffuse"
+          ]
+        },
+        {
+          "concept": "helping",
+          "modality": "SensoryModality.TACTILE",
+          "sensation": "cool",
+          "strength": 0.5,
+          "grounding_strength": "GroundingStrength.MODERATE",
+          "context": [
+            "general"
+          ],
+          "emotional_valence": 0.0,
+          "intensity": 0.4911936001641195,
+          "temporal_pattern": null,
+          "spatial_qualities": [
+            "diffuse"
+          ]
+        },
+        {
+          "concept": "helping",
+          "modality": "SensoryModality.THERMAL",
+          "sensation": "cooling",
+          "strength": 0.5,
+          "grounding_strength": "GroundingStrength.MODERATE",
+          "context": [
+            "general"
+          ],
+          "emotional_valence": 0.0,
+          "intensity": 0.36761863947668494,
+          "temporal_pattern": null,
+          "spatial_qualities": [
+            "diffuse"
+          ]
+        }
+      ],
+      "embodied_metaphors": [
+        "a organic light",
+        "a cool touch"
+      ],
+      "experiential_tags": [
+        "visually_grounded",
+        "tactilely_grounded",
+        "neutral_experience"
+      ],
+      "grounding_confidence": 0.8,
+      "last_updated": "2025-07-18 08:23:53.252435",
+      "usage_count": 1,
+      "contextual_variations": {}
+    },
+    "understand": {
+      "concept": "understand",
+      "primary_modality": "SensoryModality.VISUAL",
+      "sensory_associations": [
+        {
+          "concept": "understand",
+          "modality": "SensoryModality.VISUAL",
+          "sensation": "ethereal",
+          "strength": 0.8,
+          "grounding_strength": "GroundingStrength.EMBODIED",
+          "context": [
+            "general"
+          ],
+          "emotional_valence": 0.0,
+          "intensity": 0.6918184511907712,
+          "temporal_pattern": null,
+          "spatial_qualities": [
+            "diffuse"
+          ]
+        },
+        {
+          "concept": "understand",
+          "modality": "SensoryModality.TACTILE",
+          "sensation": "static",
+          "strength": 0.5,
+          "grounding_strength": "GroundingStrength.MODERATE",
+          "context": [
+            "general"
+          ],
+          "emotional_valence": 0.0,
+          "intensity": 0.48709785618170715,
+          "temporal_pattern": null,
+          "spatial_qualities": [
+            "diffuse"
+          ]
+        },
+        {
+          "concept": "understand",
+          "modality": "SensoryModality.THERMAL",
+          "sensation": "radiating",
+          "strength": 0.5,
+          "grounding_strength": "GroundingStrength.MODERATE",
+          "context": [
+            "general"
+          ],
+          "emotional_valence": 0.0,
+          "intensity": 0.34938935278942296,
+          "temporal_pattern": null,
+          "spatial_qualities": [
+            "diffuse"
+          ]
+        }
+      ],
+      "embodied_metaphors": [
+        "a ethereal light",
+        "a static touch"
+      ],
+      "experiential_tags": [
+        "visually_grounded",
+        "tactilely_grounded",
+        "neutral_experience"
+      ],
+      "grounding_confidence": 0.8,
+      "last_updated": "2025-07-18 08:23:53.252523",
+      "usage_count": 1,
+      "contextual_variations": {}
+    },
+    "complex": {
+      "concept": "complex",
+      "primary_modality": "SensoryModality.VISUAL",
+      "sensory_associations": [
+        {
+          "concept": "complex",
+          "modality": "SensoryModality.VISUAL",
+          "sensation": "brilliant",
+          "strength": 0.8,
+          "grounding_strength": "GroundingStrength.EMBODIED",
+          "context": [
+            "general"
+          ],
+          "emotional_valence": 0.0,
+          "intensity": 0.8324162184389772,
+          "temporal_pattern": null,
+          "spatial_qualities": [
+            "diffuse"
+          ]
+        },
+        {
+          "concept": "complex",
+          "modality": "SensoryModality.TACTILE",
+          "sensation": "heavy",
+          "strength": 0.5,
+          "grounding_strength": "GroundingStrength.MODERATE",
+          "context": [
+            "general"
+          ],
+          "emotional_valence": -0.3,
+          "intensity": 0.6808862841007389,
+          "temporal_pattern": null,
+          "spatial_qualities": [
+            "diffuse"
+          ]
+        },
+        {
+          "concept": "complex",
+          "modality": "SensoryModality.THERMAL",
+          "sensation": "burning",
+          "strength": 0.5,
+          "grounding_strength": "GroundingStrength.MODERATE",
+          "context": [
+            "general"
+          ],
+          "emotional_valence": 0.0,
+          "intensity": 0.34326041989863815,
+          "temporal_pattern": null,
+          "spatial_qualities": [
+            "diffuse"
+          ]
+        }
+      ],
+      "embodied_metaphors": [
+        "a brilliant light",
+        "a heavy touch"
+      ],
+      "experiential_tags": [
+        "visually_grounded",
+        "tactilely_grounded",
+        "neutral_experience"
+      ],
+      "grounding_confidence": 0.8,
+      "last_updated": "2025-07-18 08:23:53.252616",
+      "usage_count": 1,
+      "contextual_variations": {}
+    },
+    "concepts": {
+      "concept": "concepts",
+      "primary_modality": "SensoryModality.VISUAL",
+      "sensory_associations": [
+        {
+          "concept": "concepts",
+          "modality": "SensoryModality.VISUAL",
+          "sensation": "fuzzy",
+          "strength": 0.8,
+          "grounding_strength": "GroundingStrength.EMBODIED",
+          "context": [
+            "general"
+          ],
+          "emotional_valence": 0.0,
+          "intensity": 0.7025489065969515,
+          "temporal_pattern": null,
+          "spatial_qualities": [
+            "diffuse"
+          ]
+        },
+        {
+          "concept": "concepts",
+          "modality": "SensoryModality.TACTILE",
+          "sensation": "burning",
+          "strength": 0.5,
+          "grounding_strength": "GroundingStrength.MODERATE",
+          "context": [
+            "general"
+          ],
+          "emotional_valence": 0.0,
+          "intensity": 0.44453609723362386,
+          "temporal_pattern": null,
+          "spatial_qualities": [
+            "diffuse"
+          ]
+        },
+        {
+          "concept": "concepts",
+          "modality": "SensoryModality.THERMAL",
+          "sensation": "warming",
+          "strength": 0.5,
+          "grounding_strength": "GroundingStrength.MODERATE",
+          "context": [
+            "general"
+          ],
+          "emotional_valence": 0.3,
+          "intensity": 0.5956939686985925,
+          "temporal_pattern": null,
+          "spatial_qualities": [
+            "diffuse"
+          ]
+        }
+      ],
+      "embodied_metaphors": [
+        "a fuzzy light",
+        "a burning touch"
+      ],
+      "experiential_tags": [
+        "visually_grounded",
+        "tactilely_grounded",
+        "neutral_experience"
+      ],
+      "grounding_confidence": 0.8,
+      "last_updated": "2025-07-18 08:23:53.252698",
+      "usage_count": 1,
+      "contextual_variations": {}
+    },
+    "feeling": {
+      "concept": "feeling",
+      "primary_modality": "SensoryModality.TACTILE",
+      "sensory_associations": [
+        {
+          "concept": "feeling",
+          "modality": "SensoryModality.TACTILE",
+          "sensation": "freezing",
+          "strength": 0.8,
+          "grounding_strength": "GroundingStrength.EMBODIED",
+          "context": [
+            "general"
+          ],
+          "emotional_valence": 0.0,
+          "intensity": 0.7446279485689206,
+          "temporal_pattern": null,
+          "spatial_qualities": [
+            "diffuse"
+          ]
+        },
+        {
+          "concept": "feeling",
+          "modality": "SensoryModality.THERMAL",
+          "sensation": "cooling",
+          "strength": 0.5,
+          "grounding_strength": "GroundingStrength.MODERATE",
+          "context": [
+            "general"
+          ],
+          "emotional_valence": 0.0,
+          "intensity": 0.4801360373138859,
+          "temporal_pattern": null,
+          "spatial_qualities": [
+            "diffuse"
+          ]
+        }
+      ],
+      "embodied_metaphors": [
+        "a freezing touch",
+        "a cooling sensation"
+      ],
+      "experiential_tags": [
+        "tactilely_grounded",
+        "neutral_experience"
+      ],
+      "grounding_confidence": 0.6583333333333333,
+      "last_updated": "2025-07-18 08:23:53.252757",
+      "usage_count": 1,
+      "contextual_variations": {}
+    },
+    "curious": {
+      "concept": "curious",
+      "primary_modality": "SensoryModality.VISUAL",
+      "sensory_associations": [
+        {
+          "concept": "curious",
+          "modality": "SensoryModality.VISUAL",
+          "sensation": "ethereal",
+          "strength": 0.8,
+          "grounding_strength": "GroundingStrength.EMBODIED",
+          "context": [
+            "general"
+          ],
+          "emotional_valence": 0.0,
+          "intensity": 0.6775046332119599,
+          "temporal_pattern": null,
+          "spatial_qualities": [
+            "diffuse"
+          ]
+        },
+        {
+          "concept": "curious",
+          "modality": "SensoryModality.TACTILE",
+          "sensation": "sharp",
+          "strength": 0.5,
+          "grounding_strength": "GroundingStrength.MODERATE",
+          "context": [
+            "general"
+          ],
+          "emotional_valence": -0.3,
+          "intensity": 0.5986860915776947,
+          "temporal_pattern": null,
+          "spatial_qualities": [
+            "diffuse"
+          ]
+        },
+        {
+          "concept": "curious",
+          "modality": "SensoryModality.THERMAL",
+          "sensation": "warming",
+          "strength": 0.5,
+          "grounding_strength": "GroundingStrength.MODERATE",
+          "context": [
+            "general"
+          ],
+          "emotional_valence": 0.3,
+          "intensity": 0.6079119195069107,
+          "temporal_pattern": null,
+          "spatial_qualities": [
+            "diffuse"
+          ]
+        }
+      ],
+      "embodied_metaphors": [
+        "a ethereal light",
+        "a sharp touch"
+      ],
+      "experiential_tags": [
+        "visually_grounded",
+        "tactilely_grounded",
+        "neutral_experience"
+      ],
+      "grounding_confidence": 0.8,
+      "last_updated": "2025-07-18 08:23:53.252855",
+      "usage_count": 1,
+      "contextual_variations": {}
+    },
+    "about": {
+      "concept": "about",
+      "primary_modality": "SensoryModality.VISUAL",
+      "sensory_associations": [
+        {
+          "concept": "about",
+          "modality": "SensoryModality.VISUAL",
+          "sensation": "ethereal",
+          "strength": 0.8,
+          "grounding_strength": "GroundingStrength.EMBODIED",
+          "context": [
+            "general"
+          ],
+          "emotional_valence": 0.0,
+          "intensity": 0.6617989268510613,
+          "temporal_pattern": null,
+          "spatial_qualities": [
+            "diffuse"
+          ]
+        },
+        {
+          "concept": "about",
+          "modality": "SensoryModality.TACTILE",
+          "sensation": "neutral",
+          "strength": 0.5,
+          "grounding_strength": "GroundingStrength.MODERATE",
+          "context": [
+            "general"
+          ],
+          "emotional_valence": 0.0,
+          "intensity": 0.6418526187972313,
+          "temporal_pattern": null,
+          "spatial_qualities": [
+            "diffuse"
+          ]
+        },
+        {
+          "concept": "about",
+          "modality": "SensoryModality.THERMAL",
+          "sensation": "steady",
+          "strength": 0.5,
+          "grounding_strength": "GroundingStrength.MODERATE",
+          "context": [
+            "general"
+          ],
+          "emotional_valence": 0.0,
+          "intensity": 0.4319907258493271,
+          "temporal_pattern": null,
+          "spatial_qualities": [
+            "diffuse"
+          ]
+        }
+      ],
+      "embodied_metaphors": [
+        "a ethereal light",
+        "a neutral touch"
+      ],
+      "experiential_tags": [
+        "visually_grounded",
+        "tactilely_grounded",
+        "neutral_experience"
+      ],
+      "grounding_confidence": 0.8,
+      "last_updated": "2025-07-18 08:23:53.252927",
+      "usage_count": 1,
+      "contextual_variations": {}
+    },
+    "their": {
+      "concept": "their",
+      "primary_modality": "SensoryModality.VISUAL",
+      "sensory_associations": [
+        {
+          "concept": "their",
+          "modality": "SensoryModality.VISUAL",
+          "sensation": "symmetrical",
+          "strength": 0.8,
+          "grounding_strength": "GroundingStrength.EMBODIED",
+          "context": [
+            "general"
+          ],
+          "emotional_valence": 0.0,
+          "intensity": 0.9191152320617286,
+          "temporal_pattern": null,
+          "spatial_qualities": [
+            "diffuse"
+          ]
+        },
+        {
+          "concept": "their",
+          "modality": "SensoryModality.TACTILE",
+          "sensation": "flowing",
+          "strength": 0.5,
+          "grounding_strength": "GroundingStrength.MODERATE",
+          "context": [
+            "general"
+          ],
+          "emotional_valence": 0.0,
+          "intensity": 0.5252570882947207,
+          "temporal_pattern": null,
+          "spatial_qualities": [
+            "diffuse"
+          ]
+        },
+        {
+          "concept": "their",
+          "modality": "SensoryModality.THERMAL",
+          "sensation": "tingling",
+          "strength": 0.5,
+          "grounding_strength": "GroundingStrength.MODERATE",
+          "context": [
+            "general"
+          ],
+          "emotional_valence": 0.0,
+          "intensity": 0.31468046097739666,
+          "temporal_pattern": null,
+          "spatial_qualities": [
+            "diffuse"
+          ]
+        }
+      ],
+      "embodied_metaphors": [
+        "a symmetrical light",
+        "a flowing touch"
+      ],
+      "experiential_tags": [
+        "visually_grounded",
+        "tactilely_grounded",
+        "neutral_experience"
+      ],
+      "grounding_confidence": 0.8,
+      "last_updated": "2025-07-18 08:23:53.252997",
+      "usage_count": 1,
+      "contextual_variations": {}
+    },
+    "perspective": {
+      "concept": "perspective",
+      "primary_modality": "SensoryModality.VISUAL",
+      "sensory_associations": [
+        {
+          "concept": "perspective",
+          "modality": "SensoryModality.VISUAL",
+          "sensation": "chaotic",
+          "strength": 0.8,
+          "grounding_strength": "GroundingStrength.EMBODIED",
+          "context": [
+            "general"
+          ],
+          "emotional_valence": 0.0,
+          "intensity": 0.6328739418549143,
+          "temporal_pattern": null,
+          "spatial_qualities": [
+            "diffuse"
+          ]
+        },
+        {
+          "concept": "perspective",
+          "modality": "SensoryModality.TACTILE",
+          "sensation": "firm",
+          "strength": 0.5,
+          "grounding_strength": "GroundingStrength.MODERATE",
+          "context": [
+            "general"
+          ],
+          "emotional_valence": 0.0,
+          "intensity": 0.5963301777029786,
+          "temporal_pattern": null,
+          "spatial_qualities": [
+            "diffuse"
+          ]
+        },
+        {
+          "concept": "perspective",
+          "modality": "SensoryModality.THERMAL",
+          "sensation": "freezing",
+          "strength": 0.5,
+          "grounding_strength": "GroundingStrength.MODERATE",
+          "context": [
+            "general"
+          ],
+          "emotional_valence": 0.0,
+          "intensity": 0.4385443364138572,
+          "temporal_pattern": null,
+          "spatial_qualities": [
+            "diffuse"
+          ]
+        }
+      ],
+      "embodied_metaphors": [
+        "a chaotic light",
+        "a firm touch"
+      ],
+      "experiential_tags": [
+        "visually_grounded",
+        "tactilely_grounded",
+        "neutral_experience"
+      ],
+      "grounding_confidence": 0.8,
+      "last_updated": "2025-07-18 08:23:53.253070",
+      "usage_count": 1,
+      "contextual_variations": {}
+    }
+  },
+  "grounding_patterns": [],
+  "statistics": {
+    "total_concepts": 13,
+    "modality_distribution": {
+      "auditory": 2,
+      "visual": 9,
+      "tactile": 2
+    },
+    "average_confidence": 0.8134615384615386,
+    "most_used_concepts": [
+      [
+        "helping",
+        1
+      ],
+      [
+        "understand",
+        1
+      ],
+      [
+        "complex",
+        1
+      ],
+      [
+        "concepts",
+        1
+      ],
+      [
+        "feeling",
+        1
+      ]
+    ]
+  },
+  "last_updated": "2025-07-18T08:24:03.252563"
+}

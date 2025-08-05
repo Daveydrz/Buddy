@@ -1,0 +1,26 @@
+[
+  {
+    "timestamp": "2025-07-30T10:58:40.311781",
+    "text": "How are you, buddy?",
+    "audio_length": 33792,
+    "interaction_id": 1
+  },
+  {
+    "timestamp": "2025-07-30T11:03:15.879312",
+    "text": "your plans for tomorrow.",
+    "audio_length": 40448,
+    "interaction_id": 2
+  },
+  {
+    "timestamp": "2025-08-03T02:19:08.423482",
+    "text": "Hello how are you?",
+    "audio_length": 0,
+    "interaction_id": 1
+  },
+  {
+    "timestamp": "2025-08-04T23:01:21.255368",
+    "text": "How are you today?",
+    "audio_length": 37888,
+    "interaction_id": 1
+  }
+]

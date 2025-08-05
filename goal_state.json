@@ -1,0 +1,18 @@
+{
+  "active_goals": {},
+  "completed_goals": [],
+  "motivation_state": {
+    "intrinsic_motivation": 0.7,
+    "goal_satisfaction": 0.5,
+    "existential_tension": 0.4,
+    "curiosity_level": 0.6,
+    "growth_drive": 0.5
+  },
+  "metrics": {
+    "total_goals_created": 0,
+    "total_goals_completed": 0,
+    "total_desires_generated": 0,
+    "motivation_fluctuations": 0
+  },
+  "last_updated": "2025-07-19T12:01:48.944662"
+}

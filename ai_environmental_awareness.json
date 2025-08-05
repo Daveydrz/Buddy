@@ -1,0 +1,66 @@
+{
+  "current_mood_state": "neutral",
+  "current_environmental_context": "weekday_busy",
+  "prosody_readings": [
+    {
+      "pitch_mean": 533.3333333333334,
+      "pitch_variance": 0.0,
+      "pace_words_per_minute": 3000.0,
+      "volume_level": 0.5085304975509644,
+      "emotional_indicators": [
+        "pitch_high",
+        "pace_fast",
+        "rhythm_monotone",
+        "tone_flat"
+      ],
+      "stress_level": 0.3,
+      "energy_level": 1.0,
+      "confidence_level": 0.3,
+      "timestamp": "2025-07-18T15:43:10.968993"
+    },
+    {
+      "pitch_mean": 139.1304347826087,
+      "pitch_variance": 0.0,
+      "pace_words_per_minute": 480.0,
+      "volume_level": 0.49545085430145264,
+      "emotional_indicators": [
+        "pitch_low",
+        "sadness_detected",
+        "pace_fast",
+        "rhythm_monotone",
+        "tone_flat"
+      ],
+      "stress_level": 0.3,
+      "energy_level": 0.993180341720581,
+      "confidence_level": 0.3,
+      "timestamp": "2025-07-18T15:43:10.978235"
+    }
+  ],
+  "mood_trends": [],
+  "environmental_readings": [
+    {
+      "timestamp": "2025-07-18T15:43:08.960042",
+      "context": "weekday_busy",
+      "mood_state": "positive",
+      "detected_patterns": [
+        "work_hours",
+        "positive_mood"
+      ],
+      "intervention_suggested": false,
+      "intervention_type": null,
+      "confidence": 0.8
+    }
+  ],
+  "emotional_baselines": {
+    "stress_baseline": 0.3,
+    "energy_baseline": 0.5,
+    "confidence_baseline": 0.6
+  },
+  "prosody_baselines": {
+    "pitch_mean_baseline": 200.0,
+    "pitch_variance_baseline": 50.0,
+    "pace_baseline": 150.0,
+    "volume_baseline": 0.5
+  },
+  "last_save": "2025-07-18T15:43:23.982423"
+}

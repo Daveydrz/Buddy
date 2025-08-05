@@ -1,0 +1,47 @@
+{
+  "qualia_markers": [
+    {
+      "qualia_id": "qualia_c3942514",
+      "qualia_type": "QualiaType.EMOTIONAL",
+      "intensity": "QualiaIntensity.MODERATE",
+      "emotional_valence": 0.8,
+      "cognitive_clarity": 0.8,
+      "temporal_duration": 10.0,
+      "description": "Emotional response to: joy",
+      "triggers": [
+        "joy"
+      ],
+      "timestamp": "2025-07-18T10:36:35.782738",
+      "frequency_count": 1
+    },
+    {
+      "qualia_id": "qualia_4995aa36",
+      "qualia_type": "QualiaType.COGNITIVE",
+      "intensity": "QualiaIntensity.MODERATE",
+      "emotional_valence": 0.1,
+      "cognitive_clarity": 0.9,
+      "temporal_duration": 15.0,
+      "description": "Cognitive processing of: learning",
+      "triggers": [
+        "learning"
+      ],
+      "timestamp": "2025-07-18T10:36:35.782769",
+      "frequency_count": 1
+    }
+  ],
+  "belief_qualia_links": [
+    {
+      "belief_id": "belief_2c603cae",
+      "belief_content": "I feel excited about learning AI",
+      "qualia_id": "qualia_4995aa36",
+      "link_strength": 0.8,
+      "link_type": "experiential",
+      "formation_context": "Processing user input from test_user",
+      "timestamp": "2025-07-18T10:36:35.782802",
+      "activation_count": 1
+    }
+  ],
+  "last_updated": "2025-07-18T10:36:35.782861",
+  "total_markers": 2,
+  "total_links": 1
+}

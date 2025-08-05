@@ -1,0 +1,334 @@
+{
+  "events": [],
+  "patterns": [],
+  "interaction_history": [
+    {
+      "type": "conversation",
+      "timestamp": "2025-07-18T15:19:35.738106",
+      "context": {
+        "text": "Hello, how are you?",
+        "user_id": "test_user",
+        "timestamp": "2025-07-18T15:19:35.738089"
+      },
+      "day_of_week": 4,
+      "hour": 15,
+      "minute": 19
+    },
+    {
+      "type": "voice_analysis",
+      "timestamp": "2025-07-18T15:20:00.283761",
+      "context": {
+        "stress_level": 0.3,
+        "energy_level": 0.5,
+        "emotional_indicators": [],
+        "text": "Hello, how are you doing?"
+      },
+      "day_of_week": 4,
+      "hour": 15,
+      "minute": 20
+    },
+    {
+      "type": "conversation",
+      "timestamp": "2025-07-18T15:20:00.283768",
+      "context": {
+        "text": "Hello, how are you doing?",
+        "user_id": "test_user",
+        "timestamp": "2025-07-18T15:20:00.283697"
+      },
+      "day_of_week": 4,
+      "hour": 15,
+      "minute": 20
+    },
+    {
+      "type": "conversation",
+      "timestamp": "2025-07-18T15:20:25.290513",
+      "context": {
+        "text": "Test interaction at 10.0s",
+        "user_id": "test_user",
+        "timestamp": "2025-07-18T15:20:25.290488"
+      },
+      "day_of_week": 4,
+      "hour": 15,
+      "minute": 20
+    },
+    {
+      "type": "conversation",
+      "timestamp": "2025-07-18T15:20:35.291093",
+      "context": {
+        "text": "Test interaction at 20.0s",
+        "user_id": "test_user",
+        "timestamp": "2025-07-18T15:20:35.291077"
+      },
+      "day_of_week": 4,
+      "hour": 15,
+      "minute": 20
+    },
+    {
+      "type": "conversation",
+      "timestamp": "2025-07-18T15:20:45.291603",
+      "context": {
+        "text": "Test interaction at 30.0s",
+        "user_id": "test_user",
+        "timestamp": "2025-07-18T15:20:45.291588"
+      },
+      "day_of_week": 4,
+      "hour": 15,
+      "minute": 20
+    },
+    {
+      "type": "voice_analysis",
+      "timestamp": "2025-07-18T15:33:50.969177",
+      "context": {
+        "stress_level": 0.3,
+        "energy_level": 0.5,
+        "emotional_indicators": [],
+        "text": "Hello, how are you doing?"
+      },
+      "day_of_week": 4,
+      "hour": 15,
+      "minute": 33
+    },
+    {
+      "type": "conversation",
+      "timestamp": "2025-07-18T15:33:50.969187",
+      "context": {
+        "text": "Hello, how are you doing?",
+        "user_id": "test_user",
+        "timestamp": "2025-07-18T15:33:50.969097"
+      },
+      "day_of_week": 4,
+      "hour": 15,
+      "minute": 33
+    },
+    {
+      "type": "conversation",
+      "timestamp": "2025-07-18T15:34:16.006939",
+      "context": {
+        "text": "Test interaction at 10.0s",
+        "user_id": "test_user",
+        "timestamp": "2025-07-18T15:34:16.006905"
+      },
+      "day_of_week": 4,
+      "hour": 15,
+      "minute": 34
+    },
+    {
+      "type": "conversation",
+      "timestamp": "2025-07-18T15:34:26.028026",
+      "context": {
+        "text": "Test interaction at 20.0s",
+        "user_id": "test_user",
+        "timestamp": "2025-07-18T15:34:26.028004"
+      },
+      "day_of_week": 4,
+      "hour": 15,
+      "minute": 34
+    },
+    {
+      "type": "conversation",
+      "timestamp": "2025-07-18T15:34:36.049072",
+      "context": {
+        "text": "Test interaction at 30.1s",
+        "user_id": "test_user",
+        "timestamp": "2025-07-18T15:34:36.049052"
+      },
+      "day_of_week": 4,
+      "hour": 15,
+      "minute": 34
+    },
+    {
+      "type": "voice_analysis",
+      "timestamp": "2025-07-18T15:38:15.106624",
+      "context": {
+        "stress_level": 0.3,
+        "energy_level": 0.5,
+        "emotional_indicators": [],
+        "text": "Hello, how are you doing?"
+      },
+      "day_of_week": 4,
+      "hour": 15,
+      "minute": 38
+    },
+    {
+      "type": "conversation",
+      "timestamp": "2025-07-18T15:38:15.106650",
+      "context": {
+        "text": "Hello, how are you doing?",
+        "user_id": "test_user",
+        "timestamp": "2025-07-18T15:38:15.105932"
+      },
+      "day_of_week": 4,
+      "hour": 15,
+      "minute": 38
+    },
+    {
+      "type": "conversation",
+      "timestamp": "2025-07-18T15:38:40.154040",
+      "context": {
+        "text": "Test interaction at 10.0s",
+        "user_id": "test_user",
+        "timestamp": "2025-07-18T15:38:40.153999"
+      },
+      "day_of_week": 4,
+      "hour": 15,
+      "minute": 38
+    },
+    {
+      "type": "conversation",
+      "timestamp": "2025-07-18T15:38:50.154682",
+      "context": {
+        "text": "Test interaction at 20.0s",
+        "user_id": "test_user",
+        "timestamp": "2025-07-18T15:38:50.154666"
+      },
+      "day_of_week": 4,
+      "hour": 15,
+      "minute": 38
+    },
+    {
+      "type": "conversation",
+      "timestamp": "2025-07-18T15:39:00.155278",
+      "context": {
+        "text": "Test interaction at 30.0s",
+        "user_id": "test_user",
+        "timestamp": "2025-07-18T15:39:00.155261"
+      },
+      "day_of_week": 4,
+      "hour": 15,
+      "minute": 39
+    },
+    {
+      "type": "voice_analysis",
+      "timestamp": "2025-07-18T15:42:02.397831",
+      "context": {
+        "stress_level": 0.3,
+        "energy_level": 1.0,
+        "emotional_indicators": [
+          "pitch_high",
+          "pace_fast",
+          "rhythm_monotone",
+          "tone_flat"
+        ],
+        "text": "Hello, how are you doing?"
+      },
+      "day_of_week": 4,
+      "hour": 15,
+      "minute": 42
+    },
+    {
+      "type": "conversation",
+      "timestamp": "2025-07-18T15:42:02.397839",
+      "context": {
+        "text": "Hello, how are you doing?",
+        "user_id": "test_user",
+        "timestamp": "2025-07-18T15:42:02.397183"
+      },
+      "day_of_week": 4,
+      "hour": 15,
+      "minute": 42
+    },
+    {
+      "type": "conversation",
+      "timestamp": "2025-07-18T15:42:27.414568",
+      "context": {
+        "text": "Test interaction at 10.0s",
+        "user_id": "test_user",
+        "timestamp": "2025-07-18T15:42:27.414546"
+      },
+      "day_of_week": 4,
+      "hour": 15,
+      "minute": 42
+    },
+    {
+      "type": "conversation",
+      "timestamp": "2025-07-18T15:42:37.415079",
+      "context": {
+        "text": "Test interaction at 20.0s",
+        "user_id": "test_user",
+        "timestamp": "2025-07-18T15:42:37.415065"
+      },
+      "day_of_week": 4,
+      "hour": 15,
+      "minute": 42
+    },
+    {
+      "type": "conversation",
+      "timestamp": "2025-07-18T15:42:47.415652",
+      "context": {
+        "text": "Test interaction at 30.0s",
+        "user_id": "test_user",
+        "timestamp": "2025-07-18T15:42:47.415615"
+      },
+      "day_of_week": 4,
+      "hour": 15,
+      "minute": 42
+    },
+    {
+      "type": "voice_analysis",
+      "timestamp": "2025-07-18T15:43:10.969011",
+      "context": {
+        "stress_level": 0.3,
+        "energy_level": 1.0,
+        "emotional_indicators": [
+          "pitch_high",
+          "pace_fast",
+          "rhythm_monotone",
+          "tone_flat"
+        ],
+        "text": "Hello, how are you doing?"
+      },
+      "day_of_week": 4,
+      "hour": 15,
+      "minute": 43
+    },
+    {
+      "type": "conversation",
+      "timestamp": "2025-07-18T15:43:10.969019",
+      "context": {
+        "text": "Hello, how are you doing?",
+        "user_id": "test_user",
+        "timestamp": "2025-07-18T15:43:10.968379"
+      },
+      "day_of_week": 4,
+      "hour": 15,
+      "minute": 43
+    },
+    {
+      "type": "conversation",
+      "timestamp": "2025-07-18T15:43:35.985533",
+      "context": {
+        "text": "Test interaction at 10.0s",
+        "user_id": "test_user",
+        "timestamp": "2025-07-18T15:43:35.985510"
+      },
+      "day_of_week": 4,
+      "hour": 15,
+      "minute": 43
+    },
+    {
+      "type": "conversation",
+      "timestamp": "2025-07-18T15:43:45.986173",
+      "context": {
+        "text": "Test interaction at 20.0s",
+        "user_id": "test_user",
+        "timestamp": "2025-07-18T15:43:45.986157"
+      },
+      "day_of_week": 4,
+      "hour": 15,
+      "minute": 43
+    },
+    {
+      "type": "conversation",
+      "timestamp": "2025-07-18T15:43:55.986672",
+      "context": {
+        "text": "Test interaction at 30.0s",
+        "user_id": "test_user",
+        "timestamp": "2025-07-18T15:43:55.986660"
+      },
+      "day_of_week": 4,
+      "hour": 15,
+      "minute": 43
+    }
+  ],
+  "last_save": "2025-07-18T15:44:02.987272"
+}

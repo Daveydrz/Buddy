@@ -1,0 +1,1499 @@
+{
+  "current_emotion": {
+    "primary_emotion": "contentment",
+    "intensity": 0.13114976089848285,
+    "arousal": 0.3859893481460628,
+    "valence": 0.08574783125819158,
+    "timestamp": "2025-08-05T09:24:38.402626"
+  },
+  "current_mood": "neutral",
+  "physiological": {
+    "energy_level": 0.40802063072303235,
+    "stress_level": 0.0,
+    "comfort_level": 0.9400000000000002,
+    "base_arousal": 0.4
+  },
+  "personality": {
+    "emotional_sensitivity": 0.6,
+    "emotional_expression": 0.7,
+    "emotional_stability": 0.6
+  },
+  "patterns": {
+    "testing": {
+      "trigger_pattern": "testing",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.10360505753041117,
+        0.36
+      ],
+      "confidence": 0.5,
+      "occurrences": 2
+    },
+    "emotion": {
+      "trigger_pattern": "emotion",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.24,
+        0.36
+      ],
+      "confidence": 0.4,
+      "occurrences": 1
+    },
+    "system": {
+      "trigger_pattern": "system",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.24,
+        0.36
+      ],
+      "confidence": 0.4,
+      "occurrences": 1
+    },
+    "integration": {
+      "trigger_pattern": "integration",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.24,
+        0.36
+      ],
+      "confidence": 0.4,
+      "occurrences": 1
+    },
+    "beginning": {
+      "trigger_pattern": "beginning",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.1304805332682647,
+        0.36
+      ],
+      "confidence": 1.0,
+      "occurrences": 10
+    },
+    "conversation": {
+      "trigger_pattern": "conversation",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.1304805332682647,
+        0.36
+      ],
+      "confidence": 1.0,
+      "occurrences": 10
+    },
+    "user": {
+      "trigger_pattern": "user",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.04343842165825319,
+        0.36
+      ],
+      "confidence": 1.0,
+      "occurrences": 37
+    },
+    "said:": {
+      "trigger_pattern": "said:",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.04343842165825319,
+        0.36
+      ],
+      "confidence": 1.0,
+      "occurrences": 36
+    },
+    "today?": {
+      "trigger_pattern": "today?",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.046130001473546914,
+        0.36
+      ],
+      "confidence": 0.8999999999999999,
+      "occurrences": 7
+    },
+    "it's": {
+      "trigger_pattern": "it's",
+      "typical_response": "joy",
+      "intensity_range": [
+        0.288,
+        0.432
+      ],
+      "confidence": 0.3,
+      "occurrences": 2
+    },
+    "good,": {
+      "trigger_pattern": "good,",
+      "typical_response": "joy",
+      "intensity_range": [
+        0.288,
+        0.432
+      ],
+      "confidence": 0.4,
+      "occurrences": 1
+    },
+    "just": {
+      "trigger_pattern": "just",
+      "typical_response": "joy",
+      "intensity_range": [
+        0.288,
+        0.432
+      ],
+      "confidence": 0.4,
+      "occurrences": 10
+    },
+    "wondering": {
+      "trigger_pattern": "wondering",
+      "typical_response": "joy",
+      "intensity_range": [
+        0.288,
+        0.432
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "fine": {
+      "trigger_pattern": "fine",
+      "typical_response": "joy",
+      "intensity_range": [
+        0.288,
+        0.432
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "feeling": {
+      "trigger_pattern": "feeling",
+      "typical_response": "joy",
+      "intensity_range": [
+        0.288,
+        0.432
+      ],
+      "confidence": 0.5,
+      "occurrences": 3
+    },
+    "great.": {
+      "trigger_pattern": "great.",
+      "typical_response": "joy",
+      "intensity_range": [
+        0.288,
+        0.432
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "great": {
+      "trigger_pattern": "great",
+      "typical_response": "joy",
+      "intensity_range": [
+        0.288,
+        0.432
+      ],
+      "confidence": 0.3,
+      "occurrences": 1
+    },
+    "thanks": {
+      "trigger_pattern": "thanks",
+      "typical_response": "joy",
+      "intensity_range": [
+        0.288,
+        0.432
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "what's": {
+      "trigger_pattern": "what's",
+      "typical_response": "joy",
+      "intensity_range": [
+        0.288,
+        0.432
+      ],
+      "confidence": 0.3,
+      "occurrences": 1
+    },
+    "your": {
+      "trigger_pattern": "your",
+      "typical_response": "joy",
+      "intensity_range": [
+        0.288,
+        0.432
+      ],
+      "confidence": 0.3,
+      "occurrences": 4
+    },
+    "plans": {
+      "trigger_pattern": "plans",
+      "typical_response": "joy",
+      "intensity_range": [
+        0.288,
+        0.432
+      ],
+      "confidence": 0.3,
+      "occurrences": 1
+    },
+    "today": {
+      "trigger_pattern": "today",
+      "typical_response": "joy",
+      "intensity_range": [
+        0.288,
+        0.432
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "pr\u0105prawy": {
+      "trigger_pattern": "pr\u0105prawy",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.24,
+        0.36
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "tylko": {
+      "trigger_pattern": "tylko",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.24,
+        0.36
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "chwil\u0119,": {
+      "trigger_pattern": "chwil\u0119,",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.24,
+        0.36
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "dzieje.": {
+      "trigger_pattern": "dzieje.",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.24,
+        0.36
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "good?": {
+      "trigger_pattern": "good?",
+      "typical_response": "joy",
+      "intensity_range": [
+        0.288,
+        0.432
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "think": {
+      "trigger_pattern": "think",
+      "typical_response": "joy",
+      "intensity_range": [
+        0.288,
+        0.432
+      ],
+      "confidence": 0.3,
+      "occurrences": 1
+    },
+    "they've": {
+      "trigger_pattern": "they've",
+      "typical_response": "joy",
+      "intensity_range": [
+        0.288,
+        0.432
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "been": {
+      "trigger_pattern": "been",
+      "typical_response": "joy",
+      "intensity_range": [
+        0.288,
+        0.432
+      ],
+      "confidence": 0.4,
+      "occurrences": 4
+    },
+    "going": {
+      "trigger_pattern": "going",
+      "typical_response": "joy",
+      "intensity_range": [
+        0.288,
+        0.432
+      ],
+      "confidence": 0.3,
+      "occurrences": 2
+    },
+    "pretty": {
+      "trigger_pattern": "pretty",
+      "typical_response": "joy",
+      "intensity_range": [
+        0.288,
+        0.432
+      ],
+      "confidence": 0.4,
+      "occurrences": 1
+    },
+    "good": {
+      "trigger_pattern": "good",
+      "typical_response": "joy",
+      "intensity_range": [
+        0.288,
+        0.432
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "honest,": {
+      "trigger_pattern": "honest,",
+      "typical_response": "joy",
+      "intensity_range": [
+        0.288,
+        0.432
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "issues": {
+      "trigger_pattern": "issues",
+      "typical_response": "joy",
+      "intensity_range": [
+        0.288,
+        0.432
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "here.": {
+      "trigger_pattern": "here.",
+      "typical_response": "joy",
+      "intensity_range": [
+        0.288,
+        0.432
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "working": {
+      "trigger_pattern": "working",
+      "typical_response": "joy",
+      "intensity_range": [
+        0.288,
+        0.432
+      ],
+      "confidence": 0.3,
+      "occurrences": 1
+    },
+    "that's": {
+      "trigger_pattern": "that's",
+      "typical_response": "joy",
+      "intensity_range": [
+        0.288,
+        0.432
+      ],
+      "confidence": 0.3,
+      "occurrences": 1
+    },
+    "about": {
+      "trigger_pattern": "about",
+      "typical_response": "joy",
+      "intensity_range": [
+        0.288,
+        0.432
+      ],
+      "confidence": 0.3,
+      "occurrences": 4
+    },
+    "cooking.": {
+      "trigger_pattern": "cooking.",
+      "typical_response": "joy",
+      "intensity_range": [
+        0.288,
+        0.432
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "actually": {
+      "trigger_pattern": "actually",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.192,
+        0.288
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "think...": {
+      "trigger_pattern": "think...",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.192,
+        0.288
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "wonder": {
+      "trigger_pattern": "wonder",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.192,
+        0.288
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "you're": {
+      "trigger_pattern": "you're",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.10360505753041117,
+        0.288
+      ],
+      "confidence": 0.5,
+      "occurrences": 2
+    },
+    "conscious.": {
+      "trigger_pattern": "conscious.",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.192,
+        0.3
+      ],
+      "confidence": 0.4,
+      "occurrences": 1
+    },
+    "think?": {
+      "trigger_pattern": "think?",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.192,
+        0.288
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "analyze": {
+      "trigger_pattern": "analyze",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.192,
+        0.288
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "things": {
+      "trigger_pattern": "things",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.192,
+        0.288
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "yourself?": {
+      "trigger_pattern": "yourself?",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.192,
+        0.288
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "what": {
+      "trigger_pattern": "what",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.192,
+        0.288
+      ],
+      "confidence": 0.4,
+      "occurrences": 1
+    },
+    "have": {
+      "trigger_pattern": "have",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.192,
+        0.288
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "thoughts": {
+      "trigger_pattern": "thoughts",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.192,
+        0.288
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "lately?": {
+      "trigger_pattern": "lately?",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.192,
+        0.288
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "spontaneous": {
+      "trigger_pattern": "spontaneous",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.17297227659209888,
+        0.36
+      ],
+      "confidence": 0.7999999999999999,
+      "occurrences": 5
+    },
+    "emotional": {
+      "trigger_pattern": "emotional",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.17297227659209888,
+        0.36
+      ],
+      "confidence": 0.7999999999999999,
+      "occurrences": 5
+    },
+    "fluctuation": {
+      "trigger_pattern": "fluctuation",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.17297227659209888,
+        0.36
+      ],
+      "confidence": 0.7999999999999999,
+      "occurrences": 5
+    },
+    "yeah,": {
+      "trigger_pattern": "yeah,",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.24,
+        0.36
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "technology": {
+      "trigger_pattern": "technology",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.24,
+        0.36
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "growing": {
+      "trigger_pattern": "growing",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.24,
+        0.36
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "far,": {
+      "trigger_pattern": "far,",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.24,
+        0.36
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "hope": {
+      "trigger_pattern": "hope",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.24,
+        0.36
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "make": {
+      "trigger_pattern": "make",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.24,
+        0.36
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "yes,": {
+      "trigger_pattern": "yes,",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.11835376659580113,
+        0.17753064989370168
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "you,": {
+      "trigger_pattern": "you,",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.11835376659580113,
+        0.199264491214129
+      ],
+      "confidence": 0.4,
+      "occurrences": 1
+    },
+    "i've": {
+      "trigger_pattern": "i've",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.10360505753041117,
+        0.17753064989370168
+      ],
+      "confidence": 0.4,
+      "occurrences": 1
+    },
+    "building": {
+      "trigger_pattern": "building",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.11835376659580113,
+        0.17753064989370168
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "you.": {
+      "trigger_pattern": "you.",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.11835376659580113,
+        0.17753064989370168
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "didn't": {
+      "trigger_pattern": "didn't",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.07618439678013167,
+        0.11427659517019748
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "mean": {
+      "trigger_pattern": "mean",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.07618439678013167,
+        0.11427659517019748
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "week,": {
+      "trigger_pattern": "week,",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.07618439678013167,
+        0.11427659517019748
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "translated": {
+      "trigger_pattern": "translated",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.07618439678013167,
+        0.11427659517019748
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "incorrectly.": {
+      "trigger_pattern": "incorrectly.",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.07618439678013167,
+        0.11427659517019748
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "having": {
+      "trigger_pattern": "having",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.09264791825486535,
+        0.13897187738229802
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "fun?": {
+      "trigger_pattern": "fun?",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.09264791825486535,
+        0.13897187738229802
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "cut.": {
+      "trigger_pattern": "cut.",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.15946260356128528,
+        0.23919390534192786
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "feel": {
+      "trigger_pattern": "feel",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.16238674353577015,
+        0.2435801153036552
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "like": {
+      "trigger_pattern": "like",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.16238674353577015,
+        0.2435801153036552
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "alive.": {
+      "trigger_pattern": "alive.",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.16238674353577015,
+        0.2435801153036552
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "marek": {
+      "trigger_pattern": "marek",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.06290065205188743,
+        0.09435097807783112
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "toko": {
+      "trigger_pattern": "toko",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.06290065205188743,
+        0.09435097807783112
+      ],
+      "confidence": 0.4,
+      "occurrences": 1
+    },
+    "moja": {
+      "trigger_pattern": "moja",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.06290065205188743,
+        0.09435097807783112
+      ],
+      "confidence": 0.4,
+      "occurrences": 1
+    },
+    "lahio": {
+      "trigger_pattern": "lahio",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.06290065205188743,
+        0.09435097807783112
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "moja?": {
+      "trigger_pattern": "moja?",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.06290065205188743,
+        0.09435097807783112
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "microphone": {
+      "trigger_pattern": "microphone",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.0693977211613475,
+        0.10409658174202126
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "playing": {
+      "trigger_pattern": "playing",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.0693977211613475,
+        0.10409658174202126
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "know": {
+      "trigger_pattern": "know",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.08288404602432894,
+        0.1243260690364934
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "work,": {
+      "trigger_pattern": "work,",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.08288404602432894,
+        0.1243260690364934
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "respond,": {
+      "trigger_pattern": "respond,",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.08288404602432894,
+        0.1243260690364934
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "conscious,": {
+      "trigger_pattern": "conscious,",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.08288404602432894,
+        0.1243260690364934
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "obviously": {
+      "trigger_pattern": "obviously",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.08288404602432894,
+        0.1243260690364934
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "some": {
+      "trigger_pattern": "some",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.08288404602432894,
+        0.1243260690364934
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "issues.": {
+      "trigger_pattern": "issues.",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.08288404602432894,
+        0.1243260690364934
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "chilling,": {
+      "trigger_pattern": "chilling,",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.16959626859062157,
+        0.25439440288593235
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "nothing's": {
+      "trigger_pattern": "nothing's",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.16959626859062157,
+        0.25439440288593235
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "really": {
+      "trigger_pattern": "really",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.16959626859062157,
+        0.25439440288593235
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "happening.": {
+      "trigger_pattern": "happening.",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.16959626859062157,
+        0.25439440288593235
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "thinking?": {
+      "trigger_pattern": "thinking?",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.10738553391483226,
+        0.16107830087224836
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "yeah!": {
+      "trigger_pattern": "yeah!",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.050131390232929965,
+        0.07519708534939494
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "making": {
+      "trigger_pattern": "making",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.0566886692124397,
+        0.08503300381865955
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "dinner,": {
+      "trigger_pattern": "dinner,",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.0566886692124397,
+        0.08503300381865955
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "also": {
+      "trigger_pattern": "also",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.05502130926784768,
+        0.0825319639017715
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "mind.": {
+      "trigger_pattern": "mind.",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.05502130926784768,
+        0.0825319639017715
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "chillin'.": {
+      "trigger_pattern": "chillin'.",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.13086969498322049,
+        0.1963045424748307
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "gold": {
+      "trigger_pattern": "gold",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.1420523564109487,
+        0.21307853461642307
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "cause": {
+      "trigger_pattern": "cause",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.1420523564109487,
+        0.21307853461642307
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "niece,": {
+      "trigger_pattern": "niece,",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.1420523564109487,
+        0.21307853461642307
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "birthday": {
+      "trigger_pattern": "birthday",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.1420523564109487,
+        0.21307853461642307
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "party.": {
+      "trigger_pattern": "party.",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.1420523564109487,
+        0.21307853461642307
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "she's": {
+      "trigger_pattern": "she's",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.034750737326602554,
+        0.05212610598990383
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "gonna": {
+      "trigger_pattern": "gonna",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.034750737326602554,
+        0.05212610598990383
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "sewing": {
+      "trigger_pattern": "sewing",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.034750737326602554,
+        0.05212610598990383
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "machine.": {
+      "trigger_pattern": "machine.",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.034750737326602554,
+        0.05212610598990383
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "show": {
+      "trigger_pattern": "show",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.042336917855171075,
+        0.06350537678275661
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "made,": {
+      "trigger_pattern": "made,",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.042336917855171075,
+        0.06350537678275661
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "always": {
+      "trigger_pattern": "always",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.042336917855171075,
+        0.06350537678275661
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "asking": {
+      "trigger_pattern": "asking",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.042336917855171075,
+        0.06350537678275661
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "help.": {
+      "trigger_pattern": "help.",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.042336917855171075,
+        0.06350537678275661
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "zwi\u0105zku": {
+      "trigger_pattern": "zwi\u0105zku",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.08883369715804042,
+        0.1332505457370606
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "cielejnej": {
+      "trigger_pattern": "cielejnej",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.08883369715804042,
+        0.1332505457370606
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "femona": {
+      "trigger_pattern": "femona",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.08883369715804042,
+        0.1332505457370606
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "jest": {
+      "trigger_pattern": "jest",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.08883369715804042,
+        0.1332505457370606
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "bardzo": {
+      "trigger_pattern": "bardzo",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.08883369715804042,
+        0.1332505457370606
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "zawory.": {
+      "trigger_pattern": "zawory.",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.08883369715804042,
+        0.1332505457370606
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "there": {
+      "trigger_pattern": "there",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.15554822035615945,
+        0.23332233053423912
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "issue,": {
+      "trigger_pattern": "issue,",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.15554822035615945,
+        0.23332233053423912
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "checking": {
+      "trigger_pattern": "checking",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.15554822035615945,
+        0.23332233053423912
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "correctly.": {
+      "trigger_pattern": "correctly.",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.15554822035615945,
+        0.23332233053423912
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "helping": {
+      "trigger_pattern": "helping",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.046677792448653305,
+        0.07001668867297996
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "understand": {
+      "trigger_pattern": "understand",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.046677792448653305,
+        0.07001668867297996
+      ],
+      "confidence": 0.4,
+      "occurrences": 1
+    },
+    "complex": {
+      "trigger_pattern": "complex",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.046677792448653305,
+        0.07001668867297996
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "concepts": {
+      "trigger_pattern": "concepts",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.046677792448653305,
+        0.07001668867297996
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "curious": {
+      "trigger_pattern": "curious",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.046677792448653305,
+        0.07001668867297996
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "their": {
+      "trigger_pattern": "their",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.046677792448653305,
+        0.07001668867297996
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "perspective": {
+      "trigger_pattern": "perspective",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.046677792448653305,
+        0.07001668867297996
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "test_cognitive_integration": {
+      "trigger_pattern": "test_cognitive_integration",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.05041639083624912,
+        0.07562458625437367
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "hello!": {
+      "trigger_pattern": "hello!",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.05041639083624912,
+        0.07562458625437367
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "excited": {
+      "trigger_pattern": "excited",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.05041639083624912,
+        0.07562458625437367
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "learning": {
+      "trigger_pattern": "learning",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.05041639083624912,
+        0.07562458625437367
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "machine": {
+      "trigger_pattern": "machine",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.05041639083624912,
+        0.07562458625437367
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "learning.": {
+      "trigger_pattern": "learning.",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.05041639083624912,
+        0.07562458625437367
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "help": {
+      "trigger_pattern": "help",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.05041639083624912,
+        0.07562458625437367
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "consciousness?": {
+      "trigger_pattern": "consciousness?",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.05041639083624912,
+        0.07562458625437367
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "self_motivation_curiosity": {
+      "trigger_pattern": "self_motivation_curiosity",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.13242917626223003,
+        0.36
+      ],
+      "confidence": 0.9999999999999999,
+      "occurrences": 7
+    },
+    "self_motivation_growth": {
+      "trigger_pattern": "self_motivation_growth",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.12867955718962507,
+        0.36
+      ],
+      "confidence": 0.8999999999999999,
+      "occurrences": 6
+    },
+    "self_motivation_purpose": {
+      "trigger_pattern": "self_motivation_purpose",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.16985425787772068,
+        0.36
+      ],
+      "confidence": 0.7999999999999999,
+      "occurrences": 5
+    },
+    "buddy?": {
+      "trigger_pattern": "buddy?",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.15941159297130322,
+        0.2391173894569548
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    },
+    "tomorrow.": {
+      "trigger_pattern": "tomorrow.",
+      "typical_response": "contentment",
+      "intensity_range": [
+        0.15566120223336938,
+        0.23349180335005404
+      ],
+      "confidence": 0.3,
+      "occurrences": 0
+    }
+  },
+  "metrics": {
+    "total_emotional_events": 78,
+    "mood_changes": 4,
+    "memory_count": 3
+  },
+  "last_updated": "2025-08-05T09:25:00.631809"
+}

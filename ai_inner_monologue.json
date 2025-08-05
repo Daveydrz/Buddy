@@ -1,0 +1,26 @@
+{
+  "recent_thoughts": [],
+  "mental_state": {
+    "mental_activity_level": 0.6,
+    "focus_level": 0.7,
+    "creativity_level": 0.5,
+    "contemplation_depth": 0.4
+  },
+  "metrics": {
+    "total_thoughts": 7,
+    "insights_generated": 0,
+    "thoughts_by_type": {
+      "reflection": 1,
+      "observation": 1,
+      "planning": 1,
+      "memory": 0,
+      "creative": 0,
+      "analytical": 3,
+      "emotional": 0,
+      "philosophical": 0,
+      "curiosity": 1,
+      "spontaneous": 0
+    }
+  },
+  "last_updated": "2025-07-19T12:01:48.944456"
+}

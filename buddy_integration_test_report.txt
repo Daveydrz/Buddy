@@ -1,0 +1,556 @@
+
+🧪 BUDDY INTEGRATION TEST REPORT
+=====================================
+
+📊 CONVERSATION TESTING:
+• Total conversations: 50
+• Successful: 50 
+• Failed: 0
+• Success rate: 100.0%
+• Average response time: 0.013s
+
+🔧 MODULE TESTING:
+• Modules tested: 18
+• Successful: 18
+• Module success rate: 100.0%
+
+⚠️ ISSUES:
+• Errors: 0
+• Warnings: 0
+
+🎯 PERFORMANCE:
+• Max processing time: 0.015s
+• LLM response time: 0.012s
+
+📝 DETAILED RESULTS:
+{
+  "test_start": "2025-07-31T13:08:22.734921",
+  "conversations": [
+    {
+      "conversation_id": 0,
+      "user_id": "test_user_conv_0",
+      "input": "Tell me about your consciousness (Turn 1)",
+      "response": "Thank you for sharing that, test_user_conv_0. About 'Tell me about your consciousness (T'... ",
+      "chunk_count": 13,
+      "response_time": 0.01383662223815918,
+      "context_size": 1,
+      "status": "SUCCESS"
+    },
+    {
+      "conversation_id": 1,
+      "user_id": "test_user_conv_1",
+      "input": "What are your goals and motivations? (Turn 2)",
+      "response": "I appreciate your input, test_user_conv_1. Here's my response to 'What are your goals and motiva'......",
+      "chunk_count": 15,
+      "response_time": 0.015957117080688477,
+      "context_size": 1,
+      "status": "SUCCESS"
+    },
+    {
+      "conversation_id": 2,
+      "user_id": "test_user_conv_2",
+      "input": "How do you process emotions? (Turn 3)",
+      "response": "Good point, test_user_conv_2. Regarding 'How do you process emotions? (Turn 3)'... ",
+      "chunk_count": 11,
+      "response_time": 0.01169276237487793,
+      "context_size": 1,
+      "status": "SUCCESS"
+    },
+    {
+      "conversation_id": 3,
+      "user_id": "test_user_conv_3",
+      "input": "Can you remember our previous conversations? (Turn 4)",
+      "response": "That's interesting, test_user_conv_3. Let me think about that... ",
+      "chunk_count": 8,
+      "response_time": 0.008524656295776367,
+      "context_size": 1,
+      "status": "SUCCESS"
+    },
+    {
+      "conversation_id": 4,
+      "user_id": "test_user_conv_4",
+      "input": "What's your personality like? (Turn 5)",
+      "response": "That's interesting, test_user_conv_4. Let me think about that... ",
+      "chunk_count": 8,
+      "response_time": 0.008513927459716797,
+      "context_size": 1,
+      "status": "SUCCESS"
+    },
+    {
+      "conversation_id": 5,
+      "user_id": "test_user_conv_5",
+      "input": "How do you handle complex reasoning? (Turn 6)",
+      "response": "Thank you for sharing that, test_user_conv_5. About 'How do you handle complex reasoning'... ",
+      "chunk_count": 13,
+      "response_time": 0.013840198516845703,
+      "context_size": 1,
+      "status": "SUCCESS"
+    },
+    {
+      "conversation_id": 6,
+      "user_id": "test_user_conv_6",
+      "input": "Tell me about your inner thoughts (Turn 7)",
+      "response": "Good point, test_user_conv_6. Regarding 'Tell me about your inner thoughts (Turn '... ",
+      "chunk_count": 12,
+      "response_time": 0.01276850700378418,
+      "context_size": 1,
+      "status": "SUCCESS"
+    },
+    {
+      "conversation_id": 7,
+      "user_id": "test_user_conv_7",
+      "input": "What makes you feel curious? (Turn 8)",
+      "response": "Thank you for sharing that, test_user_conv_7. About 'What makes you feel curious? (Turn '... ",
+      "chunk_count": 14,
+      "response_time": 0.014903068542480469,
+      "context_size": 1,
+      "status": "SUCCESS"
+    },
+    {
+      "conversation_id": 8,
+      "user_id": "test_user_conv_8",
+      "input": "How do you adapt to different users? (Turn 9)",
+      "response": "I appreciate your input, test_user_conv_8. Here's my response to 'How do you adapt to different '......",
+      "chunk_count": 16,
+      "response_time": 0.017018795013427734,
+      "context_size": 1,
+      "status": "SUCCESS"
+    },
+    {
+      "conversation_id": 9,
+      "user_id": "test_user_conv_9",
+      "input": "Explain your decision-making process (Turn 10)",
+      "response": "I appreciate your input, test_user_conv_9. Here's my response to 'Explain your decision-making p'......",
+      "chunk_count": 13,
+      "response_time": 0.01383352279663086,
+      "context_size": 1,
+      "status": "SUCCESS"
+    },
+    {
+      "conversation_id": 10,
+      "user_id": "test_user_conv_10",
+      "input": "Tell me about your consciousness (Turn 11)",
+      "response": "I appreciate your input, test_user_conv_10. Here's my response to 'Tell me about your consciousne'.....",
+      "chunk_count": 14,
+      "response_time": 0.014908075332641602,
+      "context_size": 1,
+      "status": "SUCCESS"
+    },
+    {
+      "conversation_id": 11,
+      "user_id": "test_user_conv_11",
+      "input": "What are your goals and motivations? (Turn 12)",
+      "response": "Good point, test_user_conv_11. Regarding 'What are your goals and motivations? (Tu'... ",
+      "chunk_count": 11,
+      "response_time": 0.011709213256835938,
+      "context_size": 1,
+      "status": "SUCCESS"
+    },
+    {
+      "conversation_id": 12,
+      "user_id": "test_user_conv_12",
+      "input": "How do you process emotions? (Turn 13)",
+      "response": "I appreciate your input, test_user_conv_12. Here's my response to 'How do you process emotions? ('.....",
+      "chunk_count": 15,
+      "response_time": 0.015961647033691406,
+      "context_size": 1,
+      "status": "SUCCESS"
+    },
+    {
+      "conversation_id": 13,
+      "user_id": "test_user_conv_13",
+      "input": "Can you remember our previous conversations? (Turn 14)",
+      "response": "That's interesting, test_user_conv_13. Let me think about that... ",
+      "chunk_count": 8,
+      "response_time": 0.008521318435668945,
+      "context_size": 1,
+      "status": "SUCCESS"
+    },
+    {
+      "conversation_id": 14,
+      "user_id": "test_user_conv_14",
+      "input": "What's your personality like? (Turn 15)",
+      "response": "Thank you for sharing that, test_user_conv_14. About 'What's your personality like? (Turn'... ",
+      "chunk_count": 12,
+      "response_time": 0.01278066635131836,
+      "context_size": 1,
+      "status": "SUCCESS"
+    },
+    {
+      "conversation_id": 15,
+      "user_id": "test_user_conv_15",
+      "input": "How do you handle complex reasoning? (Turn 16)",
+      "response": "That's interesting, test_user_conv_15. Let me think about that... ",
+      "chunk_count": 8,
+      "response_time": 0.008523702621459961,
+      "context_size": 1,
+      "status": "SUCCESS"
+    },
+    {
+      "conversation_id": 16,
+      "user_id": "test_user_conv_16",
+      "input": "Tell me about your inner thoughts (Turn 17)",
+      "response": "That's interesting, test_user_conv_16. Let me think about that... ",
+      "chunk_count": 8,
+      "response_time": 0.00852656364440918,
+      "context_size": 1,
+      "status": "SUCCESS"
+    },
+    {
+      "conversation_id": 17,
+      "user_id": "test_user_conv_17",
+      "input": "What makes you feel curious? (Turn 18)",
+      "response": "Good point, test_user_conv_17. Regarding 'What makes you feel curious? (Turn 18)'... ",
+      "chunk_count": 11,
+      "response_time": 0.011729955673217773,
+      "context_size": 1,
+      "status": "SUCCESS"
+    },
+    {
+      "conversation_id": 18,
+      "user_id": "test_user_conv_18",
+      "input": "How do you adapt to different users? (Turn 19)",
+      "response": "Thank you for sharing that, test_user_conv_18. About 'How do you adapt to different users'... ",
+      "chunk_count": 14,
+      "response_time": 0.014914989471435547,
+      "context_size": 1,
+      "status": "SUCCESS"
+    },
+    {
+      "conversation_id": 19,
+      "user_id": "test_user_conv_19",
+      "input": "Explain your decision-making process (Turn 20)",
+      "response": "Thank you for sharing that, test_user_conv_19. About 'Explain your decision-making proces'... ",
+      "chunk_count": 11,
+      "response_time": 0.01170659065246582,
+      "context_size": 1,
+      "status": "SUCCESS"
+    },
+    {
+      "conversation_id": 20,
+      "user_id": "test_user_conv_20",
+      "input": "Tell me about your consciousness (Turn 21)",
+      "response": "That's interesting, test_user_conv_20. Let me think about that... ",
+      "chunk_count": 8,
+      "response_time": 0.008523225784301758,
+      "context_size": 1,
+      "status": "SUCCESS"
+    },
+    {
+      "conversation_id": 21,
+      "user_id": "test_user_conv_21",
+      "input": "What are your goals and motivations? (Turn 22)",
+      "response": "That's interesting, test_user_conv_21. Let me think about that... ",
+      "chunk_count": 8,
+      "response_time": 0.00851893424987793,
+      "context_size": 1,
+      "status": "SUCCESS"
+    },
+    {
+      "conversation_id": 22,
+      "user_id": "test_user_conv_22",
+      "input": "How do you process emotions? (Turn 23)",
+      "response": "I appreciate your input, test_user_conv_22. Here's my response to 'How do you process emotions? ('.....",
+      "chunk_count": 15,
+      "response_time": 0.01596212387084961,
+      "context_size": 1,
+      "status": "SUCCESS"
+    },
+    {
+      "conversation_id": 23,
+      "user_id": "test_user_conv_23",
+      "input": "Can you remember our previous conversations? (Turn 24)",
+      "response": "Good point, test_user_conv_23. Regarding 'Can you remember our previous conversati'... ",
+      "chunk_count": 10,
+      "response_time": 0.010641813278198242,
+      "context_size": 1,
+      "status": "SUCCESS"
+    },
+    {
+      "conversation_id": 24,
+      "user_id": "test_user_conv_24",
+      "input": "What's your personality like? (Turn 25)",
+      "response": "I appreciate your input, test_user_conv_24. Here's my response to 'What's your personality like? '.....",
+      "chunk_count": 14,
+      "response_time": 0.014901161193847656,
+      "context_size": 1,
+      "status": "SUCCESS"
+    },
+    {
+      "conversation_id": 25,
+      "user_id": "test_user_conv_25",
+      "input": "How do you handle complex reasoning? (Turn 26)",
+      "response": "That's interesting, test_user_conv_25. Let me think about that... ",
+      "chunk_count": 8,
+      "response_time": 0.008519649505615234,
+      "context_size": 1,
+      "status": "SUCCESS"
+    },
+    {
+      "conversation_id": 26,
+      "user_id": "test_user_conv_26",
+      "input": "Tell me about your inner thoughts (Turn 27)",
+      "response": "That's interesting, test_user_conv_26. Let me think about that... ",
+      "chunk_count": 8,
+      "response_time": 0.008516550064086914,
+      "context_size": 1,
+      "status": "SUCCESS"
+    },
+    {
+      "conversation_id": 27,
+      "user_id": "test_user_conv_27",
+      "input": "What makes you feel curious? (Turn 28)",
+      "response": "Thank you for sharing that, test_user_conv_27. About 'What makes you feel curious? (Turn '... ",
+      "chunk_count": 14,
+      "response_time": 0.014905452728271484,
+      "context_size": 1,
+      "status": "SUCCESS"
+    },
+    {
+      "conversation_id": 28,
+      "user_id": "test_user_conv_28",
+      "input": "How do you adapt to different users? (Turn 29)",
+      "response": "I appreciate your input, test_user_conv_28. Here's my response to 'How do you adapt to different '.....",
+      "chunk_count": 16,
+      "response_time": 0.017023086547851562,
+      "context_size": 1,
+      "status": "SUCCESS"
+    },
+    {
+      "conversation_id": 29,
+      "user_id": "test_user_conv_29",
+      "input": "Explain your decision-making process (Turn 30)",
+      "response": "I appreciate your input, test_user_conv_29. Here's my response to 'Explain your decision-making p'.....",
+      "chunk_count": 13,
+      "response_time": 0.013833999633789062,
+      "context_size": 1,
+      "status": "SUCCESS"
+    },
+    {
+      "conversation_id": 30,
+      "user_id": "test_user_conv_30",
+      "input": "Tell me about your consciousness (Turn 31)",
+      "response": "I appreciate your input, test_user_conv_30. Here's my response to 'Tell me about your consciousne'.....",
+      "chunk_count": 14,
+      "response_time": 0.014897823333740234,
+      "context_size": 1,
+      "status": "SUCCESS"
+    },
+    {
+      "conversation_id": 31,
+      "user_id": "test_user_conv_31",
+      "input": "What are your goals and motivations? (Turn 32)",
+      "response": "I appreciate your input, test_user_conv_31. Here's my response to 'What are your goals and motiva'.....",
+      "chunk_count": 15,
+      "response_time": 0.015971899032592773,
+      "context_size": 1,
+      "status": "SUCCESS"
+    },
+    {
+      "conversation_id": 32,
+      "user_id": "test_user_conv_32",
+      "input": "How do you process emotions? (Turn 33)",
+      "response": "I appreciate your input, test_user_conv_32. Here's my response to 'How do you process emotions? ('.....",
+      "chunk_count": 15,
+      "response_time": 0.015961408615112305,
+      "context_size": 1,
+      "status": "SUCCESS"
+    },
+    {
+      "conversation_id": 33,
+      "user_id": "test_user_conv_33",
+      "input": "Can you remember our previous conversations? (Turn 34)",
+      "response": "I appreciate your input, test_user_conv_33. Here's my response to 'Can you remember our previous '.....",
+      "chunk_count": 15,
+      "response_time": 0.01596999168395996,
+      "context_size": 1,
+      "status": "SUCCESS"
+    },
+    {
+      "conversation_id": 34,
+      "user_id": "test_user_conv_34",
+      "input": "What's your personality like? (Turn 35)",
+      "response": "I appreciate your input, test_user_conv_34. Here's my response to 'What's your personality like? '.....",
+      "chunk_count": 14,
+      "response_time": 0.014899015426635742,
+      "context_size": 1,
+      "status": "SUCCESS"
+    },
+    {
+      "conversation_id": 35,
+      "user_id": "test_user_conv_35",
+      "input": "How do you handle complex reasoning? (Turn 36)",
+      "response": "Thank you for sharing that, test_user_conv_35. About 'How do you handle complex reasoning'... ",
+      "chunk_count": 13,
+      "response_time": 0.013840436935424805,
+      "context_size": 1,
+      "status": "SUCCESS"
+    },
+    {
+      "conversation_id": 36,
+      "user_id": "test_user_conv_36",
+      "input": "Tell me about your inner thoughts (Turn 37)",
+      "response": "I appreciate your input, test_user_conv_36. Here's my response to 'Tell me about your inner thoug'.....",
+      "chunk_count": 15,
+      "response_time": 0.015961647033691406,
+      "context_size": 1,
+      "status": "SUCCESS"
+    },
+    {
+      "conversation_id": 37,
+      "user_id": "test_user_conv_37",
+      "input": "What makes you feel curious? (Turn 38)",
+      "response": "Thank you for sharing that, test_user_conv_37. About 'What makes you feel curious? (Turn '... ",
+      "chunk_count": 14,
+      "response_time": 0.014898538589477539,
+      "context_size": 1,
+      "status": "SUCCESS"
+    },
+    {
+      "conversation_id": 38,
+      "user_id": "test_user_conv_38",
+      "input": "How do you adapt to different users? (Turn 39)",
+      "response": "That's interesting, test_user_conv_38. Let me think about that... ",
+      "chunk_count": 8,
+      "response_time": 0.00852346420288086,
+      "context_size": 1,
+      "status": "SUCCESS"
+    },
+    {
+      "conversation_id": 39,
+      "user_id": "test_user_conv_39",
+      "input": "Explain your decision-making process (Turn 40)",
+      "response": "That's interesting, test_user_conv_39. Let me think about that... ",
+      "chunk_count": 8,
+      "response_time": 0.008522987365722656,
+      "context_size": 1,
+      "status": "SUCCESS"
+    },
+    {
+      "conversation_id": 40,
+      "user_id": "test_user_conv_40",
+      "input": "Tell me about your consciousness (Turn 41)",
+      "response": "Good point, test_user_conv_40. Regarding 'Tell me about your consciousness (Turn 4'... ",
+      "chunk_count": 11,
+      "response_time": 0.011736392974853516,
+      "context_size": 1,
+      "status": "SUCCESS"
+    },
+    {
+      "conversation_id": 41,
+      "user_id": "test_user_conv_41",
+      "input": "What are your goals and motivations? (Turn 42)",
+      "response": "I appreciate your input, test_user_conv_41. Here's my response to 'What are your goals and motiva'.....",
+      "chunk_count": 15,
+      "response_time": 0.015975236892700195,
+      "context_size": 1,
+      "status": "SUCCESS"
+    },
+    {
+      "conversation_id": 42,
+      "user_id": "test_user_conv_42",
+      "input": "How do you process emotions? (Turn 43)",
+      "response": "Good point, test_user_conv_42. Regarding 'How do you process emotions? (Turn 43)'... ",
+      "chunk_count": 11,
+      "response_time": 0.011706829071044922,
+      "context_size": 1,
+      "status": "SUCCESS"
+    },
+    {
+      "conversation_id": 43,
+      "user_id": "test_user_conv_43",
+      "input": "Can you remember our previous conversations? (Turn 44)",
+      "response": "I appreciate your input, test_user_conv_43. Here's my response to 'Can you remember our previous '.....",
+      "chunk_count": 15,
+      "response_time": 0.015969276428222656,
+      "context_size": 1,
+      "status": "SUCCESS"
+    },
+    {
+      "conversation_id": 44,
+      "user_id": "test_user_conv_44",
+      "input": "What's your personality like? (Turn 45)",
+      "response": "Thank you for sharing that, test_user_conv_44. About 'What's your personality like? (Turn'... ",
+      "chunk_count": 12,
+      "response_time": 0.01277613639831543,
+      "context_size": 1,
+      "status": "SUCCESS"
+    },
+    {
+      "conversation_id": 45,
+      "user_id": "test_user_conv_45",
+      "input": "How do you handle complex reasoning? (Turn 46)",
+      "response": "I appreciate your input, test_user_conv_45. Here's my response to 'How do you handle complex reas'.....",
+      "chunk_count": 15,
+      "response_time": 0.015969038009643555,
+      "context_size": 1,
+      "status": "SUCCESS"
+    },
+    {
+      "conversation_id": 46,
+      "user_id": "test_user_conv_46",
+      "input": "Tell me about your inner thoughts (Turn 47)",
+      "response": "Thank you for sharing that, test_user_conv_46. About 'Tell me about your inner thoughts ('... ",
+      "chunk_count": 14,
+      "response_time": 0.014900684356689453,
+      "context_size": 1,
+      "status": "SUCCESS"
+    },
+    {
+      "conversation_id": 47,
+      "user_id": "test_user_conv_47",
+      "input": "What makes you feel curious? (Turn 48)",
+      "response": "Thank you for sharing that, test_user_conv_47. About 'What makes you feel curious? (Turn '... ",
+      "chunk_count": 14,
+      "response_time": 0.014878988265991211,
+      "context_size": 1,
+      "status": "SUCCESS"
+    },
+    {
+      "conversation_id": 48,
+      "user_id": "test_user_conv_48",
+      "input": "How do you adapt to different users? (Turn 49)",
+      "response": "That's interesting, test_user_conv_48. Let me think about that... ",
+      "chunk_count": 8,
+      "response_time": 0.008512258529663086,
+      "context_size": 1,
+      "status": "SUCCESS"
+    },
+    {
+      "conversation_id": 49,
+      "user_id": "test_user_conv_49",
+      "input": "Explain your decision-making process (Turn 50)",
+      "response": "I appreciate your input, test_user_conv_49. Here's my response to 'Explain your decision-making p'.....",
+      "chunk_count": 13,
+      "response_time": 0.013817071914672852,
+      "context_size": 1,
+      "status": "SUCCESS"
+    }
+  ],
+  "module_tests": {
+    "ai.llm_handler": "SUCCESS",
+    "ai.autonomous_consciousness_integrator": "SUCCESS",
+    "ai.memory": "SUCCESS",
+    "ai.global_workspace": "SUCCESS",
+    "ai.self_model": "SUCCESS",
+    "ai.emotion": "SUCCESS",
+    "ai.motivation": "SUCCESS",
+    "ai.inner_monologue": "SUCCESS",
+    "ai.subjective_experience": "SUCCESS",
+    "ai.temporal_awareness": "SUCCESS",
+    "ai.belief_evolution_tracker": "SUCCESS",
+    "ai.personality_state": "SUCCESS",
+    "ai.mood_manager": "SUCCESS",
+    "consciousness_mode_switching": "SUCCESS",
+    "llm_consciousness_integration": "SUCCESS",
+    "memory_isolation": "SUCCESS",
+    "autonomous_modes": "SUCCESS",
+    "infinite_loop_prevention": "SUCCESS"
+  },
+  "performance_metrics": {
+    "llm_response_time": 0.011664628982543945,
+    "max_processing_time": 0.015185117721557617
+  },
+  "errors": [],
+  "warnings": []
+}

@@ -1,0 +1,202 @@
+[
+  {
+    "input_tokens": 886,
+    "output_tokens": 16,
+    "total_tokens": 902,
+    "timestamp": "2025-08-02T23:43:25.387342",
+    "model": "gpt-3.5-turbo",
+    "cost_estimate": 0.001361,
+    "request_type": "consciousness_integrated_chat",
+    "user": "optimized_llm_system"
+  },
+  {
+    "input_tokens": 886,
+    "output_tokens": 16,
+    "total_tokens": 902,
+    "timestamp": "2025-08-02T23:43:25.539980",
+    "model": "gpt-3.5-turbo",
+    "cost_estimate": 0.001361,
+    "request_type": "consciousness_integrated_chat",
+    "user": "optimized_llm_system"
+  },
+  {
+    "input_tokens": 886,
+    "output_tokens": 16,
+    "total_tokens": 902,
+    "timestamp": "2025-08-02T23:43:25.716751",
+    "model": "gpt-3.5-turbo",
+    "cost_estimate": 0.001361,
+    "request_type": "consciousness_integrated_chat",
+    "user": "optimized_llm_system"
+  },
+  {
+    "input_tokens": 886,
+    "output_tokens": 16,
+    "total_tokens": 902,
+    "timestamp": "2025-08-02T23:43:25.888674",
+    "model": "gpt-3.5-turbo",
+    "cost_estimate": 0.001361,
+    "request_type": "consciousness_integrated_chat",
+    "user": "optimized_llm_system"
+  },
+  {
+    "input_tokens": 886,
+    "output_tokens": 16,
+    "total_tokens": 902,
+    "timestamp": "2025-08-02T23:43:26.074251",
+    "model": "gpt-3.5-turbo",
+    "cost_estimate": 0.001361,
+    "request_type": "consciousness_integrated_chat",
+    "user": "optimized_llm_system"
+  },
+  {
+    "input_tokens": 886,
+    "output_tokens": 16,
+    "total_tokens": 902,
+    "timestamp": "2025-08-02T23:43:26.281551",
+    "model": "gpt-3.5-turbo",
+    "cost_estimate": 0.001361,
+    "request_type": "consciousness_integrated_chat",
+    "user": "optimized_llm_system"
+  },
+  {
+    "input_tokens": 886,
+    "output_tokens": 16,
+    "total_tokens": 902,
+    "timestamp": "2025-08-02T23:43:26.525770",
+    "model": "gpt-3.5-turbo",
+    "cost_estimate": 0.001361,
+    "request_type": "consciousness_integrated_chat",
+    "user": "optimized_llm_system"
+  },
+  {
+    "input_tokens": 886,
+    "output_tokens": 16,
+    "total_tokens": 902,
+    "timestamp": "2025-08-02T23:43:26.758807",
+    "model": "gpt-3.5-turbo",
+    "cost_estimate": 0.001361,
+    "request_type": "consciousness_integrated_chat",
+    "user": "optimized_llm_system"
+  },
+  {
+    "input_tokens": 886,
+    "output_tokens": 16,
+    "total_tokens": 902,
+    "timestamp": "2025-08-02T23:43:27.007924",
+    "model": "gpt-3.5-turbo",
+    "cost_estimate": 0.001361,
+    "request_type": "consciousness_integrated_chat",
+    "user": "optimized_llm_system"
+  },
+  {
+    "input_tokens": 886,
+    "output_tokens": 16,
+    "total_tokens": 902,
+    "timestamp": "2025-08-02T23:43:27.270276",
+    "model": "gpt-3.5-turbo",
+    "cost_estimate": 0.001361,
+    "request_type": "consciousness_integrated_chat",
+    "user": "optimized_llm_system"
+  },
+  {
+    "input_tokens": 970,
+    "output_tokens": 16,
+    "total_tokens": 986,
+    "timestamp": "2025-08-02T23:43:27.575710",
+    "model": "gpt-3.5-turbo",
+    "cost_estimate": 0.0014869999999999998,
+    "request_type": "consciousness_integrated_chat",
+    "user": "optimized_llm_system"
+  },
+  {
+    "input_tokens": 959,
+    "output_tokens": 16,
+    "total_tokens": 975,
+    "timestamp": "2025-08-02T23:43:27.914943",
+    "model": "gpt-3.5-turbo",
+    "cost_estimate": 0.0014704999999999998,
+    "request_type": "consciousness_integrated_chat",
+    "user": "optimized_llm_system"
+  },
+  {
+    "input_tokens": 942,
+    "output_tokens": 16,
+    "total_tokens": 958,
+    "timestamp": "2025-08-02T23:43:28.255754",
+    "model": "gpt-3.5-turbo",
+    "cost_estimate": 0.0014449999999999999,
+    "request_type": "consciousness_integrated_chat",
+    "user": "optimized_llm_system"
+  },
+  {
+    "input_tokens": 1036,
+    "output_tokens": 16,
+    "total_tokens": 1052,
+    "timestamp": "2025-08-02T23:43:28.661357",
+    "model": "gpt-3.5-turbo",
+    "cost_estimate": 0.001586,
+    "request_type": "consciousness_integrated_chat",
+    "user": "optimized_llm_system"
+  },
+  {
+    "input_tokens": 1030,
+    "output_tokens": 16,
+    "total_tokens": 1046,
+    "timestamp": "2025-08-02T23:43:29.110773",
+    "model": "gpt-3.5-turbo",
+    "cost_estimate": 0.001577,
+    "request_type": "consciousness_integrated_chat",
+    "user": "optimized_llm_system"
+  },
+  {
+    "input_tokens": 1036,
+    "output_tokens": 16,
+    "total_tokens": 1052,
+    "timestamp": "2025-08-02T23:43:29.537983",
+    "model": "gpt-3.5-turbo",
+    "cost_estimate": 0.001586,
+    "request_type": "consciousness_integrated_chat",
+    "user": "optimized_llm_system"
+  },
+  {
+    "input_tokens": 1036,
+    "output_tokens": 16,
+    "total_tokens": 1052,
+    "timestamp": "2025-08-02T23:43:29.994787",
+    "model": "gpt-3.5-turbo",
+    "cost_estimate": 0.001586,
+    "request_type": "consciousness_integrated_chat",
+    "user": "optimized_llm_system"
+  },
+  {
+    "input_tokens": 1036,
+    "output_tokens": 16,
+    "total_tokens": 1052,
+    "timestamp": "2025-08-02T23:43:30.489454",
+    "model": "gpt-3.5-turbo",
+    "cost_estimate": 0.001586,
+    "request_type": "consciousness_integrated_chat",
+    "user": "optimized_llm_system"
+  },
+  {
+    "input_tokens": 1036,
+    "output_tokens": 16,
+    "total_tokens": 1052,
+    "timestamp": "2025-08-02T23:43:31.032128",
+    "model": "gpt-3.5-turbo",
+    "cost_estimate": 0.001586,
+    "request_type": "consciousness_integrated_chat",
+    "user": "optimized_llm_system"
+  },
+  {
+    "input_tokens": 1036,
+    "output_tokens": 16,
+    "total_tokens": 1052,
+    "timestamp": "2025-08-02T23:43:31.591338",
+    "model": "gpt-3.5-turbo",
+    "cost_estimate": 0.001586,
+    "request_type": "consciousness_integrated_chat",
+    "user": "optimized_llm_system"
+  }
+]

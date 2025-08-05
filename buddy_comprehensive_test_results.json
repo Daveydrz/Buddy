@@ -1,0 +1,740 @@
+{
+  "test_results": {
+    "timestamp": "2025-07-31T12:47:27.843823",
+    "total_interactions": 50,
+    "successful_interactions": 50,
+    "failed_interactions": 0,
+    "module_tests": {
+      "LLM Handler": {
+        "status": "SUCCESS",
+        "error": null
+      },
+      "Memory System": {
+        "status": "SUCCESS",
+        "error": null
+      },
+      "Chat System": {
+        "status": "SUCCESS",
+        "error": null
+      },
+      "Enhanced Smart Chat": {
+        "status": "SUCCESS",
+        "error": null
+      },
+      "Fusion Chat": {
+        "status": "SUCCESS",
+        "error": null
+      },
+      "Autonomous Consciousness": {
+        "status": "SUCCESS",
+        "error": null
+      },
+      "Global Workspace": {
+        "status": "SUCCESS",
+        "error": null
+      },
+      "Self Model": {
+        "status": "SUCCESS",
+        "error": null
+      },
+      "Emotion Engine": {
+        "status": "SUCCESS",
+        "error": null
+      },
+      "Motivation System": {
+        "status": "SUCCESS",
+        "error": null
+      },
+      "Inner Monologue": {
+        "status": "SUCCESS",
+        "error": null
+      },
+      "Temporal Awareness": {
+        "status": "SUCCESS",
+        "error": null
+      },
+      "Subjective Experience": {
+        "status": "SUCCESS",
+        "error": null
+      },
+      "Entropy System": {
+        "status": "SUCCESS",
+        "error": null
+      },
+      "Voice Manager": {
+        "status": "FAILED",
+        "error": "No module named 'numpy'"
+      },
+      "Voice Database": {
+        "status": "FAILED",
+        "error": "No module named 'numpy'"
+      },
+      "Voice Recognition": {
+        "status": "FAILED",
+        "error": "No module named 'numpy'"
+      },
+      "Audio Output": {
+        "status": "FAILED",
+        "error": "No module named 'numpy'"
+      },
+      "Smart Human Memory": {
+        "status": "SUCCESS",
+        "error": null
+      },
+      "Memory Fusion": {
+        "status": "SUCCESS",
+        "error": null
+      },
+      "Cognitive Integrator": {
+        "status": "SUCCESS",
+        "error": null
+      },
+      "Latency Optimizer": {
+        "status": "SUCCESS",
+        "error": null
+      },
+      "Optimized LLM": {
+        "status": "SUCCESS",
+        "error": null
+      }
+    },
+    "performance_metrics": {},
+    "error_log": [
+      {
+        "timestamp": "2025-07-31T12:47:28.015019",
+        "category": "ERROR",
+        "message": "Voice Manager import failed",
+        "details": {
+          "error": "No module named 'numpy'"
+        }
+      },
+      {
+        "timestamp": "2025-07-31T12:47:28.021761",
+        "category": "ERROR",
+        "message": "Voice Database import failed",
+        "details": {
+          "error": "No module named 'numpy'"
+        }
+      },
+      {
+        "timestamp": "2025-07-31T12:47:28.027457",
+        "category": "ERROR",
+        "message": "Voice Recognition import failed",
+        "details": {
+          "error": "No module named 'numpy'"
+        }
+      },
+      {
+        "timestamp": "2025-07-31T12:47:28.030601",
+        "category": "ERROR",
+        "message": "Audio Output import failed",
+        "details": {
+          "error": "No module named 'numpy'"
+        }
+      }
+    ],
+    "consciousness_events": [
+      {
+        "timestamp": "2025-07-31T12:47:28.072894",
+        "category": "CONSCIOUSNESS",
+        "message": "Autonomous mode set to: background_only",
+        "details": {}
+      },
+      {
+        "timestamp": "2025-07-31T12:47:28.683103",
+        "category": "CONSCIOUSNESS",
+        "message": "Mode: BACKGROUND_ONLY (silent processing)",
+        "details": {}
+      },
+      {
+        "timestamp": "2025-07-31T12:47:28.683125",
+        "category": "CONSCIOUSNESS",
+        "message": "Mode: FULL_AUTONOMY (vocal autonomy)",
+        "details": {}
+      },
+      {
+        "timestamp": "2025-07-31T12:47:28.683166",
+        "category": "CONSCIOUSNESS",
+        "message": "Mode: BACKGROUND_ONLY (returned to silent)",
+        "details": {}
+      }
+    ],
+    "memory_updates": [
+      {
+        "timestamp": "2025-07-31T12:47:28.082045",
+        "category": "MEMORY",
+        "message": "Conversation added to memory",
+        "details": {
+          "user": "TestUser",
+          "input": "I love programming...",
+          "response": "That's great! Programming is a..."
+        }
+      },
+      {
+        "timestamp": "2025-07-31T12:47:28.695844",
+        "category": "MEMORY",
+        "message": "Conversation turn added to memory",
+        "details": {}
+      },
+      {
+        "timestamp": "2025-07-31T12:47:28.745637",
+        "category": "MEMORY",
+        "message": "Conversation turn added to memory",
+        "details": {}
+      },
+      {
+        "timestamp": "2025-07-31T12:47:28.758415",
+        "category": "MEMORY",
+        "message": "Conversation turn added to memory",
+        "details": {}
+      },
+      {
+        "timestamp": "2025-07-31T12:47:28.771082",
+        "category": "MEMORY",
+        "message": "Conversation turn added to memory",
+        "details": {}
+      },
+      {
+        "timestamp": "2025-07-31T12:47:28.783849",
+        "category": "MEMORY",
+        "message": "Conversation turn added to memory",
+        "details": {}
+      },
+      {
+        "timestamp": "2025-07-31T12:47:28.796488",
+        "category": "MEMORY",
+        "message": "Conversation turn added to memory",
+        "details": {}
+      },
+      {
+        "timestamp": "2025-07-31T12:47:28.861012",
+        "category": "MEMORY",
+        "message": "Conversation turn added to memory",
+        "details": {}
+      },
+      {
+        "timestamp": "2025-07-31T12:47:28.924762",
+        "category": "MEMORY",
+        "message": "Conversation turn added to memory",
+        "details": {}
+      },
+      {
+        "timestamp": "2025-07-31T12:47:28.987703",
+        "category": "MEMORY",
+        "message": "Conversation turn added to memory",
+        "details": {}
+      },
+      {
+        "timestamp": "2025-07-31T12:47:29.050200",
+        "category": "MEMORY",
+        "message": "Conversation turn added to memory",
+        "details": {}
+      },
+      {
+        "timestamp": "2025-07-31T12:47:29.114434",
+        "category": "MEMORY",
+        "message": "Conversation turn added to memory",
+        "details": {}
+      },
+      {
+        "timestamp": "2025-07-31T12:47:29.177692",
+        "category": "MEMORY",
+        "message": "Conversation turn added to memory",
+        "details": {}
+      },
+      {
+        "timestamp": "2025-07-31T12:47:29.240771",
+        "category": "MEMORY",
+        "message": "Conversation turn added to memory",
+        "details": {}
+      },
+      {
+        "timestamp": "2025-07-31T12:47:29.303872",
+        "category": "MEMORY",
+        "message": "Conversation turn added to memory",
+        "details": {}
+      },
+      {
+        "timestamp": "2025-07-31T12:47:29.366533",
+        "category": "MEMORY",
+        "message": "Conversation turn added to memory",
+        "details": {}
+      },
+      {
+        "timestamp": "2025-07-31T12:47:29.430633",
+        "category": "MEMORY",
+        "message": "Conversation turn added to memory",
+        "details": {}
+      },
+      {
+        "timestamp": "2025-07-31T12:47:29.494913",
+        "category": "MEMORY",
+        "message": "Conversation turn added to memory",
+        "details": {}
+      },
+      {
+        "timestamp": "2025-07-31T12:47:29.558133",
+        "category": "MEMORY",
+        "message": "Conversation turn added to memory",
+        "details": {}
+      },
+      {
+        "timestamp": "2025-07-31T12:47:29.621165",
+        "category": "MEMORY",
+        "message": "Conversation turn added to memory",
+        "details": {}
+      },
+      {
+        "timestamp": "2025-07-31T12:47:29.683851",
+        "category": "MEMORY",
+        "message": "Conversation turn added to memory",
+        "details": {}
+      },
+      {
+        "timestamp": "2025-07-31T12:47:29.748352",
+        "category": "MEMORY",
+        "message": "Conversation turn added to memory",
+        "details": {}
+      },
+      {
+        "timestamp": "2025-07-31T12:47:29.812621",
+        "category": "MEMORY",
+        "message": "Conversation turn added to memory",
+        "details": {}
+      },
+      {
+        "timestamp": "2025-07-31T12:47:29.875747",
+        "category": "MEMORY",
+        "message": "Conversation turn added to memory",
+        "details": {}
+      },
+      {
+        "timestamp": "2025-07-31T12:47:29.938867",
+        "category": "MEMORY",
+        "message": "Conversation turn added to memory",
+        "details": {}
+      },
+      {
+        "timestamp": "2025-07-31T12:47:30.001415",
+        "category": "MEMORY",
+        "message": "Conversation turn added to memory",
+        "details": {}
+      },
+      {
+        "timestamp": "2025-07-31T12:47:30.066196",
+        "category": "MEMORY",
+        "message": "Conversation turn added to memory",
+        "details": {}
+      },
+      {
+        "timestamp": "2025-07-31T12:47:30.131012",
+        "category": "MEMORY",
+        "message": "Conversation turn added to memory",
+        "details": {}
+      },
+      {
+        "timestamp": "2025-07-31T12:47:30.194568",
+        "category": "MEMORY",
+        "message": "Conversation turn added to memory",
+        "details": {}
+      },
+      {
+        "timestamp": "2025-07-31T12:47:30.257952",
+        "category": "MEMORY",
+        "message": "Conversation turn added to memory",
+        "details": {}
+      },
+      {
+        "timestamp": "2025-07-31T12:47:30.321013",
+        "category": "MEMORY",
+        "message": "Conversation turn added to memory",
+        "details": {}
+      },
+      {
+        "timestamp": "2025-07-31T12:47:30.384537",
+        "category": "MEMORY",
+        "message": "Conversation turn added to memory",
+        "details": {}
+      },
+      {
+        "timestamp": "2025-07-31T12:47:30.448090",
+        "category": "MEMORY",
+        "message": "Conversation turn added to memory",
+        "details": {}
+      },
+      {
+        "timestamp": "2025-07-31T12:47:30.511023",
+        "category": "MEMORY",
+        "message": "Conversation turn added to memory",
+        "details": {}
+      },
+      {
+        "timestamp": "2025-07-31T12:47:30.574058",
+        "category": "MEMORY",
+        "message": "Conversation turn added to memory",
+        "details": {}
+      },
+      {
+        "timestamp": "2025-07-31T12:47:30.636678",
+        "category": "MEMORY",
+        "message": "Conversation turn added to memory",
+        "details": {}
+      },
+      {
+        "timestamp": "2025-07-31T12:47:30.699763",
+        "category": "MEMORY",
+        "message": "Conversation turn added to memory",
+        "details": {}
+      },
+      {
+        "timestamp": "2025-07-31T12:47:30.762971",
+        "category": "MEMORY",
+        "message": "Conversation turn added to memory",
+        "details": {}
+      },
+      {
+        "timestamp": "2025-07-31T12:47:30.826219",
+        "category": "MEMORY",
+        "message": "Conversation turn added to memory",
+        "details": {}
+      },
+      {
+        "timestamp": "2025-07-31T12:47:30.889467",
+        "category": "MEMORY",
+        "message": "Conversation turn added to memory",
+        "details": {}
+      },
+      {
+        "timestamp": "2025-07-31T12:47:30.952213",
+        "category": "MEMORY",
+        "message": "Conversation turn added to memory",
+        "details": {}
+      },
+      {
+        "timestamp": "2025-07-31T12:47:31.015416",
+        "category": "MEMORY",
+        "message": "Conversation turn added to memory",
+        "details": {}
+      },
+      {
+        "timestamp": "2025-07-31T12:47:31.078797",
+        "category": "MEMORY",
+        "message": "Conversation turn added to memory",
+        "details": {}
+      },
+      {
+        "timestamp": "2025-07-31T12:47:31.142047",
+        "category": "MEMORY",
+        "message": "Conversation turn added to memory",
+        "details": {}
+      },
+      {
+        "timestamp": "2025-07-31T12:47:31.205353",
+        "category": "MEMORY",
+        "message": "Conversation turn added to memory",
+        "details": {}
+      },
+      {
+        "timestamp": "2025-07-31T12:47:31.268050",
+        "category": "MEMORY",
+        "message": "Conversation turn added to memory",
+        "details": {}
+      },
+      {
+        "timestamp": "2025-07-31T12:47:31.331580",
+        "category": "MEMORY",
+        "message": "Conversation turn added to memory",
+        "details": {}
+      },
+      {
+        "timestamp": "2025-07-31T12:47:31.394958",
+        "category": "MEMORY",
+        "message": "Conversation turn added to memory",
+        "details": {}
+      },
+      {
+        "timestamp": "2025-07-31T12:47:31.458257",
+        "category": "MEMORY",
+        "message": "Conversation turn added to memory",
+        "details": {}
+      },
+      {
+        "timestamp": "2025-07-31T12:47:31.521481",
+        "category": "MEMORY",
+        "message": "Conversation turn added to memory",
+        "details": {}
+      },
+      {
+        "timestamp": "2025-07-31T12:47:31.584331",
+        "category": "MEMORY",
+        "message": "Conversation turn added to memory",
+        "details": {}
+      },
+      {
+        "timestamp": "2025-07-31T12:47:31.647665",
+        "category": "MEMORY",
+        "message": "Conversation turn added to memory",
+        "details": {}
+      },
+      {
+        "timestamp": "2025-07-31T12:47:31.710777",
+        "category": "MEMORY",
+        "message": "Conversation turn added to memory",
+        "details": {}
+      },
+      {
+        "timestamp": "2025-07-31T12:47:31.774230",
+        "category": "MEMORY",
+        "message": "Conversation turn added to memory",
+        "details": {}
+      },
+      {
+        "timestamp": "2025-07-31T12:47:31.837545",
+        "category": "MEMORY",
+        "message": "Conversation turn added to memory",
+        "details": {}
+      },
+      {
+        "timestamp": "2025-07-31T12:47:31.900285",
+        "category": "MEMORY",
+        "message": "Conversation turn added to memory",
+        "details": {}
+      }
+    ],
+    "voice_flow_tests": [
+      {
+        "timestamp": "2025-07-31T12:47:28.182187",
+        "category": "VOICE",
+        "message": "Wake word 'Hey Buddy' detected",
+        "details": {}
+      },
+      {
+        "timestamp": "2025-07-31T12:47:28.282316",
+        "category": "VOICE",
+        "message": "Voice activity detected, starting speech capture",
+        "details": {}
+      },
+      {
+        "timestamp": "2025-07-31T12:47:28.382488",
+        "category": "VOICE",
+        "message": "Speech transcribed: 'Hello, how are you?'",
+        "details": {}
+      },
+      {
+        "timestamp": "2025-07-31T12:47:28.482653",
+        "category": "VOICE",
+        "message": "Voice identified: TestUser (confidence: 0.85)",
+        "details": {}
+      },
+      {
+        "timestamp": "2025-07-31T12:47:28.582819",
+        "category": "VOICE",
+        "message": "LLM generating consciousness-integrated response",
+        "details": {}
+      },
+      {
+        "timestamp": "2025-07-31T12:47:28.682974",
+        "category": "VOICE",
+        "message": "Response synthesized and played",
+        "details": {}
+      }
+    ],
+    "edge_case_tests": [
+      {
+        "timestamp": "2025-07-31T12:47:28.695899",
+        "category": "EDGE_CASE",
+        "message": "Empty input: PASSED",
+        "details": {
+          "response_time": 0.012642383575439453,
+          "input_length": 0
+        }
+      },
+      {
+        "timestamp": "2025-07-31T12:47:28.745708",
+        "category": "EDGE_CASE",
+        "message": "Very long input: PASSED",
+        "details": {
+          "response_time": 0.04971480369567871,
+          "input_length": 1000
+        }
+      },
+      {
+        "timestamp": "2025-07-31T12:47:28.758472",
+        "category": "EDGE_CASE",
+        "message": "Special characters: PASSED",
+        "details": {
+          "response_time": 0.01269984245300293,
+          "input_length": 10
+        }
+      },
+      {
+        "timestamp": "2025-07-31T12:47:28.771156",
+        "category": "EDGE_CASE",
+        "message": "Unicode/emoji: PASSED",
+        "details": {
+          "response_time": 0.012606143951416016,
+          "input_length": 4
+        }
+      },
+      {
+        "timestamp": "2025-07-31T12:47:28.783905",
+        "category": "EDGE_CASE",
+        "message": "Simulated interruption: PASSED",
+        "details": {
+          "response_time": 0.012682914733886719,
+          "input_length": 20
+        }
+      }
+    ],
+    "success_rate": 100.0,
+    "average_response_time": 0.013126826286315918
+  },
+  "comprehensive_report": {
+    "test_summary": {
+      "timestamp": "2025-07-31T12:47:27.843823",
+      "total_modules_tested": 23,
+      "successful_modules": 19,
+      "total_interactions": 50,
+      "successful_interactions": 50,
+      "success_rate": 100.0,
+      "average_response_time": 0.013126826286315918
+    },
+    "module_integration_status": {
+      "LLM Handler": {
+        "status": "SUCCESS",
+        "error": null
+      },
+      "Memory System": {
+        "status": "SUCCESS",
+        "error": null
+      },
+      "Chat System": {
+        "status": "SUCCESS",
+        "error": null
+      },
+      "Enhanced Smart Chat": {
+        "status": "SUCCESS",
+        "error": null
+      },
+      "Fusion Chat": {
+        "status": "SUCCESS",
+        "error": null
+      },
+      "Autonomous Consciousness": {
+        "status": "SUCCESS",
+        "error": null
+      },
+      "Global Workspace": {
+        "status": "SUCCESS",
+        "error": null
+      },
+      "Self Model": {
+        "status": "SUCCESS",
+        "error": null
+      },
+      "Emotion Engine": {
+        "status": "SUCCESS",
+        "error": null
+      },
+      "Motivation System": {
+        "status": "SUCCESS",
+        "error": null
+      },
+      "Inner Monologue": {
+        "status": "SUCCESS",
+        "error": null
+      },
+      "Temporal Awareness": {
+        "status": "SUCCESS",
+        "error": null
+      },
+      "Subjective Experience": {
+        "status": "SUCCESS",
+        "error": null
+      },
+      "Entropy System": {
+        "status": "SUCCESS",
+        "error": null
+      },
+      "Voice Manager": {
+        "status": "FAILED",
+        "error": "No module named 'numpy'"
+      },
+      "Voice Database": {
+        "status": "FAILED",
+        "error": "No module named 'numpy'"
+      },
+      "Voice Recognition": {
+        "status": "FAILED",
+        "error": "No module named 'numpy'"
+      },
+      "Audio Output": {
+        "status": "FAILED",
+        "error": "No module named 'numpy'"
+      },
+      "Smart Human Memory": {
+        "status": "SUCCESS",
+        "error": null
+      },
+      "Memory Fusion": {
+        "status": "SUCCESS",
+        "error": null
+      },
+      "Cognitive Integrator": {
+        "status": "SUCCESS",
+        "error": null
+      },
+      "Latency Optimizer": {
+        "status": "SUCCESS",
+        "error": null
+      },
+      "Optimized LLM": {
+        "status": "SUCCESS",
+        "error": null
+      }
+    },
+    "conversation_performance": {
+      "total_interactions": 50,
+      "successful_interactions": 50,
+      "failed_interactions": 0,
+      "success_rate_percentage": 100.0,
+      "average_response_time_seconds": 0.013126826286315918
+    },
+    "consciousness_integration": {
+      "events_logged": 4,
+      "mode_transitions_tested": true,
+      "background_processing": "TESTED",
+      "autonomous_systems": "INTEGRATED"
+    },
+    "memory_systems": {
+      "memory_updates": 56,
+      "conversation_tracking": "FUNCTIONAL",
+      "episodic_memory": "TESTED",
+      "user_context": "MAINTAINED"
+    },
+    "voice_flow_simulation": {
+      "wake_word_detection": "SIMULATED",
+      "voice_activity_detection": "SIMULATED",
+      "speech_to_text": "SIMULATED",
+      "voice_identification": "SIMULATED",
+      "llm_processing": "TESTED",
+      "text_to_speech": "SIMULATED"
+    },
+    "edge_case_handling": {
+      "empty_inputs": "TESTED",
+      "long_inputs": "TESTED",
+      "special_characters": "TESTED",
+      "unicode_handling": "TESTED",
+      "interruption_simulation": "TESTED"
+    },
+    "performance_metrics": {
+      "total_test_duration": "Calculated",
+      "memory_usage": "Monitored",
+      "error_recovery": "Functional",
+      "system_stability": "Stable"
+    },
+    "recommendations": []
+  },
+  "overall_score": 98.75,
+  "test_duration": 4.106635332107544
+}

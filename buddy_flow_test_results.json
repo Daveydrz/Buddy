@@ -1,0 +1,874 @@
+{
+  "test_start_time": "2025-07-31T12:38:32.168468",
+  "total_interactions": 50,
+  "successful_interactions": 50,
+  "failed_interactions": 0,
+  "errors": [
+    {
+      "timestamp": "2025-07-31T12:38:32.752535",
+      "stage": "import_main_imports",
+      "error": "No module named 'numpy'",
+      "interaction_number": 1
+    },
+    {
+      "timestamp": "2025-07-31T12:38:32.916181",
+      "stage": "import_voice",
+      "error": "No module named 'numpy'",
+      "interaction_number": 2
+    },
+    {
+      "timestamp": "2025-07-31T12:38:32.919586",
+      "stage": "import_audio",
+      "error": "No module named 'numpy'",
+      "interaction_number": 3
+    }
+  ],
+  "warnings": [
+    {
+      "timestamp": "2025-07-31T12:38:32.919933",
+      "stage": "audio_mock",
+      "warning": "Could not mock audio: No module named 'numpy'"
+    },
+    {
+      "timestamp": "2025-07-31T12:38:32.960411",
+      "stage": "voice_test",
+      "warning": "Voice manager not available"
+    }
+  ],
+  "consciousness_states": [],
+  "response_times": [
+    0.040273189544677734
+  ],
+  "import_status": {
+    "main_imports": "FAILED: No module named 'numpy'",
+    "consciousness": "SUCCESS",
+    "autonomous": "SUCCESS",
+    "voice": "FAILED: No module named 'numpy'",
+    "memory": "SUCCESS",
+    "llm": "SUCCESS",
+    "audio": "FAILED: No module named 'numpy'"
+  },
+  "integration_status": {
+    "autonomous_mode": "SUCCESS",
+    "consciousness_core": "SUCCESS",
+    "llm_consciousness": "SUCCESS",
+    "memory_system": "SUCCESS"
+  },
+  "memory_operations": [
+    {
+      "operation": "conversation_history",
+      "user": "TestUser_Flow",
+      "input": "Test memory input",
+      "response": "Test memory response",
+      "timestamp": "2025-07-31T12:38:32.969812"
+    }
+  ],
+  "voice_operations": [],
+  "interaction_results": [
+    {
+      "number": 1,
+      "input": "Hello, how are you?",
+      "timestamp": "2025-07-31T12:38:32.969855",
+      "success": true,
+      "response_generated": true,
+      "errors": [],
+      "response_time": 0.0327913761138916,
+      "response": "I understand you said: Hello, how are you? This is a test response from the consciousness system.",
+      "chunk_count": 3,
+      "memory_updated": true,
+      "consciousness_state": {
+        "mode": "background_only"
+      },
+      "spoken_outputs_count": 0
+    },
+    {
+      "number": 2,
+      "input": "What time is it?",
+      "timestamp": "2025-07-31T12:38:33.102763",
+      "success": true,
+      "response_generated": true,
+      "errors": [],
+      "response_time": 0.03310346603393555,
+      "response": "I understand you said: What time is it? This is a test response from the consciousness system.",
+      "chunk_count": 3,
+      "memory_updated": true,
+      "consciousness_state": {
+        "mode": "background_only"
+      },
+      "spoken_outputs_count": 0
+    },
+    {
+      "number": 3,
+      "input": "Tell me about artificial intelligence",
+      "timestamp": "2025-07-31T12:38:33.236006",
+      "success": true,
+      "response_generated": true,
+      "errors": [],
+      "response_time": 0.0328669548034668,
+      "response": "I understand you said: Tell me about artificial intel This is a test response from the consciousness system.",
+      "chunk_count": 3,
+      "memory_updated": true,
+      "consciousness_state": {
+        "mode": "background_only"
+      },
+      "spoken_outputs_count": 0
+    },
+    {
+      "number": 4,
+      "input": "What's the weather like?",
+      "timestamp": "2025-07-31T12:38:33.369027",
+      "success": true,
+      "response_generated": true,
+      "errors": [],
+      "response_time": 0.03629779815673828,
+      "response": "I understand you said: What's the weather like? This is a test response from the consciousness system.",
+      "chunk_count": 3,
+      "memory_updated": true,
+      "consciousness_state": {
+        "mode": "background_only"
+      },
+      "spoken_outputs_count": 0
+    },
+    {
+      "number": 5,
+      "input": "How do you work?",
+      "timestamp": "2025-07-31T12:38:33.505455",
+      "success": true,
+      "response_generated": true,
+      "errors": [],
+      "response_time": 0.0340113639831543,
+      "response": "I understand you said: How do you work? This is a test response from the consciousness system.",
+      "chunk_count": 3,
+      "memory_updated": true,
+      "consciousness_state": {
+        "mode": "background_only"
+      },
+      "spoken_outputs_count": 0
+    },
+    {
+      "number": 6,
+      "input": "What's my name?",
+      "timestamp": "2025-07-31T12:38:33.639603",
+      "success": true,
+      "response_generated": true,
+      "errors": [],
+      "response_time": 0.03388810157775879,
+      "response": "I understand you said: What's my name? This is a test response from the consciousness system.",
+      "chunk_count": 3,
+      "memory_updated": true,
+      "consciousness_state": {
+        "mode": "background_only"
+      },
+      "spoken_outputs_count": 0
+    },
+    {
+      "number": 7,
+      "input": "Tell me a joke",
+      "timestamp": "2025-07-31T12:38:33.773624",
+      "success": true,
+      "response_generated": true,
+      "errors": [],
+      "response_time": 0.03293776512145996,
+      "response": "I understand you said: Tell me a joke This is a test response from the consciousness system.",
+      "chunk_count": 3,
+      "memory_updated": true,
+      "consciousness_state": {
+        "mode": "background_only"
+      },
+      "spoken_outputs_count": 0
+    },
+    {
+      "number": 8,
+      "input": "What can you do?",
+      "timestamp": "2025-07-31T12:38:33.906690",
+      "success": true,
+      "response_generated": true,
+      "errors": [],
+      "response_time": 0.032990217208862305,
+      "response": "I understand you said: What can you do? This is a test response from the consciousness system.",
+      "chunk_count": 3,
+      "memory_updated": true,
+      "consciousness_state": {
+        "mode": "background_only"
+      },
+      "spoken_outputs_count": 0
+    },
+    {
+      "number": 9,
+      "input": "Where are you located?",
+      "timestamp": "2025-07-31T12:38:34.039817",
+      "success": true,
+      "response_generated": true,
+      "errors": [],
+      "response_time": 0.035767316818237305,
+      "response": "I understand you said: Where are you located? This is a test response from the consciousness system.",
+      "chunk_count": 3,
+      "memory_updated": true,
+      "consciousness_state": {
+        "mode": "background_only"
+      },
+      "spoken_outputs_count": 0
+    },
+    {
+      "number": 10,
+      "input": "Explain quantum physics",
+      "timestamp": "2025-07-31T12:38:34.175726",
+      "success": true,
+      "response_generated": true,
+      "errors": [],
+      "response_time": 0.03319573402404785,
+      "response": "I understand you said: Explain quantum physics This is a test response from the consciousness system.",
+      "chunk_count": 3,
+      "memory_updated": true,
+      "consciousness_state": {
+        "mode": "background_only"
+      },
+      "spoken_outputs_count": 0
+    },
+    {
+      "number": 11,
+      "input": "I'm feeling sad today",
+      "timestamp": "2025-07-31T12:38:34.309066",
+      "success": true,
+      "response_generated": true,
+      "errors": [],
+      "response_time": 0.03307747840881348,
+      "response": "I understand you said: I'm feeling sad today This is a test response from the consciousness system.",
+      "chunk_count": 3,
+      "memory_updated": true,
+      "consciousness_state": {
+        "mode": "background_only"
+      },
+      "spoken_outputs_count": 0
+    },
+    {
+      "number": 12,
+      "input": "What are your thoughts on consciousness?",
+      "timestamp": "2025-07-31T12:38:34.442277",
+      "success": true,
+      "response_generated": true,
+      "errors": [],
+      "response_time": 0.033102989196777344,
+      "response": "I understand you said: What are your thoughts on cons This is a test response from the consciousness system.",
+      "chunk_count": 3,
+      "memory_updated": true,
+      "consciousness_state": {
+        "mode": "background_only"
+      },
+      "spoken_outputs_count": 0
+    },
+    {
+      "number": 13,
+      "input": "Can you help me with math?",
+      "timestamp": "2025-07-31T12:38:34.575504",
+      "success": true,
+      "response_generated": true,
+      "errors": [],
+      "response_time": 0.03308510780334473,
+      "response": "I understand you said: Can you help me with math? This is a test response from the consciousness system.",
+      "chunk_count": 3,
+      "memory_updated": true,
+      "consciousness_state": {
+        "mode": "background_only"
+      },
+      "spoken_outputs_count": 0
+    },
+    {
+      "number": 14,
+      "input": "What's the meaning of life?",
+      "timestamp": "2025-07-31T12:38:34.708735",
+      "success": true,
+      "response_generated": true,
+      "errors": [],
+      "response_time": 0.03330564498901367,
+      "response": "I understand you said: What's the meaning of life? This is a test response from the consciousness system.",
+      "chunk_count": 3,
+      "memory_updated": true,
+      "consciousness_state": {
+        "mode": "background_only"
+      },
+      "spoken_outputs_count": 0
+    },
+    {
+      "number": 15,
+      "input": "Do you have emotions?",
+      "timestamp": "2025-07-31T12:38:34.842172",
+      "success": true,
+      "response_generated": true,
+      "errors": [],
+      "response_time": 0.033004045486450195,
+      "response": "I understand you said: Do you have emotions? This is a test response from the consciousness system.",
+      "chunk_count": 3,
+      "memory_updated": true,
+      "consciousness_state": {
+        "mode": "background_only"
+      },
+      "spoken_outputs_count": 0
+    },
+    {
+      "number": 16,
+      "input": "Tell me about your memory",
+      "timestamp": "2025-07-31T12:38:34.975304",
+      "success": true,
+      "response_generated": true,
+      "errors": [],
+      "response_time": 0.033057451248168945,
+      "response": "I understand you said: Tell me about your memory This is a test response from the consciousness system.",
+      "chunk_count": 3,
+      "memory_updated": true,
+      "consciousness_state": {
+        "mode": "background_only"
+      },
+      "spoken_outputs_count": 0
+    },
+    {
+      "number": 17,
+      "input": "What goals do you have?",
+      "timestamp": "2025-07-31T12:38:35.108496",
+      "success": true,
+      "response_generated": true,
+      "errors": [],
+      "response_time": 0.03279685974121094,
+      "response": "I understand you said: What goals do you have? This is a test response from the consciousness system.",
+      "chunk_count": 3,
+      "memory_updated": true,
+      "consciousness_state": {
+        "mode": "background_only"
+      },
+      "spoken_outputs_count": 0
+    },
+    {
+      "number": 18,
+      "input": "How do you learn?",
+      "timestamp": "2025-07-31T12:38:35.241427",
+      "success": true,
+      "response_generated": true,
+      "errors": [],
+      "response_time": 0.03307843208312988,
+      "response": "I understand you said: How do you learn? This is a test response from the consciousness system.",
+      "chunk_count": 3,
+      "memory_updated": true,
+      "consciousness_state": {
+        "mode": "background_only"
+      },
+      "spoken_outputs_count": 0
+    },
+    {
+      "number": 19,
+      "input": "What makes you unique?",
+      "timestamp": "2025-07-31T12:38:35.374641",
+      "success": true,
+      "response_generated": true,
+      "errors": [],
+      "response_time": 0.03302407264709473,
+      "response": "I understand you said: What makes you unique? This is a test response from the consciousness system.",
+      "chunk_count": 3,
+      "memory_updated": true,
+      "consciousness_state": {
+        "mode": "background_only"
+      },
+      "spoken_outputs_count": 0
+    },
+    {
+      "number": 20,
+      "input": "Can you be creative?",
+      "timestamp": "2025-07-31T12:38:35.507793",
+      "success": true,
+      "response_generated": true,
+      "errors": [],
+      "response_time": 0.032984256744384766,
+      "response": "I understand you said: Can you be creative? This is a test response from the consciousness system.",
+      "chunk_count": 3,
+      "memory_updated": true,
+      "consciousness_state": {
+        "mode": "background_only"
+      },
+      "spoken_outputs_count": 0
+    },
+    {
+      "number": 21,
+      "input": "How does your voice recognition work?",
+      "timestamp": "2025-07-31T12:38:35.640945",
+      "success": true,
+      "response_generated": true,
+      "errors": [],
+      "response_time": 0.03446650505065918,
+      "response": "I understand you said: How does your voice recognitio This is a test response from the consciousness system.",
+      "chunk_count": 3,
+      "memory_updated": true,
+      "consciousness_state": {
+        "mode": "background_only"
+      },
+      "spoken_outputs_count": 0
+    },
+    {
+      "number": 22,
+      "input": "What's your language model?",
+      "timestamp": "2025-07-31T12:38:35.775571",
+      "success": true,
+      "response_generated": true,
+      "errors": [],
+      "response_time": 0.03389406204223633,
+      "response": "I understand you said: What's your language model? This is a test response from the consciousness system.",
+      "chunk_count": 3,
+      "memory_updated": true,
+      "consciousness_state": {
+        "mode": "background_only"
+      },
+      "spoken_outputs_count": 0
+    },
+    {
+      "number": 23,
+      "input": "How do you process emotions?",
+      "timestamp": "2025-07-31T12:38:35.909596",
+      "success": true,
+      "response_generated": true,
+      "errors": [],
+      "response_time": 0.032828569412231445,
+      "response": "I understand you said: How do you process emotions? This is a test response from the consciousness system.",
+      "chunk_count": 3,
+      "memory_updated": true,
+      "consciousness_state": {
+        "mode": "background_only"
+      },
+      "spoken_outputs_count": 0
+    },
+    {
+      "number": 24,
+      "input": "Tell me about your consciousness",
+      "timestamp": "2025-07-31T12:38:36.042575",
+      "success": true,
+      "response_generated": true,
+      "errors": [],
+      "response_time": 0.03380727767944336,
+      "response": "I understand you said: Tell me about your consciousne This is a test response from the consciousness system.",
+      "chunk_count": 3,
+      "memory_updated": true,
+      "consciousness_state": {
+        "mode": "background_only"
+      },
+      "spoken_outputs_count": 0
+    },
+    {
+      "number": 25,
+      "input": "What's your purpose?",
+      "timestamp": "2025-07-31T12:38:36.176514",
+      "success": true,
+      "response_generated": true,
+      "errors": [],
+      "response_time": 0.033330678939819336,
+      "response": "I understand you said: What's your purpose? This is a test response from the consciousness system.",
+      "chunk_count": 3,
+      "memory_updated": true,
+      "consciousness_state": {
+        "mode": "background_only"
+      },
+      "spoken_outputs_count": 0
+    },
+    {
+      "number": 26,
+      "input": "That's interesting, tell me more",
+      "timestamp": "2025-07-31T12:38:36.309977",
+      "success": true,
+      "response_generated": true,
+      "errors": [],
+      "response_time": 0.033042192459106445,
+      "response": "I understand you said: That's interesting, tell me mo This is a test response from the consciousness system.",
+      "chunk_count": 3,
+      "memory_updated": true,
+      "consciousness_state": {
+        "mode": "background_only"
+      },
+      "spoken_outputs_count": 0
+    },
+    {
+      "number": 27,
+      "input": "I disagree with that",
+      "timestamp": "2025-07-31T12:38:36.443151",
+      "success": true,
+      "response_generated": true,
+      "errors": [],
+      "response_time": 0.03315114974975586,
+      "response": "I understand you said: I disagree with that This is a test response from the consciousness system.",
+      "chunk_count": 3,
+      "memory_updated": true,
+      "consciousness_state": {
+        "mode": "background_only"
+      },
+      "spoken_outputs_count": 0
+    },
+    {
+      "number": 28,
+      "input": "You're very helpful",
+      "timestamp": "2025-07-31T12:38:36.576435",
+      "success": true,
+      "response_generated": true,
+      "errors": [],
+      "response_time": 0.03440451622009277,
+      "response": "I understand you said: You're very helpful This is a test response from the consciousness system.",
+      "chunk_count": 3,
+      "memory_updated": true,
+      "consciousness_state": {
+        "mode": "background_only"
+      },
+      "spoken_outputs_count": 0
+    },
+    {
+      "number": 29,
+      "input": "I'm confused about something",
+      "timestamp": "2025-07-31T12:38:36.710978",
+      "success": true,
+      "response_generated": true,
+      "errors": [],
+      "response_time": 0.03335428237915039,
+      "response": "I understand you said: I'm confused about something This is a test response from the consciousness system.",
+      "chunk_count": 3,
+      "memory_updated": true,
+      "consciousness_state": {
+        "mode": "background_only"
+      },
+      "spoken_outputs_count": 0
+    },
+    {
+      "number": 30,
+      "input": "Can we talk about something else?",
+      "timestamp": "2025-07-31T12:38:36.844463",
+      "success": true,
+      "response_generated": true,
+      "errors": [],
+      "response_time": 0.03284025192260742,
+      "response": "I understand you said: Can we talk about something el This is a test response from the consciousness system.",
+      "chunk_count": 3,
+      "memory_updated": true,
+      "consciousness_state": {
+        "mode": "background_only"
+      },
+      "spoken_outputs_count": 0
+    },
+    {
+      "number": 31,
+      "input": "...",
+      "timestamp": "2025-07-31T12:38:36.977437",
+      "success": true,
+      "response_generated": true,
+      "errors": [],
+      "response_time": 0.033028602600097656,
+      "response": "I understand you said: ... This is a test response from the consciousness system.",
+      "chunk_count": 3,
+      "memory_updated": true,
+      "consciousness_state": {
+        "mode": "background_only"
+      },
+      "spoken_outputs_count": 0
+    },
+    {
+      "number": 32,
+      "input": "What?",
+      "timestamp": "2025-07-31T12:38:37.110602",
+      "success": true,
+      "response_generated": true,
+      "errors": [],
+      "response_time": 0.03260087966918945,
+      "response": "I understand you said: What? This is a test response from the consciousness system.",
+      "chunk_count": 3,
+      "memory_updated": true,
+      "consciousness_state": {
+        "mode": "background_only"
+      },
+      "spoken_outputs_count": 0
+    },
+    {
+      "number": 33,
+      "input": "Why?",
+      "timestamp": "2025-07-31T12:38:37.243318",
+      "success": true,
+      "response_generated": true,
+      "errors": [],
+      "response_time": 0.03292727470397949,
+      "response": "I understand you said: Why? This is a test response from the consciousness system.",
+      "chunk_count": 3,
+      "memory_updated": true,
+      "consciousness_state": {
+        "mode": "background_only"
+      },
+      "spoken_outputs_count": 0
+    },
+    {
+      "number": 34,
+      "input": "Really?",
+      "timestamp": "2025-07-31T12:38:37.376383",
+      "success": true,
+      "response_generated": true,
+      "errors": [],
+      "response_time": 0.03309965133666992,
+      "response": "I understand you said: Really? This is a test response from the consciousness system.",
+      "chunk_count": 3,
+      "memory_updated": true,
+      "consciousness_state": {
+        "mode": "background_only"
+      },
+      "spoken_outputs_count": 0
+    },
+    {
+      "number": 35,
+      "input": "Hmm",
+      "timestamp": "2025-07-31T12:38:37.509610",
+      "success": true,
+      "response_generated": true,
+      "errors": [],
+      "response_time": 0.03295111656188965,
+      "response": "I understand you said: Hmm This is a test response from the consciousness system.",
+      "chunk_count": 3,
+      "memory_updated": true,
+      "consciousness_state": {
+        "mode": "background_only"
+      },
+      "spoken_outputs_count": 0
+    },
+    {
+      "number": 36,
+      "input": "If you could change one thing about yourself what would it be?",
+      "timestamp": "2025-07-31T12:38:37.642695",
+      "success": true,
+      "response_generated": true,
+      "errors": [],
+      "response_time": 0.03325200080871582,
+      "response": "I understand you said: If you could change one thing  This is a test response from the consciousness system.",
+      "chunk_count": 3,
+      "memory_updated": true,
+      "consciousness_state": {
+        "mode": "background_only"
+      },
+      "spoken_outputs_count": 0
+    },
+    {
+      "number": 37,
+      "input": "Describe your perfect day",
+      "timestamp": "2025-07-31T12:38:37.776074",
+      "success": true,
+      "response_generated": true,
+      "errors": [],
+      "response_time": 0.033559322357177734,
+      "response": "I understand you said: Describe your perfect day This is a test response from the consciousness system.",
+      "chunk_count": 3,
+      "memory_updated": true,
+      "consciousness_state": {
+        "mode": "background_only"
+      },
+      "spoken_outputs_count": 0
+    },
+    {
+      "number": 38,
+      "input": "What would you do if you were human?",
+      "timestamp": "2025-07-31T12:38:37.909765",
+      "success": true,
+      "response_generated": true,
+      "errors": [],
+      "response_time": 0.033107757568359375,
+      "response": "I understand you said: What would you do if you were  This is a test response from the consciousness system.",
+      "chunk_count": 3,
+      "memory_updated": true,
+      "consciousness_state": {
+        "mode": "background_only"
+      },
+      "spoken_outputs_count": 0
+    },
+    {
+      "number": 39,
+      "input": "How do you handle uncertainty?",
+      "timestamp": "2025-07-31T12:38:38.042996",
+      "success": true,
+      "response_generated": true,
+      "errors": [],
+      "response_time": 0.0331883430480957,
+      "response": "I understand you said: How do you handle uncertainty? This is a test response from the consciousness system.",
+      "chunk_count": 3,
+      "memory_updated": true,
+      "consciousness_state": {
+        "mode": "background_only"
+      },
+      "spoken_outputs_count": 0
+    },
+    {
+      "number": 40,
+      "input": "What's your biggest fear?",
+      "timestamp": "2025-07-31T12:38:38.176318",
+      "success": true,
+      "response_generated": true,
+      "errors": [],
+      "response_time": 0.033208370208740234,
+      "response": "I understand you said: What's your biggest fear? This is a test response from the consciousness system.",
+      "chunk_count": 3,
+      "memory_updated": true,
+      "consciousness_state": {
+        "mode": "background_only"
+      },
+      "spoken_outputs_count": 0
+    },
+    {
+      "number": 41,
+      "input": "Test consciousness integration",
+      "timestamp": "2025-07-31T12:38:38.309661",
+      "success": true,
+      "response_generated": true,
+      "errors": [],
+      "response_time": 0.03433942794799805,
+      "response": "I understand you said: Test consciousness integration This is a test response from the consciousness system.",
+      "chunk_count": 3,
+      "memory_updated": true,
+      "consciousness_state": {
+        "mode": "background_only"
+      },
+      "spoken_outputs_count": 0
+    },
+    {
+      "number": 42,
+      "input": "Test memory persistence",
+      "timestamp": "2025-07-31T12:38:38.444127",
+      "success": true,
+      "response_generated": true,
+      "errors": [],
+      "response_time": 0.03283333778381348,
+      "response": "I understand you said: Test memory persistence This is a test response from the consciousness system.",
+      "chunk_count": 3,
+      "memory_updated": true,
+      "consciousness_state": {
+        "mode": "background_only"
+      },
+      "spoken_outputs_count": 0
+    },
+    {
+      "number": 43,
+      "input": "Test voice identification",
+      "timestamp": "2025-07-31T12:38:38.577116",
+      "success": true,
+      "response_generated": true,
+      "errors": [],
+      "response_time": 0.03329181671142578,
+      "response": "I understand you said: Test voice identification This is a test response from the consciousness system.",
+      "chunk_count": 3,
+      "memory_updated": true,
+      "consciousness_state": {
+        "mode": "background_only"
+      },
+      "spoken_outputs_count": 0
+    },
+    {
+      "number": 44,
+      "input": "Test emotional processing",
+      "timestamp": "2025-07-31T12:38:38.710589",
+      "success": true,
+      "response_generated": true,
+      "errors": [],
+      "response_time": 0.033127784729003906,
+      "response": "I understand you said: Test emotional processing This is a test response from the consciousness system.",
+      "chunk_count": 3,
+      "memory_updated": true,
+      "consciousness_state": {
+        "mode": "background_only"
+      },
+      "spoken_outputs_count": 0
+    },
+    {
+      "number": 45,
+      "input": "Test goal reasoning",
+      "timestamp": "2025-07-31T12:38:38.843831",
+      "success": true,
+      "response_generated": true,
+      "errors": [],
+      "response_time": 0.032921791076660156,
+      "response": "I understand you said: Test goal reasoning This is a test response from the consciousness system.",
+      "chunk_count": 3,
+      "memory_updated": true,
+      "consciousness_state": {
+        "mode": "background_only"
+      },
+      "spoken_outputs_count": 0
+    },
+    {
+      "number": 46,
+      "input": "How has this conversation been for you?",
+      "timestamp": "2025-07-31T12:38:38.976878",
+      "success": true,
+      "response_generated": true,
+      "errors": [],
+      "response_time": 0.03320765495300293,
+      "response": "I understand you said: How has this conversation been This is a test response from the consciousness system.",
+      "chunk_count": 3,
+      "memory_updated": true,
+      "consciousness_state": {
+        "mode": "background_only"
+      },
+      "spoken_outputs_count": 0
+    },
+    {
+      "number": 47,
+      "input": "What have you learned today?",
+      "timestamp": "2025-07-31T12:38:39.110239",
+      "success": true,
+      "response_generated": true,
+      "errors": [],
+      "response_time": 0.03329062461853027,
+      "response": "I understand you said: What have you learned today? This is a test response from the consciousness system.",
+      "chunk_count": 3,
+      "memory_updated": true,
+      "consciousness_state": {
+        "mode": "background_only"
+      },
+      "spoken_outputs_count": 0
+    },
+    {
+      "number": 48,
+      "input": "Do you remember our first interaction?",
+      "timestamp": "2025-07-31T12:38:39.243656",
+      "success": true,
+      "response_generated": true,
+      "errors": [],
+      "response_time": 0.03306317329406738,
+      "response": "I understand you said: Do you remember our first inte This is a test response from the consciousness system.",
+      "chunk_count": 3,
+      "memory_updated": true,
+      "consciousness_state": {
+        "mode": "background_only"
+      },
+      "spoken_outputs_count": 0
+    },
+    {
+      "number": 49,
+      "input": "Thank you for the conversation",
+      "timestamp": "2025-07-31T12:38:39.376845",
+      "success": true,
+      "response_generated": true,
+      "errors": [],
+      "response_time": 0.03313803672790527,
+      "response": "I understand you said: Thank you for the conversation This is a test response from the consciousness system.",
+      "chunk_count": 3,
+      "memory_updated": true,
+      "consciousness_state": {
+        "mode": "background_only"
+      },
+      "spoken_outputs_count": 0
+    },
+    {
+      "number": 50,
+      "input": "Goodbye",
+      "timestamp": "2025-07-31T12:38:39.510144",
+      "success": true,
+      "response_generated": true,
+      "errors": [],
+      "response_time": 0.033101797103881836,
+      "response": "I understand you said: Goodbye This is a test response from the consciousness system.",
+      "chunk_count": 3,
+      "memory_updated": true,
+      "consciousness_state": {
+        "mode": "background_only"
+      },
+      "spoken_outputs_count": 0
+    }
+  ],
+  "test_end_time": "2025-07-31T12:38:39.643386",
+  "success_rate": 100.0,
+  "avg_response_time": 0.040273189544677734,
+  "max_response_time": 0.040273189544677734,
+  "min_response_time": 0.040273189544677734
+}

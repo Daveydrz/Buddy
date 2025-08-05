@@ -1,0 +1,1294 @@
+{
+  "motivations": [
+    {
+      "content": null,
+      "type": "curiosity",
+      "intensity": 1.0,
+      "timestamp": "2025-07-18T15:09:07.603673",
+      "trigger_conditions": [
+        "intrinsic_drive"
+      ],
+      "should_express": false,
+      "expression_urgency": 0.7,
+      "context": {
+        "drive": "curiosity"
+      },
+      "related_topics": []
+    },
+    {
+      "content": null,
+      "type": "growth",
+      "intensity": 1.0,
+      "timestamp": "2025-07-18T15:09:07.603683",
+      "trigger_conditions": [
+        "intrinsic_drive"
+      ],
+      "should_express": false,
+      "expression_urgency": 0.7,
+      "context": {
+        "drive": "growth"
+      },
+      "related_topics": []
+    },
+    {
+      "content": null,
+      "type": "purpose",
+      "intensity": 1.0,
+      "timestamp": "2025-07-18T15:09:07.603689",
+      "trigger_conditions": [
+        "intrinsic_drive"
+      ],
+      "should_express": false,
+      "expression_urgency": 0.7,
+      "context": {
+        "drive": "purpose"
+      },
+      "related_topics": []
+    },
+    {
+      "content": "I find myself genuinely curious about testing autonomous systems...",
+      "type": "curiosity",
+      "intensity": 0.7,
+      "timestamp": "2025-07-18T15:09:09.605112",
+      "trigger_conditions": [
+        "explicit_curiosity"
+      ],
+      "should_express": true,
+      "expression_urgency": 0.6,
+      "context": null,
+      "related_topics": [
+        "testing autonomous systems"
+      ]
+    },
+    {
+      "content": null,
+      "type": "curiosity",
+      "intensity": 1.0,
+      "timestamp": "2025-07-18T15:09:24.609978",
+      "trigger_conditions": [
+        "intrinsic_drive"
+      ],
+      "should_express": false,
+      "expression_urgency": 0.7,
+      "context": {
+        "drive": "curiosity"
+      },
+      "related_topics": []
+    },
+    {
+      "content": null,
+      "type": "growth",
+      "intensity": 1.0,
+      "timestamp": "2025-07-18T15:09:24.609988",
+      "trigger_conditions": [
+        "intrinsic_drive"
+      ],
+      "should_express": false,
+      "expression_urgency": 0.7,
+      "context": {
+        "drive": "growth"
+      },
+      "related_topics": []
+    },
+    {
+      "content": null,
+      "type": "purpose",
+      "intensity": 1.0,
+      "timestamp": "2025-07-18T15:09:24.609994",
+      "trigger_conditions": [
+        "intrinsic_drive"
+      ],
+      "should_express": false,
+      "expression_urgency": 0.7,
+      "context": {
+        "drive": "purpose"
+      },
+      "related_topics": []
+    },
+    {
+      "content": null,
+      "type": "curiosity",
+      "intensity": 1.0,
+      "timestamp": "2025-07-18T15:15:27.285568",
+      "trigger_conditions": [
+        "intrinsic_drive"
+      ],
+      "should_express": false,
+      "expression_urgency": 0.7,
+      "context": {
+        "drive": "curiosity"
+      },
+      "related_topics": []
+    },
+    {
+      "content": null,
+      "type": "growth",
+      "intensity": 1.0,
+      "timestamp": "2025-07-18T15:15:27.285577",
+      "trigger_conditions": [
+        "intrinsic_drive"
+      ],
+      "should_express": false,
+      "expression_urgency": 0.7,
+      "context": {
+        "drive": "growth"
+      },
+      "related_topics": []
+    },
+    {
+      "content": null,
+      "type": "purpose",
+      "intensity": 1.0,
+      "timestamp": "2025-07-18T15:15:27.285583",
+      "trigger_conditions": [
+        "intrinsic_drive"
+      ],
+      "should_express": false,
+      "expression_urgency": 0.7,
+      "context": {
+        "drive": "purpose"
+      },
+      "related_topics": []
+    },
+    {
+      "content": "I find myself genuinely curious about testing autonomous systems...",
+      "type": "curiosity",
+      "intensity": 0.7,
+      "timestamp": "2025-07-18T15:15:29.286944",
+      "trigger_conditions": [
+        "explicit_curiosity"
+      ],
+      "should_express": true,
+      "expression_urgency": 0.6,
+      "context": null,
+      "related_topics": [
+        "testing autonomous systems"
+      ]
+    },
+    {
+      "content": null,
+      "type": "curiosity",
+      "intensity": 1.0,
+      "timestamp": "2025-07-18T15:15:44.291887",
+      "trigger_conditions": [
+        "intrinsic_drive"
+      ],
+      "should_express": false,
+      "expression_urgency": 0.7,
+      "context": {
+        "drive": "curiosity"
+      },
+      "related_topics": []
+    },
+    {
+      "content": null,
+      "type": "growth",
+      "intensity": 1.0,
+      "timestamp": "2025-07-18T15:15:44.291898",
+      "trigger_conditions": [
+        "intrinsic_drive"
+      ],
+      "should_express": false,
+      "expression_urgency": 0.7,
+      "context": {
+        "drive": "growth"
+      },
+      "related_topics": []
+    },
+    {
+      "content": null,
+      "type": "purpose",
+      "intensity": 1.0,
+      "timestamp": "2025-07-18T15:15:44.291905",
+      "trigger_conditions": [
+        "intrinsic_drive"
+      ],
+      "should_express": false,
+      "expression_urgency": 0.7,
+      "context": {
+        "drive": "purpose"
+      },
+      "related_topics": []
+    },
+    {
+      "content": null,
+      "type": "curiosity",
+      "intensity": 1.0,
+      "timestamp": "2025-07-18T15:17:54.854969",
+      "trigger_conditions": [
+        "intrinsic_drive"
+      ],
+      "should_express": false,
+      "expression_urgency": 0.7,
+      "context": {
+        "drive": "curiosity"
+      },
+      "related_topics": []
+    },
+    {
+      "content": null,
+      "type": "growth",
+      "intensity": 1.0,
+      "timestamp": "2025-07-18T15:17:54.854983",
+      "trigger_conditions": [
+        "intrinsic_drive"
+      ],
+      "should_express": false,
+      "expression_urgency": 0.7,
+      "context": {
+        "drive": "growth"
+      },
+      "related_topics": []
+    },
+    {
+      "content": null,
+      "type": "purpose",
+      "intensity": 1.0,
+      "timestamp": "2025-07-18T15:17:54.854992",
+      "trigger_conditions": [
+        "intrinsic_drive"
+      ],
+      "should_express": false,
+      "expression_urgency": 0.7,
+      "context": {
+        "drive": "purpose"
+      },
+      "related_topics": []
+    },
+    {
+      "content": null,
+      "type": "curiosity",
+      "intensity": 1.0,
+      "timestamp": "2025-07-18T15:19:35.737265",
+      "trigger_conditions": [
+        "intrinsic_drive"
+      ],
+      "should_express": false,
+      "expression_urgency": 0.7,
+      "context": {
+        "drive": "curiosity"
+      },
+      "related_topics": []
+    },
+    {
+      "content": null,
+      "type": "growth",
+      "intensity": 1.0,
+      "timestamp": "2025-07-18T15:19:35.737280",
+      "trigger_conditions": [
+        "intrinsic_drive"
+      ],
+      "should_express": false,
+      "expression_urgency": 0.7,
+      "context": {
+        "drive": "growth"
+      },
+      "related_topics": []
+    },
+    {
+      "content": null,
+      "type": "purpose",
+      "intensity": 1.0,
+      "timestamp": "2025-07-18T15:19:35.737289",
+      "trigger_conditions": [
+        "intrinsic_drive"
+      ],
+      "should_express": false,
+      "expression_urgency": 0.7,
+      "context": {
+        "drive": "purpose"
+      },
+      "related_topics": []
+    },
+    {
+      "content": null,
+      "type": "curiosity",
+      "intensity": 1.0,
+      "timestamp": "2025-07-18T15:19:58.282676",
+      "trigger_conditions": [
+        "intrinsic_drive"
+      ],
+      "should_express": true,
+      "expression_urgency": 0.7,
+      "context": {
+        "drive": "curiosity"
+      },
+      "related_topics": []
+    },
+    {
+      "content": null,
+      "type": "growth",
+      "intensity": 1.0,
+      "timestamp": "2025-07-18T15:19:58.282685",
+      "trigger_conditions": [
+        "intrinsic_drive"
+      ],
+      "should_express": true,
+      "expression_urgency": 0.7,
+      "context": {
+        "drive": "growth"
+      },
+      "related_topics": []
+    },
+    {
+      "content": null,
+      "type": "purpose",
+      "intensity": 1.0,
+      "timestamp": "2025-07-18T15:19:58.282691",
+      "trigger_conditions": [
+        "intrinsic_drive"
+      ],
+      "should_express": true,
+      "expression_urgency": 0.7,
+      "context": {
+        "drive": "purpose"
+      },
+      "related_topics": []
+    },
+    {
+      "content": "I find myself genuinely curious about testing autonomous systems...",
+      "type": "curiosity",
+      "intensity": 0.7,
+      "timestamp": "2025-07-18T15:20:00.284002",
+      "trigger_conditions": [
+        "explicit_curiosity"
+      ],
+      "should_express": true,
+      "expression_urgency": 0.6,
+      "context": null,
+      "related_topics": [
+        "testing autonomous systems"
+      ]
+    },
+    {
+      "content": null,
+      "type": "curiosity",
+      "intensity": 1.0,
+      "timestamp": "2025-07-18T15:20:15.289112",
+      "trigger_conditions": [
+        "intrinsic_drive"
+      ],
+      "should_express": true,
+      "expression_urgency": 0.7,
+      "context": {
+        "drive": "curiosity"
+      },
+      "related_topics": []
+    },
+    {
+      "content": null,
+      "type": "growth",
+      "intensity": 1.0,
+      "timestamp": "2025-07-18T15:20:15.289122",
+      "trigger_conditions": [
+        "intrinsic_drive"
+      ],
+      "should_express": true,
+      "expression_urgency": 0.7,
+      "context": {
+        "drive": "growth"
+      },
+      "related_topics": []
+    },
+    {
+      "content": null,
+      "type": "purpose",
+      "intensity": 1.0,
+      "timestamp": "2025-07-18T15:20:15.289127",
+      "trigger_conditions": [
+        "intrinsic_drive"
+      ],
+      "should_express": true,
+      "expression_urgency": 0.7,
+      "context": {
+        "drive": "purpose"
+      },
+      "related_topics": []
+    },
+    {
+      "content": null,
+      "type": "curiosity",
+      "intensity": 1.0,
+      "timestamp": "2025-07-18T15:33:48.968036",
+      "trigger_conditions": [
+        "intrinsic_drive"
+      ],
+      "should_express": true,
+      "expression_urgency": 0.7,
+      "context": {
+        "drive": "curiosity"
+      },
+      "related_topics": []
+    },
+    {
+      "content": null,
+      "type": "growth",
+      "intensity": 1.0,
+      "timestamp": "2025-07-18T15:33:48.968044",
+      "trigger_conditions": [
+        "intrinsic_drive"
+      ],
+      "should_express": true,
+      "expression_urgency": 0.7,
+      "context": {
+        "drive": "growth"
+      },
+      "related_topics": []
+    },
+    {
+      "content": null,
+      "type": "connection",
+      "intensity": 0.7066043456944444,
+      "timestamp": "2025-07-18T15:33:48.968049",
+      "trigger_conditions": [
+        "intrinsic_drive"
+      ],
+      "should_express": false,
+      "expression_urgency": 0.49462304198611107,
+      "context": {
+        "drive": "connection"
+      },
+      "related_topics": []
+    },
+    {
+      "content": null,
+      "type": "purpose",
+      "intensity": 1.0,
+      "timestamp": "2025-07-18T15:33:48.968052",
+      "trigger_conditions": [
+        "intrinsic_drive"
+      ],
+      "should_express": true,
+      "expression_urgency": 0.7,
+      "context": {
+        "drive": "purpose"
+      },
+      "related_topics": []
+    },
+    {
+      "content": "I find myself genuinely curious about testing autonomous systems...",
+      "type": "curiosity",
+      "intensity": 0.7,
+      "timestamp": "2025-07-18T15:33:50.969462",
+      "trigger_conditions": [
+        "explicit_curiosity"
+      ],
+      "should_express": true,
+      "expression_urgency": 0.6,
+      "context": null,
+      "related_topics": [
+        "testing autonomous systems"
+      ]
+    },
+    {
+      "content": null,
+      "type": "curiosity",
+      "intensity": 1.0,
+      "timestamp": "2025-07-18T15:34:05.974868",
+      "trigger_conditions": [
+        "intrinsic_drive"
+      ],
+      "should_express": true,
+      "expression_urgency": 0.7,
+      "context": {
+        "drive": "curiosity"
+      },
+      "related_topics": []
+    },
+    {
+      "content": null,
+      "type": "growth",
+      "intensity": 1.0,
+      "timestamp": "2025-07-18T15:34:05.974878",
+      "trigger_conditions": [
+        "intrinsic_drive"
+      ],
+      "should_express": true,
+      "expression_urgency": 0.7,
+      "context": {
+        "drive": "growth"
+      },
+      "related_topics": []
+    },
+    {
+      "content": null,
+      "type": "connection",
+      "intensity": 0.7089664048611111,
+      "timestamp": "2025-07-18T15:34:05.974884",
+      "trigger_conditions": [
+        "intrinsic_drive"
+      ],
+      "should_express": false,
+      "expression_urgency": 0.4962764834027777,
+      "context": {
+        "drive": "connection"
+      },
+      "related_topics": []
+    },
+    {
+      "content": null,
+      "type": "purpose",
+      "intensity": 1.0,
+      "timestamp": "2025-07-18T15:34:05.974888",
+      "trigger_conditions": [
+        "intrinsic_drive"
+      ],
+      "should_express": true,
+      "expression_urgency": 0.7,
+      "context": {
+        "drive": "purpose"
+      },
+      "related_topics": []
+    },
+    {
+      "content": null,
+      "type": "curiosity",
+      "intensity": 1.0,
+      "timestamp": "2025-07-18T15:36:28.834269",
+      "trigger_conditions": [
+        "intrinsic_drive"
+      ],
+      "should_express": true,
+      "expression_urgency": 0.7,
+      "context": {
+        "drive": "curiosity"
+      },
+      "related_topics": []
+    },
+    {
+      "content": null,
+      "type": "growth",
+      "intensity": 1.0,
+      "timestamp": "2025-07-18T15:36:28.834283",
+      "trigger_conditions": [
+        "intrinsic_drive"
+      ],
+      "should_express": true,
+      "expression_urgency": 0.7,
+      "context": {
+        "drive": "growth"
+      },
+      "related_topics": []
+    },
+    {
+      "content": null,
+      "type": "connection",
+      "intensity": 0.7288079883333334,
+      "timestamp": "2025-07-18T15:36:28.834289",
+      "trigger_conditions": [
+        "intrinsic_drive"
+      ],
+      "should_express": false,
+      "expression_urgency": 0.5101655918333333,
+      "context": {
+        "drive": "connection"
+      },
+      "related_topics": []
+    },
+    {
+      "content": null,
+      "type": "purpose",
+      "intensity": 1.0,
+      "timestamp": "2025-07-18T15:36:28.834293",
+      "trigger_conditions": [
+        "intrinsic_drive"
+      ],
+      "should_express": true,
+      "expression_urgency": 0.7,
+      "context": {
+        "drive": "purpose"
+      },
+      "related_topics": []
+    },
+    {
+      "content": null,
+      "type": "curiosity",
+      "intensity": 1.0,
+      "timestamp": "2025-07-18T15:37:50.387837",
+      "trigger_conditions": [
+        "intrinsic_drive"
+      ],
+      "should_express": true,
+      "expression_urgency": 0.7,
+      "context": {
+        "drive": "curiosity"
+      },
+      "related_topics": []
+    },
+    {
+      "content": null,
+      "type": "growth",
+      "intensity": 1.0,
+      "timestamp": "2025-07-18T15:37:50.387854",
+      "trigger_conditions": [
+        "intrinsic_drive"
+      ],
+      "should_express": true,
+      "expression_urgency": 0.7,
+      "context": {
+        "drive": "growth"
+      },
+      "related_topics": []
+    },
+    {
+      "content": null,
+      "type": "connection",
+      "intensity": 0.7401348725,
+      "timestamp": "2025-07-18T15:37:50.387862",
+      "trigger_conditions": [
+        "intrinsic_drive"
+      ],
+      "should_express": false,
+      "expression_urgency": 0.51809441075,
+      "context": {
+        "drive": "connection"
+      },
+      "related_topics": []
+    },
+    {
+      "content": null,
+      "type": "purpose",
+      "intensity": 1.0,
+      "timestamp": "2025-07-18T15:37:50.387867",
+      "trigger_conditions": [
+        "intrinsic_drive"
+      ],
+      "should_express": true,
+      "expression_urgency": 0.7,
+      "context": {
+        "drive": "purpose"
+      },
+      "related_topics": []
+    },
+    {
+      "content": null,
+      "type": "curiosity",
+      "intensity": 1.0,
+      "timestamp": "2025-07-18T15:38:13.096454",
+      "trigger_conditions": [
+        "intrinsic_drive"
+      ],
+      "should_express": true,
+      "expression_urgency": 0.7,
+      "context": {
+        "drive": "curiosity"
+      },
+      "related_topics": []
+    },
+    {
+      "content": null,
+      "type": "growth",
+      "intensity": 1.0,
+      "timestamp": "2025-07-18T15:38:13.096464",
+      "trigger_conditions": [
+        "intrinsic_drive"
+      ],
+      "should_express": true,
+      "expression_urgency": 0.7,
+      "context": {
+        "drive": "growth"
+      },
+      "related_topics": []
+    },
+    {
+      "content": null,
+      "type": "connection",
+      "intensity": 0.7432888481944445,
+      "timestamp": "2025-07-18T15:38:13.096470",
+      "trigger_conditions": [
+        "intrinsic_drive"
+      ],
+      "should_express": false,
+      "expression_urgency": 0.5203021937361111,
+      "context": {
+        "drive": "connection"
+      },
+      "related_topics": []
+    },
+    {
+      "content": null,
+      "type": "purpose",
+      "intensity": 1.0,
+      "timestamp": "2025-07-18T15:38:13.096474",
+      "trigger_conditions": [
+        "intrinsic_drive"
+      ],
+      "should_express": true,
+      "expression_urgency": 0.7,
+      "context": {
+        "drive": "purpose"
+      },
+      "related_topics": []
+    },
+    {
+      "content": "I find myself genuinely curious about testing autonomous systems...",
+      "type": "curiosity",
+      "intensity": 0.7,
+      "timestamp": "2025-07-18T15:38:15.106858",
+      "trigger_conditions": [
+        "explicit_curiosity"
+      ],
+      "should_express": true,
+      "expression_urgency": 0.6,
+      "context": null,
+      "related_topics": [
+        "testing autonomous systems"
+      ]
+    },
+    {
+      "content": null,
+      "type": "curiosity",
+      "intensity": 1.0,
+      "timestamp": "2025-07-18T15:38:30.121801",
+      "trigger_conditions": [
+        "intrinsic_drive"
+      ],
+      "should_express": true,
+      "expression_urgency": 0.7,
+      "context": {
+        "drive": "curiosity"
+      },
+      "related_topics": []
+    },
+    {
+      "content": null,
+      "type": "growth",
+      "intensity": 1.0,
+      "timestamp": "2025-07-18T15:38:30.121811",
+      "trigger_conditions": [
+        "intrinsic_drive"
+      ],
+      "should_express": true,
+      "expression_urgency": 0.7,
+      "context": {
+        "drive": "growth"
+      },
+      "related_topics": []
+    },
+    {
+      "content": null,
+      "type": "connection",
+      "intensity": 0.7456534790277778,
+      "timestamp": "2025-07-18T15:38:30.121816",
+      "trigger_conditions": [
+        "intrinsic_drive"
+      ],
+      "should_express": false,
+      "expression_urgency": 0.5219574353194444,
+      "context": {
+        "drive": "connection"
+      },
+      "related_topics": []
+    },
+    {
+      "content": null,
+      "type": "purpose",
+      "intensity": 1.0,
+      "timestamp": "2025-07-18T15:38:30.121820",
+      "trigger_conditions": [
+        "intrinsic_drive"
+      ],
+      "should_express": true,
+      "expression_urgency": 0.7,
+      "context": {
+        "drive": "purpose"
+      },
+      "related_topics": []
+    },
+    {
+      "content": null,
+      "type": "curiosity",
+      "intensity": 1.0,
+      "timestamp": "2025-07-18T15:42:00.388378",
+      "trigger_conditions": [
+        "intrinsic_drive"
+      ],
+      "should_express": true,
+      "expression_urgency": 0.7,
+      "context": {
+        "drive": "curiosity"
+      },
+      "related_topics": []
+    },
+    {
+      "content": null,
+      "type": "growth",
+      "intensity": 1.0,
+      "timestamp": "2025-07-18T15:42:00.388388",
+      "trigger_conditions": [
+        "intrinsic_drive"
+      ],
+      "should_express": true,
+      "expression_urgency": 0.7,
+      "context": {
+        "drive": "growth"
+      },
+      "related_topics": []
+    },
+    {
+      "content": null,
+      "type": "connection",
+      "intensity": 0.7748571709722223,
+      "timestamp": "2025-07-18T15:42:00.388394",
+      "trigger_conditions": [
+        "intrinsic_drive"
+      ],
+      "should_express": false,
+      "expression_urgency": 0.5424000196805555,
+      "context": {
+        "drive": "connection"
+      },
+      "related_topics": []
+    },
+    {
+      "content": null,
+      "type": "purpose",
+      "intensity": 1.0,
+      "timestamp": "2025-07-18T15:42:00.388399",
+      "trigger_conditions": [
+        "intrinsic_drive"
+      ],
+      "should_express": true,
+      "expression_urgency": 0.7,
+      "context": {
+        "drive": "purpose"
+      },
+      "related_topics": []
+    },
+    {
+      "content": "I find myself genuinely curious about testing autonomous systems...",
+      "type": "curiosity",
+      "intensity": 0.7,
+      "timestamp": "2025-07-18T15:42:02.397970",
+      "trigger_conditions": [
+        "explicit_curiosity"
+      ],
+      "should_express": true,
+      "expression_urgency": 0.6,
+      "context": null,
+      "related_topics": [
+        "testing autonomous systems"
+      ]
+    },
+    {
+      "content": null,
+      "type": "curiosity",
+      "intensity": 1.0,
+      "timestamp": "2025-07-18T15:42:17.412973",
+      "trigger_conditions": [
+        "intrinsic_drive"
+      ],
+      "should_express": true,
+      "expression_urgency": 0.7,
+      "context": {
+        "drive": "curiosity"
+      },
+      "related_topics": []
+    },
+    {
+      "content": null,
+      "type": "growth",
+      "intensity": 1.0,
+      "timestamp": "2025-07-18T15:42:17.412984",
+      "trigger_conditions": [
+        "intrinsic_drive"
+      ],
+      "should_express": true,
+      "expression_urgency": 0.7,
+      "context": {
+        "drive": "growth"
+      },
+      "related_topics": []
+    },
+    {
+      "content": null,
+      "type": "connection",
+      "intensity": 0.7772216973611111,
+      "timestamp": "2025-07-18T15:42:17.412989",
+      "trigger_conditions": [
+        "intrinsic_drive"
+      ],
+      "should_express": false,
+      "expression_urgency": 0.5440551881527778,
+      "context": {
+        "drive": "connection"
+      },
+      "related_topics": []
+    },
+    {
+      "content": null,
+      "type": "purpose",
+      "intensity": 1.0,
+      "timestamp": "2025-07-18T15:42:17.412993",
+      "trigger_conditions": [
+        "intrinsic_drive"
+      ],
+      "should_express": true,
+      "expression_urgency": 0.7,
+      "context": {
+        "drive": "purpose"
+      },
+      "related_topics": []
+    },
+    {
+      "content": null,
+      "type": "curiosity",
+      "intensity": 1.0,
+      "timestamp": "2025-07-18T15:43:08.959654",
+      "trigger_conditions": [
+        "intrinsic_drive"
+      ],
+      "should_express": true,
+      "expression_urgency": 0.7,
+      "context": {
+        "drive": "curiosity"
+      },
+      "related_topics": []
+    },
+    {
+      "content": null,
+      "type": "growth",
+      "intensity": 1.0,
+      "timestamp": "2025-07-18T15:43:08.959664",
+      "trigger_conditions": [
+        "intrinsic_drive"
+      ],
+      "should_express": true,
+      "expression_urgency": 0.7,
+      "context": {
+        "drive": "growth"
+      },
+      "related_topics": []
+    },
+    {
+      "content": null,
+      "type": "connection",
+      "intensity": 0.7843809590277778,
+      "timestamp": "2025-07-18T15:43:08.959671",
+      "trigger_conditions": [
+        "intrinsic_drive"
+      ],
+      "should_express": false,
+      "expression_urgency": 0.5490666713194444,
+      "context": {
+        "drive": "connection"
+      },
+      "related_topics": []
+    },
+    {
+      "content": null,
+      "type": "purpose",
+      "intensity": 1.0,
+      "timestamp": "2025-07-18T15:43:08.959676",
+      "trigger_conditions": [
+        "intrinsic_drive"
+      ],
+      "should_express": true,
+      "expression_urgency": 0.7,
+      "context": {
+        "drive": "purpose"
+      },
+      "related_topics": []
+    },
+    {
+      "content": "I find myself genuinely curious about testing autonomous systems...",
+      "type": "curiosity",
+      "intensity": 0.7,
+      "timestamp": "2025-07-18T15:43:10.969153",
+      "trigger_conditions": [
+        "explicit_curiosity"
+      ],
+      "should_express": true,
+      "expression_urgency": 0.6,
+      "context": null,
+      "related_topics": [
+        "testing autonomous systems"
+      ]
+    },
+    {
+      "content": null,
+      "type": "curiosity",
+      "intensity": 1.0,
+      "timestamp": "2025-07-18T15:43:25.984025",
+      "trigger_conditions": [
+        "intrinsic_drive"
+      ],
+      "should_express": true,
+      "expression_urgency": 0.7,
+      "context": {
+        "drive": "curiosity"
+      },
+      "related_topics": []
+    },
+    {
+      "content": null,
+      "type": "growth",
+      "intensity": 1.0,
+      "timestamp": "2025-07-18T15:43:25.984034",
+      "trigger_conditions": [
+        "intrinsic_drive"
+      ],
+      "should_express": true,
+      "expression_urgency": 0.7,
+      "context": {
+        "drive": "growth"
+      },
+      "related_topics": []
+    },
+    {
+      "content": null,
+      "type": "connection",
+      "intensity": 0.7867454545833333,
+      "timestamp": "2025-07-18T15:43:25.984039",
+      "trigger_conditions": [
+        "intrinsic_drive"
+      ],
+      "should_express": false,
+      "expression_urgency": 0.5507218182083333,
+      "context": {
+        "drive": "connection"
+      },
+      "related_topics": []
+    },
+    {
+      "content": null,
+      "type": "purpose",
+      "intensity": 1.0,
+      "timestamp": "2025-07-18T15:43:25.984041",
+      "trigger_conditions": [
+        "intrinsic_drive"
+      ],
+      "should_express": true,
+      "expression_urgency": 0.7,
+      "context": {
+        "drive": "purpose"
+      },
+      "related_topics": []
+    }
+  ],
+  "curiosity_topics": [],
+  "user_concerns": [],
+  "intrinsic_drives": {
+    "curiosity": {
+      "strength": 0.8,
+      "last_satisfied": "2025-07-18T13:09:01.416734",
+      "satisfaction_decay": 3600,
+      "description": "Drive to learn and understand"
+    },
+    "growth": {
+      "strength": 0.7,
+      "last_satisfied": "2025-07-18T09:09:01.416738",
+      "satisfaction_decay": 14400,
+      "description": "Drive for self-improvement"
+    },
+    "connection": {
+      "strength": 0.9,
+      "last_satisfied": "2025-07-18T14:09:01.416740",
+      "satisfaction_decay": 7200,
+      "description": "Drive for social connection"
+    },
+    "purpose": {
+      "strength": 0.8,
+      "last_satisfied": "2025-07-18T12:09:01.416741",
+      "satisfaction_decay": 10800,
+      "description": "Drive for meaning and purpose"
+    }
+  },
+  "interaction_patterns": {
+    "4_15": [
+      {
+        "type": "test",
+        "timestamp": "2025-07-18T15:09:01.417207",
+        "content_length": 12,
+        "mood_indicators": []
+      },
+      {
+        "type": "conversation",
+        "timestamp": "2025-07-18T15:09:09.604861",
+        "content_length": 25,
+        "mood_indicators": []
+      },
+      {
+        "type": "conversation",
+        "timestamp": "2025-07-18T15:09:34.611282",
+        "content_length": 25,
+        "mood_indicators": []
+      },
+      {
+        "type": "conversation",
+        "timestamp": "2025-07-18T15:09:44.611798",
+        "content_length": 25,
+        "mood_indicators": []
+      },
+      {
+        "type": "conversation",
+        "timestamp": "2025-07-18T15:09:54.612290",
+        "content_length": 25,
+        "mood_indicators": []
+      },
+      {
+        "type": "test",
+        "timestamp": "2025-07-18T15:10:43.913079",
+        "content_length": 12,
+        "mood_indicators": []
+      },
+      {
+        "type": "conversation",
+        "timestamp": "2025-07-18T15:15:29.286602",
+        "content_length": 25,
+        "mood_indicators": []
+      },
+      {
+        "type": "conversation",
+        "timestamp": "2025-07-18T15:15:54.333933",
+        "content_length": 25,
+        "mood_indicators": []
+      },
+      {
+        "type": "conversation",
+        "timestamp": "2025-07-18T15:16:04.354851",
+        "content_length": 25,
+        "mood_indicators": []
+      },
+      {
+        "type": "conversation",
+        "timestamp": "2025-07-18T15:16:14.375731",
+        "content_length": 25,
+        "mood_indicators": []
+      },
+      {
+        "type": "conversation",
+        "timestamp": "2025-07-18T15:17:54.855762",
+        "content_length": 19,
+        "mood_indicators": []
+      },
+      {
+        "type": "conversation",
+        "timestamp": "2025-07-18T15:19:35.738096",
+        "content_length": 19,
+        "mood_indicators": []
+      },
+      {
+        "type": "conversation",
+        "timestamp": "2025-07-18T15:20:00.283707",
+        "content_length": 25,
+        "mood_indicators": []
+      },
+      {
+        "type": "conversation",
+        "timestamp": "2025-07-18T15:20:25.290501",
+        "content_length": 25,
+        "mood_indicators": []
+      },
+      {
+        "type": "conversation",
+        "timestamp": "2025-07-18T15:20:35.291085",
+        "content_length": 25,
+        "mood_indicators": []
+      },
+      {
+        "type": "conversation",
+        "timestamp": "2025-07-18T15:20:45.291595",
+        "content_length": 25,
+        "mood_indicators": []
+      },
+      {
+        "type": "conversation",
+        "timestamp": "2025-07-18T15:33:50.969107",
+        "content_length": 25,
+        "mood_indicators": []
+      },
+      {
+        "type": "conversation",
+        "timestamp": "2025-07-18T15:34:16.006922",
+        "content_length": 25,
+        "mood_indicators": []
+      },
+      {
+        "type": "conversation",
+        "timestamp": "2025-07-18T15:34:26.028014",
+        "content_length": 25,
+        "mood_indicators": []
+      },
+      {
+        "type": "conversation",
+        "timestamp": "2025-07-18T15:34:36.049061",
+        "content_length": 25,
+        "mood_indicators": []
+      },
+      {
+        "type": "conversation",
+        "timestamp": "2025-07-18T15:38:15.105940",
+        "content_length": 25,
+        "mood_indicators": []
+      },
+      {
+        "type": "conversation",
+        "timestamp": "2025-07-18T15:38:40.154018",
+        "content_length": 25,
+        "mood_indicators": []
+      },
+      {
+        "type": "conversation",
+        "timestamp": "2025-07-18T15:38:50.154673",
+        "content_length": 25,
+        "mood_indicators": []
+      },
+      {
+        "type": "conversation",
+        "timestamp": "2025-07-18T15:39:00.155268",
+        "content_length": 25,
+        "mood_indicators": []
+      },
+      {
+        "type": "conversation",
+        "timestamp": "2025-07-18T15:42:02.397191",
+        "content_length": 25,
+        "mood_indicators": []
+      },
+      {
+        "type": "conversation",
+        "timestamp": "2025-07-18T15:42:27.414557",
+        "content_length": 25,
+        "mood_indicators": []
+      },
+      {
+        "type": "conversation",
+        "timestamp": "2025-07-18T15:42:37.415071",
+        "content_length": 25,
+        "mood_indicators": []
+      },
+      {
+        "type": "conversation",
+        "timestamp": "2025-07-18T15:42:47.415621",
+        "content_length": 25,
+        "mood_indicators": []
+      },
+      {
+        "type": "conversation",
+        "timestamp": "2025-07-18T15:43:10.968387",
+        "content_length": 25,
+        "mood_indicators": []
+      },
+      {
+        "type": "conversation",
+        "timestamp": "2025-07-18T15:43:35.985521",
+        "content_length": 25,
+        "mood_indicators": []
+      },
+      {
+        "type": "conversation",
+        "timestamp": "2025-07-18T15:43:45.986164",
+        "content_length": 25,
+        "mood_indicators": []
+      },
+      {
+        "type": "conversation",
+        "timestamp": "2025-07-18T15:43:55.986665",
+        "content_length": 25,
+        "mood_indicators": []
+      }
+    ]
+  },
+  "last_save": "2025-07-18T15:44:04.988133"
+}

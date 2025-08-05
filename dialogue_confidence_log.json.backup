@@ -1,0 +1,31 @@
+{
+  "instances": [
+    {
+      "instance_id": "uncertainty_0",
+      "uncertainty_type": {
+        "_value_": "knowledge_gap",
+        "_name_": "KNOWLEDGE_GAP",
+        "__objclass__": {
+          "_generate_next_value_": {
+            "__module__": "enum",
+            "__name__": "_generate_next_value_",
+            "__qualname__": "Enum._generate_next_value_",
+            "__doc__": "\n        Generate the next value when not given.\n\n        name: the name of the member\n        start: the initial start value or None\n        count: the number of existing members\n        last_values: the list of values assigned\n        ",
+            "__annotations__": {}
+          },
+          "__module__": "ai.dialogue_confidence_filter",
+          "__doc__": "Types of uncertainty",
+          "_new_member_": "<built-in method __new__ of type object at 0xa44820>",
+          "_use_args_": false,
+          "_member_names_": [
+            "KNOWLEDGE_GAP",
+            "AMBIGUOUS_QUERY",
+            "CONFLICTING_INFORMATION",
+            "INSUFFICIENT_CONTEXT",
+            "MULTIPLE_INTERPRETATIONS",
+            "TECHNICAL_COMPLEXITY",
+            "SUBJECTIVE_MATTER",
+            "OUTDATED_INFORMATION"
+          ],
+          "_member_map_": {
+            "KNOWLEDGE_GAP": 

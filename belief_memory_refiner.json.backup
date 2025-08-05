@@ -1,0 +1,30 @@
+{
+  "instances": [
+    {
+      "instance_id": "instance_0",
+      "content": "I enjoy programming",
+      "source": {
+        "_value_": "user_statement",
+        "_name_": "USER_STATEMENT",
+        "__objclass__": {
+          "_generate_next_value_": {
+            "__module__": "enum",
+            "__name__": "_generate_next_value_",
+            "__qualname__": "Enum._generate_next_value_",
+            "__doc__": "\n        Generate the next value when not given.\n\n        name: the name of the member\n        start: the initial start value or None\n        count: the number of existing members\n        last_values: the list of values assigned\n        ",
+            "__annotations__": {}
+          },
+          "__module__": "ai.belief_memory_refiner",
+          "__doc__": "Sources of beliefs",
+          "_new_member_": "<built-in method __new__ of type object at 0xa44820>",
+          "_use_args_": false,
+          "_member_names_": [
+            "USER_STATEMENT",
+            "OBSERVATION",
+            "INFERENCE",
+            "EXTERNAL_INFORMATION",
+            "REPETITION",
+            "CONFIRMATION"
+          ],
+          "_member_map_": {
+            "USER_STATEMENT": 

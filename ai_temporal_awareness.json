@@ -1,0 +1,37 @@
+{
+  "temporal_markers": [
+    {
+      "timestamp": "2025-07-18T10:38:49.496130",
+      "event": "User interaction: Hello! I'm excited about learn...",
+      "significance": 0.7,
+      "emotional_weight": 0.5,
+      "context": {
+        "user_id": "test_cognitive_integration",
+        "input_length": 100
+      },
+      "connections": [
+        "User interaction: Hello! I'm excited about learn...",
+        "User interaction: Hello! I'm excited about learn..."
+      ]
+    }
+  ],
+  "episodic_memories": {},
+  "subjective_time": {
+    "perceived_flow_rate": 1.0,
+    "attention_to_time": 0.5,
+    "temporal_mood": "neutral",
+    "flow_state": false
+  },
+  "temporal_state": {
+    "current_focus": "present",
+    "time_awareness_level": 0.7999999999999999,
+    "session_start": "2025-07-18T10:38:49.494635",
+    "total_aware_time": "0:03:10"
+  },
+  "metrics": {
+    "temporal_reflections": 0,
+    "time_distortions": 0,
+    "memory_counter": 4
+  },
+  "last_updated": "2025-07-18T10:38:54.498118"
+}

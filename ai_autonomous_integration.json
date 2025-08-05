@@ -1,0 +1,19 @@
+{
+  "autonomous_mode": "conscious_only",
+  "status": {
+    "proactive_thinking_active": false,
+    "calendar_monitoring_active": false,
+    "self_motivation_active": false,
+    "dream_simulation_active": false,
+    "environmental_awareness_active": false,
+    "communication_management_active": false,
+    "integration_loops_active": true
+  },
+  "autonomous_parameters": {
+    "expression_chance": 0.2,
+    "communication_interval": 300.0,
+    "check_in_interval": 3600.0
+  },
+  "last_integration_update": "2025-07-18T15:43:08.960304",
+  "last_save": "2025-07-18T15:43:25.983383"
+}

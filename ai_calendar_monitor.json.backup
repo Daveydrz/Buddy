@@ -1,0 +1,24 @@
+{
+  "events": [],
+  "patterns": [],
+  "interaction_history": [
+    {
+      "type": "voice_analysis",
+      "timestamp": "2025-07-18T13:57:28.254504",
+      "context": {
+        "stress_level": 0.3,
+        "energy_level": 0.5,
+        "emotional_indicators": [],
+        "text": "Hello, how are you doing?"
+      },
+      "day_of_week": 4,
+      "hour": 13,
+      "minute": 57
+    },
+    {
+      "type": "conversation",
+      "timestamp": "2025-07-18T13:57:28.254510",
+      "context": {
+        "text": "Hello, how are you doing?",
+        "user_id": "test_user",
+        "timestamp": 
