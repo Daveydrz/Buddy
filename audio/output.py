@@ -238,8 +238,13 @@ def speak_streaming(text, voice=None, lang=DEFAULT_LANG):
     return True
 
 def play_chime():
-    """Play notification chime"""
+    """Play notification chime with fallback for missing chime.wav"""
     try:
+        # Check if chime file exists first
+        if not os.path.exists(CHIME_PATH):
+            # Create a simple synthetic chime if file is missing
+            _create_fallback_chime()
+        
         from pydub import AudioSegment
         from audio.processing import downsample_audio
         
@@ -257,6 +262,49 @@ def play_chime():
     except Exception as e:
         if DEBUG:
             print(f"[Buddy V2] Chime error: {e}")
+        # Fallback: Generate simple beep programmatically
+        _generate_simple_beep()
+
+def _create_fallback_chime():
+    """Create a simple fallback chime.wav file if missing"""
+    try:
+        import numpy as np
+        from scipy.io.wavfile import write
+        
+        # Generate a simple 800Hz tone for 0.3 seconds
+        sample_rate = 44100
+        duration = 0.3
+        frequency = 800
+        
+        t = np.linspace(0, duration, int(sample_rate * duration))
+        # Create a simple chime with fade in/out
+        tone = np.sin(2 * np.pi * frequency * t) * np.exp(-t * 3)  # Exponential decay
+        tone = (tone * 32767 * 0.3).astype(np.int16)  # Convert to 16-bit, reduce volume
+        
+        write(CHIME_PATH, sample_rate, tone)
+        print(f"[Audio] ✅ Created fallback chime.wav at {CHIME_PATH}")
+        
+    except Exception as e:
+        print(f"[Audio] ⚠️ Could not create fallback chime: {e}")
+
+def _generate_simple_beep():
+    """Generate a simple beep directly to audio queue as final fallback"""
+    try:
+        # Generate a simple 600Hz beep for 0.2 seconds
+        duration = 0.2
+        frequency = 600
+        
+        t = np.linspace(0, duration, int(SAMPLE_RATE * duration))
+        beep = np.sin(2 * np.pi * frequency * t) * 0.2  # Low volume
+        beep = (beep * 32767).astype(np.int16)
+        
+        audio_queue.put((beep, SAMPLE_RATE))
+        if DEBUG:
+            print("[Audio] 🔔 Generated fallback beep")
+            
+    except Exception as e:
+        if DEBUG:
+            print(f"[Audio] ⚠️ Could not generate fallback beep: {e}")
 
 def notify_full_duplex_manager_speaking(audio_data):
     """✅ SIMPLE: Notify for audio chunk"""

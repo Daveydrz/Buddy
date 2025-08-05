@@ -54,7 +54,7 @@ class ComprehensiveExtractor:
             ParseErrorType.VALIDATION_ERROR: self._recover_validation_error
         }
         
-        # Common JSON repair patterns
+        # Common JSON repair patterns (enhanced for KoboldCPP responses)
         self.json_repair_patterns = [
             (r'([^"\\])"([^"\\])', r'\1\\"\2'),  # Fix unescaped quotes
             (r'([{,]\s*)([a-zA-Z_][a-zA-Z0-9_]*)\s*:', r'\1"\2":'),  # Add quotes to keys
@@ -62,6 +62,11 @@ class ComprehensiveExtractor:
             (r',\s*[}\]]', lambda m: m.group(0)[1:]),  # Remove trailing commas
             (r'\n\s*\n', '\n'),  # Remove extra newlines
             (r'[\x00-\x1f\x7f-\x9f]', ''),  # Remove control characters
+            # Enhanced patterns for KoboldCPP response issues
+            (r'"response":\s*"([^"]*)"([^,}]*)"', r'"response": "\1\2"'),  # Fix broken response fields
+            (r'```json\s*', ''),  # Remove markdown JSON blocks
+            (r'\s*```\s*$', ''),  # Remove trailing markdown
+            (r'(\w+):\s*"([^"]*)"', r'"\1": "\2"'),  # Ensure proper key quoting
         ]
     
     def parse_json_safe(self, content: str, expected_schema: Optional[Dict] = None,
@@ -525,5 +530,64 @@ def extract_data_safe(content: str, extraction_func: Callable[[str], T],
 def get_parsing_statistics() -> Dict[str, Any]:
     """Get current parsing statistics"""
     return comprehensive_extractor.get_parsing_stats()
+
+def validate_kobold_response_for_kokoro(response_content: str) -> str:
+    """
+    Validate and fix KoboldCPP responses before sending to Kokoro audio system.
+    Ensures responses are properly formatted and safe for audio playback.
+    
+    Args:
+        response_content: Raw response content from KoboldCPP
+        
+    Returns:
+        Cleaned and validated response content ready for Kokoro
+    """
+    import re  # Import re here to ensure it's available
+    
+    try:
+        if not response_content or not isinstance(response_content, str):
+            print("[ComprehensiveExtractor] ⚠️ Empty or invalid KoboldCPP response")
+            return ""
+        
+        # Clean the response content
+        cleaned_content = response_content.strip()
+        
+        # Remove any JSON wrapper if the response is wrapped in JSON
+        if cleaned_content.startswith('{') and '"response"' in cleaned_content:
+            try:
+                # Try to extract the actual response from JSON
+                parsed = json.loads(cleaned_content)
+                if isinstance(parsed, dict) and 'response' in parsed:
+                    cleaned_content = parsed['response']
+                elif isinstance(parsed, dict) and 'text' in parsed:
+                    cleaned_content = parsed['text']
+                elif isinstance(parsed, dict) and 'content' in parsed:
+                    cleaned_content = parsed['content']
+            except json.JSONDecodeError:
+                # If JSON parsing fails, extract the response value manually
+                response_match = re.search(r'"response"\s*:\s*"([^"]*)"', cleaned_content)
+                if response_match:
+                    cleaned_content = response_match.group(1)
+                else:
+                    # Remove JSON-like wrapper and keep the content
+                    cleaned_content = re.sub(r'^\s*[{].*?"([^"]+)"\s*[}]?\s*$', r'\1', cleaned_content)
+        
+        # Clean up the text for audio playback
+        cleaned_content = cleaned_content.replace('\\n', ' ').replace('\n', ' ')
+        cleaned_content = cleaned_content.replace('\\"', '"')
+        cleaned_content = re.sub(r'\s+', ' ', cleaned_content)  # Normalize whitespace
+        cleaned_content = cleaned_content.strip()
+        
+        # Validate that we have meaningful content
+        if len(cleaned_content) < 2:
+            print("[ComprehensiveExtractor] ⚠️ KoboldCPP response too short after cleaning")
+            return ""
+        
+        print(f"[ComprehensiveExtractor] ✅ KoboldCPP response validated for Kokoro: '{cleaned_content[:50]}...'")
+        return cleaned_content
+        
+    except Exception as e:
+        print(f"[ComprehensiveExtractor] ❌ KoboldCPP response validation error: {e}")
+        return response_content  # Return original if validation fails
 
 print("[ComprehensiveExtractor] ✅ Robust data parsing and error handling system initialized")
