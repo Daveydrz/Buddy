@@ -703,28 +703,71 @@ class FullDuplexManager:
                 audio_data = self.processed_queue.get(timeout=0.5)
                 
                 def transcribe_and_handle():
+                    import asyncio
+                    
+                    # ✅ FIX: Create event loop for this thread to handle async transcription
                     try:
+                        # Check if there's already an event loop in this thread
+                        try:
+                            loop = asyncio.get_event_loop()
+                            if loop.is_closed():
+                                raise RuntimeError("Event loop is closed")
+                        except RuntimeError:
+                            # No event loop exists, create a new one for this thread
+                            loop = asyncio.new_event_loop()
+                            asyncio.set_event_loop(loop)
+                            print("[Speech] 🔧 Created new event loop for transcription thread")
+                        
+                        # Import and run transcription
                         from ai.speech import transcribe_audio
                         
                         if DEBUG:
                             duration = len(audio_data) / SAMPLE_RATE
                             volume = np.abs(audio_data).mean()
-                            print(f"[FullDuplex] 🎙️ Transcribing user speech: {duration:.1f}s, vol:{volume:.1f}")
+                            print(f"[Speech] 🎙️ Transcribing user speech: {duration:.1f}s, vol:{volume:.1f}")
                         
                         text = transcribe_audio(audio_data)
                         
                         if text and len(text.strip()) > 0:
-                            print(f"[FullDuplex] 📝 User said: '{text}'")
+                            print(f"[Speech] 📝 User said: '{text}'")
                             self._handle_transcribed_text(text, audio_data)
                         else:
-                            print(f"[FullDuplex] ❌ Empty transcription")
+                            print(f"[Speech] ❌ Empty transcription")
                             # Go back to waiting for input
                             with self.conversation_state_lock:
                                 self.conversation_state = "WAITING_FOR_INPUT"
                                 self.user_speech_detection_active = True
+                                
                     except Exception as e:
-                        if DEBUG:
-                            print(f"[FullDuplex] Transcription error: {e}")
+                        print(f"[Speech] ❌ Async event loop error: {e}")
+                        print("[Speech] ⚠️ Using fallback transcription method")
+                        
+                        # Fallback: Try to transcribe without async if possible
+                        try:
+                            from ai.speech import _transcribe_audio_fallback
+                            text = _transcribe_audio_fallback(audio_data)
+                            if text and len(text.strip()) > 0 and text != "Audio transcription unavailable":
+                                print(f"[Speech] 📝 Fallback transcription: '{text}'")
+                                self._handle_transcribed_text(text, audio_data)
+                            else:
+                                print(f"[Speech] ❌ Fallback transcription failed")
+                                with self.conversation_state_lock:
+                                    self.conversation_state = "WAITING_FOR_INPUT"
+                                    self.user_speech_detection_active = True
+                        except Exception as fallback_error:
+                            print(f"[Speech] ❌ Fallback transcription error: {fallback_error}")
+                            with self.conversation_state_lock:
+                                self.conversation_state = "WAITING_FOR_INPUT"
+                                self.user_speech_detection_active = True
+                    
+                    finally:
+                        # Clean up event loop if we created it
+                        try:
+                            current_loop = asyncio.get_event_loop()
+                            if current_loop and not current_loop.is_running():
+                                current_loop.close()
+                        except:
+                            pass
                 
                 threading.Thread(target=transcribe_and_handle, daemon=True).start()
                 
