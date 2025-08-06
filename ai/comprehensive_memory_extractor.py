@@ -505,14 +505,16 @@ Return ONLY valid JSON."""
             memory_value = self._create_memory_value(event)
             
             fact = PersonalFact(
+                category="activities",  # Default category
                 key=topic,
                 value=memory_value,
+                confidence=0.9,
                 date_learned=event.get('date', datetime.now().strftime('%Y-%m-%d')),
-                confidence=0.9
+                last_mentioned=datetime.now().strftime('%Y-%m-%d'),
+                source_context=event.get('original_text', '')
             )
             
             fact.emotional_significance = 0.7 if event.get('emotion') in ['happy', 'excited'] else 0.3
-            fact.source_context = event.get('original_text', '')
             
             self.mega_memory.personal_facts[topic] = fact
             print(f"[ComprehensiveExtractor] ➕ Added to memory: {topic} = {memory_value}")

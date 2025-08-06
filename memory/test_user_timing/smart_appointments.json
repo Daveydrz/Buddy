@@ -13,5 +13,20 @@
     "status": "future",
     "timestamp": "2025-08-06T10:53:05.174178",
     "id": "appointment_1754477585"
+  },
+  {
+    "type": "appointment",
+    "topic": "bikes plan",
+    "date": "2025-08-06",
+    "time": "next weekend",
+    "emotion": "excited",
+    "priority": "medium",
+    "people": [],
+    "location": null,
+    "details": "planning to bikes",
+    "original_text": "we planning to go on bikes next weekend",
+    "status": "future",
+    "timestamp": "2025-08-06T10:56:34.850229",
+    "id": "appointment_1754477794"
   }
 ]
