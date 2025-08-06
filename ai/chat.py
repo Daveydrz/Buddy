@@ -1301,3 +1301,12 @@ def test_kobold_connection():
         print(f"[CRITICAL_FIX] 📊 Health Info: {health_info}")
         
         return False
+        
+def is_kobold_available() -> bool:
+    """Quick check if KoboldCPP is available"""
+    try:
+        import requests
+        response = requests.get("http://localhost:5001/v1/models", timeout=2)
+        return response.status_code == 200
+    except:
+        return False
