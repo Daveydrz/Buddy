@@ -1,0 +1,47 @@
+[
+  {
+    "type": "life_event",
+    "topic": "McDonald's visit",
+    "date": "2025-08-06",
+    "time": null,
+    "emotion": "casual",
+    "priority": "medium",
+    "people": [],
+    "location": "McDonald's",
+    "details": "visited restaurant",
+    "original_text": "I went to mcdonald earlier today",
+    "status": "past",
+    "timestamp": "2025-08-06T10:57:31.580284",
+    "id": "life_event_1754477851"
+  },
+  {
+    "type": "highlight",
+    "topic": "read book",
+    "date": "2025-08-06",
+    "time": null,
+    "emotion": "casual",
+    "priority": "medium",
+    "people": [],
+    "location": null,
+    "details": "finished reading book",
+    "original_text": "Ive read a book",
+    "status": "past",
+    "timestamp": "2025-08-06T10:57:31.581402",
+    "id": "highlight_1754477851"
+  },
+  {
+    "type": "highlight",
+    "topic": "learning spanish",
+    "date": "2025-08-06",
+    "time": null,
+    "emotion": "casual",
+    "priority": "medium",
+    "people": [],
+    "location": null,
+    "details": "studying spanish",
+    "original_text": "I'm learning Spanish",
+    "status": "current",
+    "timestamp": "2025-08-06T10:57:31.582167",
+    "id": "highlight_1754477851"
+  }
+]
