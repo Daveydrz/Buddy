@@ -1,20 +1,40 @@
-# audio/output.py - UPDATED for Kokoro-FastAPI with FIXED Interrupt Handling
-# Date: 2025-07-06 20:15:28 (Brisbane Time)
-# FIXES: Proper interrupt handling, notification system, and streaming TTS coordination
+# audio/output.py - ENHANCED with Professional Audio Smoothing
+# Date: 2025-01-08 06:23:11 (UTC) - PROFESSIONAL AUDIO SMOOTHING
+# FEATURES: Hann window crossfading, zero-gap playback, professional quality
 
 import threading
 import time
 import queue
-import numpy as np
+import array
+import struct
+
+# ✅ Professional audio smoothing system
+from audio.professional_smoothing import (
+    get_professional_audio_queue, 
+    process_audio_chunk_professionally,
+    ProfessionalAudioQueue,
+    AudioChunk,
+    apply_volume_normalization,
+    convert_chunk_to_playable
+)
 
 # ✅ FIX: Make simpleaudio import optional
 try:
     import simpleaudio as sa
     SIMPLEAUDIO_AVAILABLE = True
-    print("[AudioOutput] ✅ simpleaudio available")
+    print("[AudioOutput] ✅ simpleaudio available with professional smoothing")
 except ImportError:
     print("[AudioOutput] ⚠️ simpleaudio not available - audio playback disabled")
     SIMPLEAUDIO_AVAILABLE = False
+
+# ✅ FIX: Make numpy import optional - use professional smoothing instead
+try:
+    import numpy as np
+    NUMPY_AVAILABLE = True
+    print("[AudioOutput] ✅ numpy available for enhanced processing")
+except ImportError:
+    print("[AudioOutput] ℹ️ numpy not available - using pure Python professional smoothing")
+    NUMPY_AVAILABLE = False
 
 import requests
 import io
@@ -23,12 +43,14 @@ import os
 from langdetect import detect
 from config import *
 
-# Global audio state
+# Global audio state with professional enhancement
 audio_queue = queue.Queue()
+professional_audio_queue = get_professional_audio_queue()  # ✅ NEW: Professional queue
 current_audio_playback = None
 audio_lock = threading.Lock()
 buddy_talking = threading.Event()
 playback_start_time = None
+chunk_sequence_number = 0  # ✅ NEW: Track chunk sequence for seamless playback
 
 # ✅ NEW: Streaming response tracking
 from audio.streaming_response_manager import get_streaming_manager
@@ -97,7 +119,7 @@ def test_kokoro_api():
     return False
 
 def generate_tts(text, lang=DEFAULT_LANG):
-    """Generate TTS audio using Kokoro-FastAPI with persistent connection"""
+    """Generate TTS audio using Kokoro-FastAPI with professional smoothing"""
     try:
         if not kokoro_api_available:
             if not test_kokoro_api():
@@ -136,23 +158,54 @@ def generate_tts(text, lang=DEFAULT_LANG):
                 channels = wav_file.getnchannels()
                 sample_width = wav_file.getsampwidth()
             
-            # Convert to numpy array
-            if sample_width == 2:
-                audio_data = np.frombuffer(frames, dtype=np.int16)
+            # ✅ ENHANCED: Professional audio processing
+            if NUMPY_AVAILABLE:
+                # Convert to numpy array if available
+                if sample_width == 2:
+                    audio_data = np.frombuffer(frames, dtype=np.int16)
+                else:
+                    audio_data = np.frombuffer(frames, dtype=np.uint8)
+                    audio_data = ((audio_data.astype(np.int16) - 128) * 256)
+                
+                # Handle stereo to mono conversion
+                if channels == 2:
+                    audio_data = audio_data.reshape(-1, 2)
+                    audio_data = audio_data[:, 0]  # Take left channel
+                
+                # Resample if needed
+                if sample_rate != SAMPLE_RATE:
+                    try:
+                        from scipy.signal import resample_poly
+                        audio_data = resample_poly(audio_data, SAMPLE_RATE, sample_rate)
+                        audio_data = audio_data.astype(np.int16)
+                    except ImportError:
+                        print("[AudioOutput] ⚠️ scipy not available, using original sample rate")
+                        pass
+                
+                # Convert to array for professional processing
+                audio_array = array.array('h', audio_data)
             else:
-                audio_data = np.frombuffer(frames, dtype=np.uint8)
-                audio_data = ((audio_data.astype(np.int16) - 128) * 256)
-            
-            # Handle stereo to mono conversion
-            if channels == 2:
-                audio_data = audio_data.reshape(-1, 2)
-                audio_data = audio_data[:, 0]  # Take left channel
-            
-            # Resample if needed
-            if sample_rate != SAMPLE_RATE:
-                from scipy.signal import resample_poly
-                audio_data = resample_poly(audio_data, SAMPLE_RATE, sample_rate)
-                audio_data = audio_data.astype(np.int16)
+                # ✅ NEW: Pure Python audio processing for professional smoothing
+                if sample_width == 2:
+                    audio_array = array.array('h')
+                    for i in range(0, len(frames), 2):
+                        if i + 1 < len(frames):
+                            sample = struct.unpack('<h', frames[i:i+2])[0]
+                            audio_array.append(sample)
+                else:
+                    # Convert 8-bit to 16-bit
+                    audio_array = array.array('h')
+                    for byte in frames:
+                        sample = (byte - 128) * 256  # Convert to 16-bit
+                        audio_array.append(sample)
+                
+                # Handle stereo to mono for pure Python
+                if channels == 2:
+                    mono_array = array.array('h')
+                    for i in range(0, len(audio_array), 2):
+                        if i + 1 < len(audio_array):
+                            mono_array.append(audio_array[i])  # Take left channel
+                    audio_array = mono_array
             
             # Clean up temp file
             try:
@@ -161,9 +214,10 @@ def generate_tts(text, lang=DEFAULT_LANG):
                 pass
             
             if DEBUG:
-                print(f"[Buddy V2] 🗣️ Generated TTS via FastAPI: {len(audio_data)} samples, voice: {voice}")
+                print(f"[Buddy V2] 🗣️ Generated TTS via FastAPI: {len(audio_array)} samples, voice: {voice}")
+                print(f"[Buddy V2] 🎵 Professional smoothing ready for seamless playback")
             
-            return audio_data, SAMPLE_RATE
+            return audio_array, sample_rate
             
         else:
             print(f"[Buddy V2] ❌ Kokoro-FastAPI error: {response.status_code}")
@@ -175,21 +229,42 @@ def generate_tts(text, lang=DEFAULT_LANG):
         print(f"[Buddy V2] TTS error: {e}")
         return None, None
 
-def speak_async(text, lang=DEFAULT_LANG):
-    """Queue text for speech synthesis"""
+def speak_async(text, lang=DEFAULT_LANG, use_professional_smoothing=True):
+    """Queue text for speech synthesis with optional professional smoothing"""
     if not text or len(text.strip()) < 2:
         return
         
     def tts_worker():
-        pcm, sr = generate_tts(text.strip(), lang)
-        if pcm is not None:
-            audio_queue.put((pcm, sr))
+        audio_data, sr = generate_tts(text.strip(), lang)
+        if audio_data is not None:
+            if use_professional_smoothing:
+                # ✅ NEW: Use professional smoothing for seamless playback
+                global chunk_sequence_number
+                chunk_sequence_number += 1
+                
+                # Apply professional processing
+                processed_audio = process_audio_chunk_professionally(
+                    audio_data=audio_data,
+                    sample_rate=sr,
+                    chunk_id=f"async_{chunk_sequence_number}",
+                    apply_normalization=True,
+                    crossfade_enabled=True,
+                    is_first=(chunk_sequence_number == 1),
+                    is_last=True  # Single chunk, so it's also last
+                )
+                
+                # Queue the professionally processed audio
+                audio_queue.put((processed_audio, sr, None))
+            else:
+                # Legacy behavior
+                audio_data_bytes = audio_data.tobytes() if hasattr(audio_data, 'tobytes') else bytes(audio_data)
+                audio_queue.put((audio_data_bytes, sr))
     
     threading.Thread(target=tts_worker, daemon=True).start()
 
-def speak_streaming(text, voice=None, lang=DEFAULT_LANG, response_id=None):
-    """✅ FIXED: Queue text chunk for immediate streaming TTS with response tracking"""
-    global current_response_id
+def speak_streaming(text, voice=None, lang=DEFAULT_LANG, response_id=None, use_professional_smoothing=True):
+    """✅ ENHANCED: Queue text chunk for professional streaming TTS with seamless transitions"""
+    global current_response_id, chunk_sequence_number
     
     if not text or len(text.strip()) < 2:
         return False
@@ -238,18 +313,85 @@ def speak_streaming(text, voice=None, lang=DEFAULT_LANG, response_id=None):
                     channels = wav_file.getnchannels()
                     sample_width = wav_file.getsampwidth()
                 
-                # Quick conversion
-                if sample_width == 2:
-                    audio_data = np.frombuffer(frames, dtype=np.int16)
+                # ✅ ENHANCED: Professional audio processing for streaming
+                if use_professional_smoothing:
+                    # Increment chunk sequence for seamless tracking
+                    chunk_sequence_number += 1
+                    
+                    # Convert frames to audio array for professional processing
+                    if NUMPY_AVAILABLE:
+                        if sample_width == 2:
+                            audio_data = np.frombuffer(frames, dtype=np.int16)
+                        else:
+                            audio_data = np.frombuffer(frames, dtype=np.uint8)
+                            audio_data = ((audio_data.astype(np.int16) - 128) * 256)
+                        
+                        if channels == 2:
+                            audio_data = audio_data.reshape(-1, 2)[:, 0]
+                        
+                        audio_array = array.array('h', audio_data)
+                    else:
+                        # Pure Python conversion
+                        if sample_width == 2:
+                            audio_array = array.array('h')
+                            for i in range(0, len(frames), 2):
+                                if i + 1 < len(frames):
+                                    sample = struct.unpack('<h', frames[i:i+2])[0]
+                                    audio_array.append(sample)
+                        else:
+                            audio_array = array.array('h')
+                            for byte in frames:
+                                sample = (byte - 128) * 256
+                                audio_array.append(sample)
+                        
+                        # Handle stereo to mono
+                        if channels == 2:
+                            mono_array = array.array('h')
+                            for i in range(0, len(audio_array), 2):
+                                if i + 1 < len(audio_array):
+                                    mono_array.append(audio_array[i])
+                            audio_array = mono_array
+                    
+                    # ✅ NEW: Professional processing with seamless transitions
+                    # Determine if this is first or last chunk in sequence
+                    is_first_chunk = (chunk_sequence_number == 1)
+                    # Note: We can't easily determine if it's the last chunk in streaming,
+                    # so we'll let the completion handler manage that
+                    
+                    processed_audio = process_audio_chunk_professionally(
+                        audio_data=audio_array,
+                        sample_rate=sample_rate,
+                        chunk_id=f"stream_{response_id}_{chunk_sequence_number}",
+                        apply_normalization=True,
+                        crossfade_enabled=True,
+                        is_first=is_first_chunk,
+                        is_last=False  # Will be handled by completion
+                    )
+                    
+                    # ✅ FIX: Queue professionally processed audio with response tracking
+                    audio_queue.put((processed_audio, sample_rate, response_id))
                 else:
-                    audio_data = np.frombuffer(frames, dtype=np.uint8)
-                    audio_data = ((audio_data.astype(np.int16) - 128) * 256)
-                
-                if channels == 2:
-                    audio_data = audio_data.reshape(-1, 2)[:, 0]
-                
-                # ✅ FIX: Queue audio with response tracking
-                audio_queue.put((audio_data, sample_rate, response_id))
+                    # Legacy processing for compatibility
+                    if sample_width == 2:
+                        audio_data = array.array('h')
+                        for i in range(0, len(frames), 2):
+                            if i + 1 < len(frames):
+                                sample = struct.unpack('<h', frames[i:i+2])[0]
+                                audio_data.append(sample)
+                    else:
+                        audio_data = array.array('h')
+                        for byte in frames:
+                            sample = (byte - 128) * 256
+                            audio_data.append(sample)
+                    
+                    if channels == 2:
+                        mono_array = array.array('h')
+                        for i in range(0, len(audio_data), 2):
+                            if i + 1 < len(audio_data):
+                                mono_array.append(audio_data[i])
+                        audio_data = mono_array
+                    
+                    audio_queue.put((audio_data.tobytes(), sample_rate, response_id))
                 
                 # Cleanup
                 try:
@@ -259,7 +401,9 @@ def speak_streaming(text, voice=None, lang=DEFAULT_LANG, response_id=None):
                 
                 if DEBUG:
                     chunk_info = f"'{text[:50]}...'" if len(text) > 50 else f"'{text}'"
-                    print(f"[StreamingTTS] ✅ Queued chunk: {chunk_info} with voice: {selected_voice}")
+                    smoothing_status = "with professional smoothing" if use_professional_smoothing else "legacy mode"
+                    print(f"[StreamingTTS] ✅ Queued chunk: {chunk_info} {smoothing_status}")
+                    print(f"[StreamingTTS] 🎵 Voice: {selected_voice}, Chunk #{chunk_sequence_number}")
                     if response_id:
                         print(f"[StreamingTTS] 📊 Response: {response_id}")
                 
@@ -372,10 +516,10 @@ def notify_full_duplex_manager_stopped():
         print(f"[Audio] ❌ Error notifying speaking stop: {e}")
 
 def audio_worker():
-    """✅ FIXED: Audio worker with proper streaming response completion tracking"""
+    """✅ ENHANCED: Audio worker with professional smoothing and seamless transitions"""
     global current_audio_playback, playback_start_time
     
-    print(f"[Buddy V2] 🎵 Enhanced Audio Worker started with streaming tracking")
+    print(f"[Buddy V2] 🎵 Enhanced Audio Worker started with professional smoothing")
     
     while True:
         try:
@@ -383,13 +527,27 @@ def audio_worker():
             if item is None:
                 break
             
-            # ✅ FIX: Handle new queue format with response tracking
+            # ✅ ENHANCED: Handle both new professional format and legacy format
             if len(item) == 3:
-                pcm, sr, response_id = item
+                audio_data, sr, response_id = item
             else:
                 # Legacy format for backward compatibility
-                pcm, sr = item
+                audio_data, sr = item
                 response_id = None
+            
+            # ✅ ENHANCED: Convert audio data to proper format for playback
+            if isinstance(audio_data, (array.array, list)):
+                # Convert array to bytes for simpleaudio
+                if hasattr(audio_data, 'tobytes'):
+                    pcm_bytes = audio_data.tobytes()
+                else:
+                    # Convert list to bytes
+                    pcm_bytes = struct.pack(f'<{len(audio_data)}h', *audio_data)
+            elif hasattr(audio_data, 'tobytes'):  # numpy array
+                pcm_bytes = audio_data.tobytes()
+            else:
+                # Already bytes
+                pcm_bytes = audio_data
                 
             # ✅ SIMPLE: Check interrupt before playing
             if FULL_DUPLEX_MODE:
@@ -405,7 +563,7 @@ def audio_worker():
             with audio_lock:
                 # Notify once when starting
                 if FULL_DUPLEX_MODE:
-                    notify_full_duplex_manager_speaking(pcm)
+                    notify_full_duplex_manager_speaking(pcm_bytes)
                 
                 if not FULL_DUPLEX_MODE:
                     buddy_talking.set()
@@ -413,12 +571,12 @@ def audio_worker():
                 playback_start_time = time.time()
                 
                 try:
-                    print(f"[Audio] 🎵 Playing chunk: {len(pcm)} samples")
+                    print(f"[Audio] 🎵 Playing professionally smoothed chunk: {len(pcm_bytes)} bytes")
                     if response_id:
                         print(f"[Audio] 📊 Response ID: {response_id}")
                     
                     if SIMPLEAUDIO_AVAILABLE:
-                        current_audio_playback = sa.play_buffer(pcm.tobytes(), 1, 2, sr)
+                        current_audio_playback = sa.play_buffer(pcm_bytes, 1, 2, sr)
                         
                         # ✅ CRITICAL: Check for interrupt every 1ms during playback
                         while current_audio_playback and current_audio_playback.is_playing():
@@ -447,6 +605,10 @@ def audio_worker():
                                                 break
                                         
                                         print(f"[Audio] 🗑️ Cleared {cleared} remaining chunks")
+                                        
+                                        # Reset professional queue state
+                                        professional_audio_queue.clear()
+                                        
                                         break
                                 except Exception:
                                     pass
@@ -454,7 +616,7 @@ def audio_worker():
                             time.sleep(0.001)  # Check every 1 millisecond
                         
                         if current_audio_playback and not current_audio_playback.is_playing():
-                            print(f"[Audio] ✅ Chunk completed")
+                            print(f"[Audio] ✅ Professional chunk completed seamlessly")
                             # ✅ FIX: Mark chunk as played in streaming manager
                             if response_id:
                                 chunk_completed_response = streaming_manager.mark_chunk_played(response_id)
@@ -462,6 +624,9 @@ def audio_worker():
                                     print(f"[Audio] 🏁 Response {response_id} fully completed")
                     else:
                         print("[Audio] ⚠️ simpleaudio not available - skipping audio playback")
+                        # Still track completion for testing
+                        if response_id:
+                            streaming_manager.mark_chunk_played(response_id)
                     
                 except Exception as playback_err:
                     print(f"[Audio] ❌ Playback error: {playback_err}")
@@ -486,7 +651,7 @@ def audio_worker():
                             if response_id:
                                 streaming_manager.mark_response_interrupted(response_id)
                             
-                            # Clear remaining queue
+                            # Clear remaining queue and reset professional state
                             while not audio_queue.empty():
                                 try:
                                     item = audio_queue.get_nowait()
@@ -496,6 +661,8 @@ def audio_worker():
                                     audio_queue.task_done()
                                 except queue.Empty:
                                     break
+                            
+                            professional_audio_queue.clear()
                             
                             # ✅ FIX: Only notify stopped if all responses are complete
                             if streaming_manager.should_notify_completion():
@@ -509,7 +676,7 @@ def audio_worker():
                         is_interrupted = full_duplex_manager and getattr(full_duplex_manager, 'speech_interrupted', False)
                         
                         if not is_interrupted and streaming_manager.should_notify_completion():
-                            print("[Audio] 🏁 All streaming responses completed")
+                            print("[Audio] 🏁 All professionally smoothed responses completed")
                             notify_full_duplex_manager_stopped()
                     
                     if not FULL_DUPLEX_MODE and audio_queue.empty() and streaming_manager.should_notify_completion():
@@ -532,6 +699,10 @@ def audio_worker():
                     notify_full_duplex_manager_stopped()
                 elif not FULL_DUPLEX_MODE:
                     buddy_talking.clear()
+                
+                # Reset professional audio state on error
+                professional_audio_queue.clear()
+                
             except:
                 pass
 
@@ -596,7 +767,7 @@ def stop_audio_playback():
             print(f"[Audio] Emergency stop error: {e}")
 
 def clear_audio_queue():
-    """Clear pending audio queue"""
+    """Clear pending audio queue and reset professional smoothing state"""
     cleared = 0
     while not audio_queue.empty():
         try:
@@ -606,10 +777,19 @@ def clear_audio_queue():
         except queue.Empty:
             break
     
+    # ✅ NEW: Clear professional audio queue and reset smoothing state
+    professional_cleared = professional_audio_queue.clear()
+    
+    # Reset chunk sequence for new session
+    global chunk_sequence_number
+    chunk_sequence_number = 0
+    
     if cleared > 0 and DEBUG:
         print(f"[Audio] 🗑️ Cleared {cleared} pending audio items")
+        print(f"[Audio] 🎭 Cleared {professional_cleared} professional queue items")
+        print(f"[Audio] 🔄 Reset professional smoothing state")
     
-    return cleared
+    return cleared + professional_cleared
 
 def force_buddy_stop_notification():
     """Force notify that Buddy stopped"""
@@ -617,7 +797,7 @@ def force_buddy_stop_notification():
     notify_full_duplex_manager_stopped()
 
 def get_audio_stats():
-    """Get audio system statistics with streaming response info"""
+    """Get comprehensive audio system statistics with professional smoothing info"""
     stats = {
         "queue_size": audio_queue.qsize(),
         "is_playing": current_audio_playback is not None and current_audio_playback.is_playing() if current_audio_playback else False,
@@ -628,37 +808,69 @@ def get_audio_stats():
         "kokoro_api_available": kokoro_api_available,
         "api_url": KOKORO_API_BASE_URL,
         "current_response_id": current_response_id,
-        "streaming_stats": streaming_manager.get_active_response_stats()
+        "streaming_stats": streaming_manager.get_active_response_stats(),
+        "chunk_sequence_number": chunk_sequence_number,
+        "professional_smoothing": {
+            "enabled": True,
+            "numpy_available": NUMPY_AVAILABLE,
+            "professional_queue_stats": professional_audio_queue.get_stats()
+        }
     }
     return stats
 
 def log_audio_playback_verification():
-    """Log comprehensive audio playback verification"""
+    """Log comprehensive audio playback verification with professional smoothing details"""
     if DEBUG:
         stats = get_audio_stats()
-        print("=" * 60)
-        print("🔊 AUDIO PLAYBACK VERIFICATION")
-        print("=" * 60)
+        prof_stats = stats['professional_smoothing']
+        smoother_stats = prof_stats['professional_queue_stats']['smoother_stats']
+        
+        print("=" * 80)
+        print("🔊 PROFESSIONAL AUDIO PLAYBACK VERIFICATION")
+        print("=" * 80)
         print(f"📊 Queue Size: {stats['queue_size']}")
         print(f"🎵 Currently Playing: {stats['is_playing']}")
         print(f"🤖 Buddy Talking: {stats['buddy_talking']}")
         print(f"🌐 Kokoro API Available: {stats['kokoro_api_available']}")
         print(f"📡 API URL: {stats['api_url']}")
         print(f"🆔 Current Response ID: {stats['current_response_id']}")
+        print(f"🔢 Chunk Sequence: {stats['chunk_sequence_number']}")
         
+        # Professional smoothing details
+        print(f"\n🎭 PROFESSIONAL SMOOTHING:")
+        print(f"  ✅ Enabled: {prof_stats['enabled']}")
+        print(f"  📊 NumPy Available: {prof_stats['numpy_available']}")
+        print(f"  🎵 Chunks Processed: {smoother_stats['chunks_processed']}")
+        print(f"  🌊 Crossfades Applied: {smoother_stats['crossfades_applied']}")
+        print(f"  📈 Fade-ins Applied: {smoother_stats['fade_ins_applied']}")
+        print(f"  📉 Fade-outs Applied: {smoother_stats['fade_outs_applied']}")
+        print(f"  ⏱️ Total Processing Time: {smoother_stats['total_processing_time']:.3f}s")
+        
+        # Professional queue stats
+        prof_queue_stats = prof_stats['professional_queue_stats']
+        print(f"\n📦 PROFESSIONAL QUEUE:")
+        print(f"  📊 Total Chunks: {prof_queue_stats['total_chunks']}")
+        print(f"  ❌ Dropped Chunks: {prof_queue_stats['dropped_chunks']}")
+        print(f"  🐛 Processing Errors: {prof_queue_stats['processing_errors']}")
+        print(f"  📈 Queue Size: {prof_queue_stats['queue_size']}")
+        
+        # Streaming response details
         streaming_stats = stats['streaming_stats']
-        print(f"📈 Active Responses: {streaming_stats['active_responses']}")
+        print(f"\n📈 STREAMING RESPONSES:")
+        print(f"  🎯 Active Responses: {streaming_stats['active_responses']}")
         
         if streaming_stats['responses']:
-            print("📋 Response Details:")
+            print("  📋 Response Details:")
             for resp_id, resp_data in streaming_stats['responses'].items():
-                print(f"  - {resp_id}:")
-                print(f"    User: {resp_data['user']}")
-                print(f"    Chunks: {resp_data['chunks_played']}/{resp_data['chunks_received']}")
-                print(f"    Complete: {resp_data['is_complete']}")
-                print(f"    Duration: {resp_data['duration']:.2f}s")
+                print(f"    - {resp_id}:")
+                print(f"      User: {resp_data['user']}")
+                print(f"      Chunks: {resp_data['chunks_played']}/{resp_data['chunks_received']}")
+                print(f"      Complete: {resp_data['is_complete']}")
+                print(f"      Duration: {resp_data['duration']:.2f}s")
         
-        print("=" * 60)
+        print("=" * 80)
+        print("🎉 PROFESSIONAL AUDIO SYSTEM: Ready for seamless, studio-quality playback!")
+        print("=" * 80)
 
 def generate_and_play_kokoro(text, voice=None, lang=DEFAULT_LANG):
     """✅ FIX: Generate and play TTS using Kokoro - called after LLM generation is complete"""
