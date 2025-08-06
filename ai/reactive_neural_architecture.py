@@ -345,7 +345,24 @@ class AsyncNeuralPathways:
     
     def __init__(self, max_concurrent: int = 100, loop: Optional[asyncio.AbstractEventLoop] = None):
         self.max_concurrent = max_concurrent
-        self.loop = loop or asyncio.get_event_loop()
+        
+        # Fix event loop management with proper try/except blocks
+        if loop is not None:
+            self.loop = loop
+        else:
+            try:
+                # Try to get running event loop
+                self.loop = asyncio.get_running_loop()
+            except RuntimeError:
+                # No running event loop, create a new one
+                try:
+                    self.loop = asyncio.get_event_loop()
+                except RuntimeError:
+                    # Create new event loop if none exists
+                    self.loop = asyncio.new_event_loop()
+                    asyncio.set_event_loop(self.loop)
+        
+        # Initialize async components with proper event loop
         self.semaphore = asyncio.Semaphore(max_concurrent)
         self.active_operations: Dict[str, asyncio.Task] = {}
         self.operation_stats = {

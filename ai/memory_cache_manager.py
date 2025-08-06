@@ -22,6 +22,98 @@ from collections import defaultdict, OrderedDict
 from concurrent.futures import ThreadPoolExecutor, Future
 import os
 import pickle
+import multiprocessing as mp
+
+# Custom serialization-safe lock implementation
+class SerializableLock:
+    """A serialization-safe lock that can be pickled"""
+    
+    def __init__(self):
+        self._lock = threading.RLock()
+        self._lock_id = id(self._lock)
+    
+    def __enter__(self):
+        return self._lock.__enter__()
+    
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        return self._lock.__exit__(exc_type, exc_val, exc_tb)
+    
+    def acquire(self, blocking=True, timeout=-1):
+        return self._lock.acquire(blocking, timeout)
+    
+    def release(self):
+        return self._lock.release()
+    
+    def __getstate__(self):
+        # Return only serializable state
+        return {'lock_id': self._lock_id}
+    
+    def __setstate__(self, state):
+        # Recreate lock on deserialization
+        self._lock = threading.RLock()
+        self._lock_id = state.get('lock_id', id(self._lock))
+
+class SerializableThreadPoolExecutor:
+    """A serialization-safe thread pool executor wrapper"""
+    
+    def __init__(self, max_workers=2, thread_name_prefix="MemoryPreloader"):
+        self.max_workers = max_workers
+        self.thread_name_prefix = thread_name_prefix
+        self._executor = ThreadPoolExecutor(max_workers=max_workers, thread_name_prefix=thread_name_prefix)
+    
+    def submit(self, fn, *args, **kwargs):
+        return self._executor.submit(fn, *args, **kwargs)
+    
+    def shutdown(self, wait=True):
+        if hasattr(self, '_executor'):
+            self._executor.shutdown(wait=wait)
+    
+    def __getstate__(self):
+        # Return only serializable state
+        return {
+            'max_workers': self.max_workers,
+            'thread_name_prefix': self.thread_name_prefix
+        }
+    
+    def __setstate__(self, state):
+        # Recreate executor on deserialization
+        self.max_workers = state['max_workers']
+        self.thread_name_prefix = state['thread_name_prefix']
+        self._executor = ThreadPoolExecutor(
+            max_workers=self.max_workers, 
+            thread_name_prefix=self.thread_name_prefix
+        )
+
+class SerializableThread:
+    """A serialization-safe thread wrapper"""
+    
+    def __init__(self, target=None, daemon=True):
+        self.target = target
+        self.daemon = daemon
+        self._thread = None
+        if target:
+            self._thread = threading.Thread(target=target, daemon=daemon)
+    
+    def start(self):
+        if self._thread:
+            self._thread.start()
+    
+    def join(self, timeout=None):
+        if self._thread:
+            self._thread.join(timeout)
+    
+    def __getstate__(self):
+        # Return only serializable state
+        return {
+            'target_name': self.target.__name__ if self.target else None,
+            'daemon': self.daemon
+        }
+    
+    def __setstate__(self, state):
+        # Don't recreate thread on deserialization to avoid issues
+        self.target = None
+        self.daemon = state['daemon']
+        self._thread = None
 
 @dataclass
 class CacheEntry:
@@ -64,22 +156,22 @@ class MemoryCacheManager:
         # Cache storage with LRU eviction
         self.cache: OrderedDict[str, CacheEntry] = OrderedDict()
         self.cache_size_bytes = 0
-        self.cache_lock = threading.RLock()
+        self.cache_lock = SerializableLock()  # Use serialization-safe lock
         
         # Operation batching
         self.pending_batches: Dict[str, MemoryOperationBatch] = {}
         self.batch_threshold = 3  # Minimum operations to form a batch
         self.batch_timeout = 2.0  # Maximum wait time for batching
-        self.batch_lock = threading.Lock()
+        self.batch_lock = SerializableLock()  # Use serialization-safe lock
         
         # Context pattern learning
         self.access_patterns: Dict[str, List[str]] = defaultdict(list)  # user -> access sequence
         self.context_associations: Dict[str, Set[str]] = defaultdict(set)  # context -> related keys
-        self.pattern_lock = threading.Lock()
+        self.pattern_lock = SerializableLock()  # Use serialization-safe lock
         
         # Pre-loading system
         self.preload_queue: Set[str] = set()
-        self.preload_executor = ThreadPoolExecutor(max_workers=2, thread_name_prefix="MemoryPreloader")
+        self.preload_executor = SerializableThreadPoolExecutor(max_workers=2, thread_name_prefix="MemoryPreloader")
         
         # Performance metrics
         self.metrics = {
@@ -97,7 +189,7 @@ class MemoryCacheManager:
             self._load_persistent_cache()
         
         # Background maintenance
-        self.maintenance_thread = threading.Thread(target=self._background_maintenance, daemon=True)
+        self.maintenance_thread = SerializableThread(target=self._background_maintenance, daemon=True)
         self.maintenance_thread.start()
         
         print("[MemoryCacheManager] 🧠 Intelligent memory cache manager initialized")

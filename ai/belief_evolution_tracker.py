@@ -1070,3 +1070,7 @@ def start_belief_evolution(user_id: str):
     """Start belief evolution monitoring for a user"""
     tracker = get_belief_evolution_tracker(user_id)
     tracker.start_evolution_monitoring()
+
+def get_belief_tracker(user_id: str) -> BeliefEvolutionTracker:
+    """Get belief tracker for a specific user (alias for get_belief_evolution_tracker)"""
+    return get_belief_evolution_tracker(user_id)
