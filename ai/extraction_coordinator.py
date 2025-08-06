@@ -158,7 +158,7 @@ class QueryComplexityAnalyzer:
             factors['locations'] = location_matches
         
         # Events/activities (+2) - critical for life event detection
-        activities = ['went', 'going', 'visit', 'visited', 'meeting', 'appointment', 'party', 'birthday', 'dinner', 'lunch', 'breakfast', 'shopping', 'traveled', 'drove']
+        activities = ['went', 'going', 'visit', 'visited', 'meeting', 'appointment', 'party', 'birthday', 'dinner', 'lunch', 'breakfast', 'shopping', 'traveled', 'drove', 'working']
         activity_matches = [activity for activity in activities if activity in text_lower]
         if activity_matches:
             complexity_score += 2

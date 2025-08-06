@@ -328,7 +328,7 @@ Return ONLY valid JSON. Extract ALL relevant details."""
         
         # Check for location/activity patterns that should be life events
         locations = ['mcdonald', 'restaurant', 'store', 'work', 'home', 'school', 'park', 'mall', 'office', 'gym', 'hospital', 'bank', 'cafe', 'bar', 'hotel']
-        activities = ['went', 'going', 'visit', 'visited', 'meeting', 'appointment', 'party', 'birthday', 'dinner', 'lunch', 'breakfast', 'shopping', 'traveled', 'drove']
+        activities = ['went', 'going', 'visit', 'visited', 'meeting', 'appointment', 'party', 'birthday', 'dinner', 'lunch', 'breakfast', 'shopping', 'traveled', 'drove', 'working']
         
         has_location = any(loc in text_lower for loc in locations)
         has_activity = any(act in text_lower for act in activities)
@@ -490,7 +490,7 @@ Return ONLY valid JSON. Extract ALL relevant details."""
             score += 1
         
         # Events/activities (+1)
-        activities = ['went', 'going', 'visit', 'meeting', 'appointment', 'party', 'birthday', 'dinner', 'lunch']
+        activities = ['went', 'going', 'visit', 'visited', 'meeting', 'appointment', 'party', 'birthday', 'dinner', 'lunch', 'breakfast', 'shopping', 'traveled', 'drove', 'working']
         if any(activity in text_lower for activity in activities):
             score += 1
         
@@ -530,7 +530,7 @@ Return ONLY valid JSON. Extract ALL relevant details."""
     def _add_to_regular_memory(self, event: Dict[str, Any]):
         """Add event to regular memory system"""
         try:
-            from ai.memory import PersonalFact
+            from ai.memory import PersonalFact, EntityStatus
             
             topic = event.get('topic', '').replace(' ', '_').lower()
             
@@ -538,20 +538,23 @@ Return ONLY valid JSON. Extract ALL relevant details."""
             memory_value = self._create_memory_value(event)
             
             fact = PersonalFact(
+                category="life_event",
                 key=topic,
                 value=memory_value,
+                confidence=0.9,
                 date_learned=event.get('date', datetime.now().strftime('%Y-%m-%d')),
-                confidence=0.9
+                last_mentioned=datetime.now().strftime('%Y-%m-%d'),
+                source_context=event.get('original_text', ''),
+                emotional_weight=0.7 if event.get('emotion') in ['happy', 'excited'] else 0.3,
+                current_status=EntityStatus.CURRENT
             )
-            
-            fact.emotional_significance = 0.7 if event.get('emotion') in ['happy', 'excited'] else 0.3
-            fact.source_context = event.get('original_text', '')
             
             self.mega_memory.personal_facts[topic] = fact
             print(f"[ComprehensiveExtractor] ➕ Added to memory: {topic} = {memory_value}")
             
         except Exception as e:
             print(f"[ComprehensiveExtractor] ⚠️ Memory addition error: {e}")
+            # Continue without failing - the event is still created and cached
     
     def _create_memory_value(self, event: Dict[str, Any]) -> str:
         """Create readable memory value from event"""
