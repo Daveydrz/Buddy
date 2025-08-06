@@ -1,0 +1,229 @@
+{
+  "transitions": {
+    "trans_1_1754436479": {
+      "transition_id": "trans_1_1754436479",
+      "source_profile": "Anonymous_01",
+      "target_profile": "Dawid",
+      "transition_type": "anonymous_to_named",
+      "memory_count": 5,
+      "started_at": "2025-08-05T23:27:59.787953",
+      "completed_at": "2025-08-05T23:27:59.788180",
+      "status": "completed",
+      "memory_items": [
+        "memory_Anonymous_01_0",
+        "memory_Anonymous_01_1",
+        "memory_Anonymous_01_2",
+        "memory_Anonymous_01_3",
+        "memory_Anonymous_01_4"
+      ],
+      "rollback_data": {
+        "original_memories": [
+          "memory_Anonymous_01_0",
+          "memory_Anonymous_01_1",
+          "memory_Anonymous_01_2",
+          "memory_Anonymous_01_3",
+          "memory_Anonymous_01_4"
+        ],
+        "target_profile_existed": false
+      }
+    },
+    "trans_2_1754436479": {
+      "transition_id": "trans_2_1754436479",
+      "source_profile": "Anonymous_02",
+      "target_profile": "Francesco",
+      "transition_type": "anonymous_to_named",
+      "memory_count": 5,
+      "started_at": "2025-08-05T23:27:59.788677",
+      "completed_at": "2025-08-05T23:27:59.788974",
+      "status": "completed",
+      "memory_items": [
+        "memory_Anonymous_02_0",
+        "memory_Anonymous_02_1",
+        "memory_Anonymous_02_2",
+        "memory_Anonymous_02_3",
+        "memory_Anonymous_02_4"
+      ],
+      "rollback_data": {
+        "original_memories": [
+          "memory_Anonymous_02_0",
+          "memory_Anonymous_02_1",
+          "memory_Anonymous_02_2",
+          "memory_Anonymous_02_3",
+          "memory_Anonymous_02_4"
+        ],
+        "target_profile_existed": false
+      }
+    },
+    "trans_3_1754436479": {
+      "transition_id": "trans_3_1754436479",
+      "source_profile": "Francesco",
+      "target_profile": "Francesco_Renamed",
+      "transition_type": "name_update",
+      "memory_count": 5,
+      "started_at": "2025-08-05T23:27:59.789263",
+      "completed_at": null,
+      "status": "pending",
+      "memory_items": [],
+      "rollback_data": {}
+    },
+    "trans_4_1754436832": {
+      "transition_id": "trans_4_1754436832",
+      "source_profile": "Anonymous_01",
+      "target_profile": "Dawid",
+      "transition_type": "anonymous_to_named",
+      "memory_count": 5,
+      "started_at": "2025-08-05T23:33:52.500259",
+      "completed_at": "2025-08-05T23:33:52.500702",
+      "status": "completed",
+      "memory_items": [
+        "memory_Anonymous_01_0",
+        "memory_Anonymous_01_1",
+        "memory_Anonymous_01_2",
+        "memory_Anonymous_01_3",
+        "memory_Anonymous_01_4"
+      ],
+      "rollback_data": {
+        "original_memories": [
+          "memory_Anonymous_01_0",
+          "memory_Anonymous_01_1",
+          "memory_Anonymous_01_2",
+          "memory_Anonymous_01_3",
+          "memory_Anonymous_01_4"
+        ],
+        "target_profile_existed": false
+      }
+    },
+    "trans_5_1754436832": {
+      "transition_id": "trans_5_1754436832",
+      "source_profile": "Anonymous_02",
+      "target_profile": "Francesco",
+      "transition_type": "anonymous_to_named",
+      "memory_count": 5,
+      "started_at": "2025-08-05T23:33:52.501342",
+      "completed_at": "2025-08-05T23:33:52.501747",
+      "status": "completed",
+      "memory_items": [
+        "memory_Anonymous_02_0",
+        "memory_Anonymous_02_1",
+        "memory_Anonymous_02_2",
+        "memory_Anonymous_02_3",
+        "memory_Anonymous_02_4"
+      ],
+      "rollback_data": {
+        "original_memories": [
+          "memory_Anonymous_02_0",
+          "memory_Anonymous_02_1",
+          "memory_Anonymous_02_2",
+          "memory_Anonymous_02_3",
+          "memory_Anonymous_02_4"
+        ],
+        "target_profile_existed": false
+      }
+    },
+    "trans_6_1754436832": {
+      "transition_id": "trans_6_1754436832",
+      "source_profile": "Francesco",
+      "target_profile": "Francesco_Renamed",
+      "transition_type": "name_update",
+      "memory_count": 5,
+      "started_at": "2025-08-05T23:33:52.502122",
+      "completed_at": null,
+      "status": "pending",
+      "memory_items": [],
+      "rollback_data": {}
+    },
+    "trans_7_1754436916": {
+      "transition_id": "trans_7_1754436916",
+      "source_profile": "Anonymous_01",
+      "target_profile": "Dawid",
+      "transition_type": "anonymous_to_named",
+      "memory_count": 5,
+      "started_at": "2025-08-05T23:35:16.479580",
+      "completed_at": "2025-08-05T23:35:16.480090",
+      "status": "completed",
+      "memory_items": [
+        "memory_Anonymous_01_0",
+        "memory_Anonymous_01_1",
+        "memory_Anonymous_01_2",
+        "memory_Anonymous_01_3",
+        "memory_Anonymous_01_4"
+      ],
+      "rollback_data": {
+        "original_memories": [
+          "memory_Anonymous_01_0",
+          "memory_Anonymous_01_1",
+          "memory_Anonymous_01_2",
+          "memory_Anonymous_01_3",
+          "memory_Anonymous_01_4"
+        ],
+        "target_profile_existed": false
+      }
+    },
+    "trans_8_1754436916": {
+      "transition_id": "trans_8_1754436916",
+      "source_profile": "Anonymous_02",
+      "target_profile": "Francesco",
+      "transition_type": "anonymous_to_named",
+      "memory_count": 5,
+      "started_at": "2025-08-05T23:35:16.480648",
+      "completed_at": "2025-08-05T23:35:16.481114",
+      "status": "completed",
+      "memory_items": [
+        "memory_Anonymous_02_0",
+        "memory_Anonymous_02_1",
+        "memory_Anonymous_02_2",
+        "memory_Anonymous_02_3",
+        "memory_Anonymous_02_4"
+      ],
+      "rollback_data": {
+        "original_memories": [
+          "memory_Anonymous_02_0",
+          "memory_Anonymous_02_1",
+          "memory_Anonymous_02_2",
+          "memory_Anonymous_02_3",
+          "memory_Anonymous_02_4"
+        ],
+        "target_profile_existed": false
+      }
+    },
+    "trans_9_1754436916": {
+      "transition_id": "trans_9_1754436916",
+      "source_profile": "Francesco",
+      "target_profile": "Francesco_Renamed",
+      "transition_type": "name_update",
+      "memory_count": 5,
+      "started_at": "2025-08-05T23:35:16.481605",
+      "completed_at": null,
+      "status": "pending",
+      "memory_items": [],
+      "rollback_data": {}
+    }
+  },
+  "profile_continuities": {
+    "Dawid": {
+      "profile_id": "Dawid",
+      "original_anonymous_id": "Anonymous_01",
+      "transition_history": [
+        "trans_1_1754436479",
+        "trans_4_1754436832",
+        "trans_7_1754436916"
+      ],
+      "memory_lineage": {},
+      "created_at": "2025-08-05T23:27:59.788176",
+      "last_updated": "2025-08-05T23:35:16.480089"
+    },
+    "Francesco": {
+      "profile_id": "Francesco",
+      "original_anonymous_id": "Anonymous_02",
+      "transition_history": [
+        "trans_2_1754436479",
+        "trans_5_1754436832",
+        "trans_8_1754436916"
+      ],
+      "memory_lineage": {},
+      "created_at": "2025-08-05T23:27:59.788971",
+      "last_updated": "2025-08-05T23:35:16.481113"
+    }
+  },
+  "transition_counter": 9
+}

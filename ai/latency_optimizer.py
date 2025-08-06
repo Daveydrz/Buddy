@@ -219,26 +219,72 @@ class LatencyOptimizer:
         try:
             print("[LatencyOptimizer] 🔄 Using fallback response generation")
             
-            if FUSION_LLM_AVAILABLE:
-                response_generator = generate_response_streaming_with_intelligent_fusion(
-                    f"You are Buddy. Respond to: {user_input}", user_id, "en"
-                )
-            elif 'generate_response_streaming' in globals():
-                response_generator = generate_response_streaming(
-                    f"You are Buddy. Respond to: {user_input}", user_id, "en"
-                )
-            else:
-                # Ultimate fallback
-                yield f"I hear you saying: {user_input}. I'm having some technical difficulties but I'm here to help."
-                return
+            # Create a simple direct prompt
+            simple_prompt = f"""You are Buddy, a helpful AI assistant. 
+
+User: {user_input}
+
+Buddy:"""
             
+            # Try different LLM approaches in order of preference
+            if FUSION_LLM_AVAILABLE:
+                try:
+                    response_generator = generate_response_streaming_with_intelligent_fusion(
+                        simple_prompt, user_id, "en"
+                    )
+                except Exception as e:
+                    print(f"[LatencyOptimizer] ⚠️ Fusion LLM failed: {e}, trying basic LLM")
+                    response_generator = self._try_basic_llm(simple_prompt, user_id)
+            else:
+                response_generator = self._try_basic_llm(simple_prompt, user_id)
+            
+            # Stream the response
+            response_received = False
             for chunk in response_generator:
                 if chunk and chunk.strip():
+                    response_received = True
                     yield chunk.strip()
+            
+            # If no response was received, provide ultimate fallback
+            if not response_received:
+                yield self._get_ultimate_fallback_response(user_input)
                     
         except Exception as e:
             print(f"[LatencyOptimizer] ❌ Fallback error: {e}")
-            yield f"I apologize, but I'm experiencing technical difficulties. Your message was: {user_input}"
+            yield self._get_ultimate_fallback_response(user_input)
+    
+    def _try_basic_llm(self, prompt: str, user_id: str):
+        """Try basic LLM generation"""
+        try:
+            if 'generate_response_streaming' in globals():
+                return generate_response_streaming(prompt, user_id, "en")
+            else:
+                # Import basic chat if not available
+                from ai.chat import generate_response_streaming
+                return generate_response_streaming(prompt, user_id, "en")
+        except Exception as e:
+            print(f"[LatencyOptimizer] ⚠️ Basic LLM failed: {e}")
+            return iter([])  # Return empty iterator
+    
+    def _get_ultimate_fallback_response(self, user_input: str) -> str:
+        """Get ultimate fallback response when all else fails"""
+        responses = [
+            f"I hear you saying: {user_input}. I'm having some technical difficulties but I'm here to help.",
+            f"I understand you said '{user_input}'. Let me try to help you with that.",
+            f"Thanks for your message: '{user_input}'. I'm experiencing some system issues but I'm working on it.",
+            "I'm experiencing some technical difficulties right now, but I'm still here to assist you.",
+            "I'm having some system issues at the moment, but I appreciate your patience."
+        ]
+        
+        # Choose response based on input length
+        if len(user_input) > 50:
+            return responses[0]
+        elif any(word in user_input.lower() for word in ['how', 'what', 'why', 'when', 'where']):
+            return responses[1]
+        elif any(word in user_input.lower() for word in ['hello', 'hi', 'hey']):
+            return "Hello! I'm experiencing some technical difficulties but I'm glad you're here."
+        else:
+            return responses[2]
     
     def _record_performance(self,
                           total_time: float,
@@ -462,3 +508,59 @@ def auto_optimize_performance() -> str:
         return f"Auto-optimized to {optimal_mode.value} mode"
     else:
         return f"Current {latency_optimizer.optimization_mode.value} mode is optimal"
+
+def get_latency_stats() -> Dict[str, Any]:
+    """Get current latency statistics and performance metrics"""
+    try:
+        if not OPTIMIZATION_AVAILABLE:
+            return {
+                'status': 'optimization_unavailable',
+                'message': 'Optimization modules not available',
+                'basic_mode': True
+            }
+        
+        # Get comprehensive performance report
+        report = latency_optimizer.get_performance_report()
+        
+        # Add current configuration info
+        current_config = latency_optimizer.mode_configs.get(latency_optimizer.optimization_mode, {})
+        
+        # Calculate additional metrics
+        if latency_optimizer.performance_history:
+            recent_times = [r['total_time'] for r in latency_optimizer.performance_history[-10:]]
+            performance_trend = "improving" if len(recent_times) > 1 and recent_times[-1] < recent_times[0] else "stable"
+        else:
+            performance_trend = "no_data"
+        
+        return {
+            'current_mode': latency_optimizer.optimization_mode.value,
+            'optimization_available': OPTIMIZATION_AVAILABLE,
+            'fusion_llm_available': FUSION_LLM_AVAILABLE,
+            'current_config': {
+                'target_time': current_config.get('target_time', 'unlimited'),
+                'consciousness_tier': current_config.get('consciousness_tier', {}).get('value', 'default') if hasattr(current_config.get('consciousness_tier', {}), 'value') else str(current_config.get('consciousness_tier', 'default')),
+                'token_budget': current_config.get('token_budget', 'unlimited'),
+                'max_modules': current_config.get('max_modules', 'unlimited')
+            },
+            'performance_metrics': report.get('performance_summary', {}),
+            'optimization_effectiveness': report.get('optimization_effectiveness', {}),
+            'total_requests': latency_optimizer.optimization_stats['total_requests'],
+            'performance_trend': performance_trend,
+            'recommendations': report.get('recommendations', []),
+            'detailed_history': latency_optimizer.performance_history[-5:] if latency_optimizer.performance_history else [],
+            'system_health': {
+                'memory_usage_ok': True,  # Could add actual memory checks
+                'response_times_stable': report.get('performance_summary', {}).get('target_success_rate', 0) > 0.7,
+                'optimization_working': latency_optimizer.optimization_stats['total_requests'] > 0
+            }
+        }
+        
+    except Exception as e:
+        return {
+            'status': 'error',
+            'error': str(e),
+            'fallback_stats': {
+                'total_requests': getattr(latency_optimizer, 'optimization_stats', {}).get('total_requests', 0),
+                'current_mode': getattr(latency_optimizer, 'optimization_mode', {}).get('value', 'unknown') if hasattr(getattr(latency_optimizer, 'optimization_mode', {}), 'value') else 'unknown'
+            }
+        }

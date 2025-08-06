@@ -1,0 +1,227 @@
+[
+  {
+    "timestamp": "2025-08-05T23:27:59.800908",
+    "content_hash": "02c432216d092e2a77d2f2dd2a8824a6",
+    "is_valid": false,
+    "confidence_score": 0.3306666666666667,
+    "issues_count": 2,
+    "issues": [
+      "Template contamination detected (score: 1.00)",
+      "Content not relevant to conversation (score: 0.11)"
+    ]
+  },
+  {
+    "timestamp": "2025-08-05T23:27:59.801179",
+    "content_hash": "a81ab91be3f2756b57568c52b5ab74a2",
+    "is_valid": false,
+    "confidence_score": 0.6322857142857143,
+    "issues_count": 1,
+    "issues": [
+      "Content not relevant to conversation (score: 0.27)"
+    ]
+  },
+  {
+    "timestamp": "2025-08-05T23:27:59.801472",
+    "content_hash": "7a642c4bb00b669f448cf59808a72eae",
+    "is_valid": false,
+    "confidence_score": 0.7115,
+    "issues_count": 2,
+    "issues": [
+      "Template contamination detected (score: 0.38)",
+      "Content not relevant to conversation (score: 0.56)"
+    ]
+  },
+  {
+    "timestamp": "2025-08-05T23:27:59.801714",
+    "content_hash": "23b68ce796c830a5191e1f824db7389c",
+    "is_valid": false,
+    "confidence_score": 0.6,
+    "issues_count": 1,
+    "issues": [
+      "Content not relevant to conversation (score: 0.00)"
+    ]
+  },
+  {
+    "timestamp": "2025-08-05T23:27:59.802054",
+    "content_hash": "7533a976bed164f1291eca3781d62c13",
+    "is_valid": false,
+    "confidence_score": 0.32307692307692304,
+    "issues_count": 2,
+    "issues": [
+      "Template contamination detected (score: 0.92)",
+      "Content not relevant to conversation (score: 0.00)"
+    ]
+  },
+  {
+    "timestamp": "2025-08-05T23:27:59.802376",
+    "content_hash": "c22b8918d4337edeb5f85a449fdc097f",
+    "is_valid": false,
+    "confidence_score": 0.9000000000000001,
+    "issues_count": 1,
+    "issues": [
+      "Template contamination detected (score: 0.33)"
+    ]
+  },
+  {
+    "timestamp": "2025-08-05T23:27:59.802690",
+    "content_hash": "823766c1b17cd13c7b0ece4096dda4e9",
+    "is_valid": false,
+    "confidence_score": 0.2198181818181818,
+    "issues_count": 3,
+    "issues": [
+      "Template contamination detected (score: 0.36)",
+      "Content not relevant to conversation (score: 0.00)",
+      "Memory validation failed (score: 0.10)"
+    ]
+  },
+  {
+    "timestamp": "2025-08-05T23:33:52.608033",
+    "content_hash": "02c432216d092e2a77d2f2dd2a8824a6",
+    "is_valid": false,
+    "confidence_score": 0.3306666666666667,
+    "issues_count": 2,
+    "issues": [
+      "Template contamination detected (score: 1.00)",
+      "Content not relevant to conversation (score: 0.11)"
+    ]
+  },
+  {
+    "timestamp": "2025-08-05T23:33:52.608436",
+    "content_hash": "a81ab91be3f2756b57568c52b5ab74a2",
+    "is_valid": false,
+    "confidence_score": 0.6322857142857143,
+    "issues_count": 1,
+    "issues": [
+      "Content not relevant to conversation (score: 0.27)"
+    ]
+  },
+  {
+    "timestamp": "2025-08-05T23:33:52.608908",
+    "content_hash": "7a642c4bb00b669f448cf59808a72eae",
+    "is_valid": false,
+    "confidence_score": 0.7115,
+    "issues_count": 2,
+    "issues": [
+      "Template contamination detected (score: 0.38)",
+      "Content not relevant to conversation (score: 0.56)"
+    ]
+  },
+  {
+    "timestamp": "2025-08-05T23:33:52.609205",
+    "content_hash": "23b68ce796c830a5191e1f824db7389c",
+    "is_valid": false,
+    "confidence_score": 0.6,
+    "issues_count": 1,
+    "issues": [
+      "Content not relevant to conversation (score: 0.00)"
+    ]
+  },
+  {
+    "timestamp": "2025-08-05T23:33:52.610513",
+    "content_hash": "7533a976bed164f1291eca3781d62c13",
+    "is_valid": false,
+    "confidence_score": 0.32307692307692304,
+    "issues_count": 2,
+    "issues": [
+      "Template contamination detected (score: 0.92)",
+      "Content not relevant to conversation (score: 0.00)"
+    ]
+  },
+  {
+    "timestamp": "2025-08-05T23:33:52.610919",
+    "content_hash": "c22b8918d4337edeb5f85a449fdc097f",
+    "is_valid": false,
+    "confidence_score": 0.9000000000000001,
+    "issues_count": 1,
+    "issues": [
+      "Template contamination detected (score: 0.33)"
+    ]
+  },
+  {
+    "timestamp": "2025-08-05T23:33:52.611272",
+    "content_hash": "823766c1b17cd13c7b0ece4096dda4e9",
+    "is_valid": false,
+    "confidence_score": 0.2198181818181818,
+    "issues_count": 3,
+    "issues": [
+      "Template contamination detected (score: 0.36)",
+      "Content not relevant to conversation (score: 0.00)",
+      "Memory validation failed (score: 0.10)"
+    ]
+  },
+  {
+    "timestamp": "2025-08-05T23:35:46.590436",
+    "content_hash": "02c432216d092e2a77d2f2dd2a8824a6",
+    "is_valid": false,
+    "confidence_score": 0.3306666666666667,
+    "issues_count": 2,
+    "issues": [
+      "Template contamination detected (score: 1.00)",
+      "Content not relevant to conversation (score: 0.11)"
+    ]
+  },
+  {
+    "timestamp": "2025-08-05T23:35:46.590939",
+    "content_hash": "a81ab91be3f2756b57568c52b5ab74a2",
+    "is_valid": false,
+    "confidence_score": 0.6322857142857143,
+    "issues_count": 1,
+    "issues": [
+      "Content not relevant to conversation (score: 0.27)"
+    ]
+  },
+  {
+    "timestamp": "2025-08-05T23:35:46.591473",
+    "content_hash": "7a642c4bb00b669f448cf59808a72eae",
+    "is_valid": false,
+    "confidence_score": 0.7115,
+    "issues_count": 2,
+    "issues": [
+      "Template contamination detected (score: 0.38)",
+      "Content not relevant to conversation (score: 0.56)"
+    ]
+  },
+  {
+    "timestamp": "2025-08-05T23:35:46.591828",
+    "content_hash": "23b68ce796c830a5191e1f824db7389c",
+    "is_valid": false,
+    "confidence_score": 0.6,
+    "issues_count": 1,
+    "issues": [
+      "Content not relevant to conversation (score: 0.00)"
+    ]
+  },
+  {
+    "timestamp": "2025-08-05T23:35:46.592407",
+    "content_hash": "7533a976bed164f1291eca3781d62c13",
+    "is_valid": false,
+    "confidence_score": 0.32307692307692304,
+    "issues_count": 2,
+    "issues": [
+      "Template contamination detected (score: 0.92)",
+      "Content not relevant to conversation (score: 0.00)"
+    ]
+  },
+  {
+    "timestamp": "2025-08-05T23:35:46.592865",
+    "content_hash": "c22b8918d4337edeb5f85a449fdc097f",
+    "is_valid": false,
+    "confidence_score": 0.9000000000000001,
+    "issues_count": 1,
+    "issues": [
+      "Template contamination detected (score: 0.33)"
+    ]
+  },
+  {
+    "timestamp": "2025-08-05T23:35:46.593375",
+    "content_hash": "823766c1b17cd13c7b0ece4096dda4e9",
+    "is_valid": false,
+    "confidence_score": 0.2198181818181818,
+    "issues_count": 3,
+    "issues": [
+      "Template contamination detected (score: 0.36)",
+      "Content not relevant to conversation (score: 0.00)",
+      "Memory validation failed (score: 0.10)"
+    ]
+  }
+]

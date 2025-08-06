@@ -345,7 +345,19 @@ class AsyncNeuralPathways:
     
     def __init__(self, max_concurrent: int = 100, loop: Optional[asyncio.AbstractEventLoop] = None):
         self.max_concurrent = max_concurrent
-        self.loop = loop or asyncio.get_event_loop()
+        
+        # Safe event loop handling
+        try:
+            # Try to get the current running loop
+            self.loop = asyncio.get_running_loop()
+        except RuntimeError:
+            # No running loop, use provided loop or create new one
+            if loop:
+                self.loop = loop
+            else:
+                # Create a new event loop but don't set it as the current loop yet
+                self.loop = asyncio.new_event_loop()
+        
         self.semaphore = asyncio.Semaphore(max_concurrent)
         self.active_operations: Dict[str, asyncio.Task] = {}
         self.operation_stats = {

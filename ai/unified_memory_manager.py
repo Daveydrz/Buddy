@@ -93,7 +93,7 @@ def extract_all_from_text(username: str, text: str, conversation_context: str = 
             return cached_result
         
         # Use enterprise extraction coordination
-        result = extract_with_enterprise_coordination(
+        future_result = extract_with_enterprise_coordination(
             username=username,
             text=text,
             interaction_type=mapped_interaction_type,
@@ -101,6 +101,17 @@ def extract_all_from_text(username: str, text: str, conversation_context: str = 
             conversation_context=conversation_context,
             timeout_seconds=30 if mapped_interaction_type == InteractionType.VOICE_TO_SPEECH else 60
         )
+        
+        # Get the actual result from the Future
+        try:
+            result = future_result.result(timeout=60)  # Wait up to 60 seconds for result
+        except Exception as e:
+            print(f"[UnifiedMemory] ❌ Enterprise extraction failed: {e}")
+            # Fallback to standard extraction
+            extractor = get_unified_memory_extractor(username)
+            result = extractor.extract_all_from_text(text, conversation_context)
+            print(f"[UnifiedMemory] 🔄 Fallback to standard extraction completed")
+            return result
         
         # Cache result intelligently
         cache_memory_intelligent(
