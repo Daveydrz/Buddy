@@ -220,6 +220,11 @@ KOKORO_VOICE_SPEED = 1.0          # Speech speed (0.5-2.0)
 KOKORO_VOICE_STABILITY = 0.8      # Voice stability
 KOKORO_VOICE_CLARITY = 0.9        # Voice clarity
 
+# ✅ Streaming TTS Configuration
+STREAMING_BUFFER_SIZE = 10              # Audio queue buffer size
+STREAMING_THREAD_POOL_SIZE = 3          # Thread pool for audio generation
+KYUTAI_PROSODY_OVERLAP = 0.1            # Overlap timing for natural prosody
+
 # ✅ Legacy compatibility (kept for fallback)
 KOKORO_MODEL_PATH = "kokoro-v1.0.onnx"    # Fallback only
 KOKORO_VOICES_PATH = "voices-v1.0.bin"    # Fallback only

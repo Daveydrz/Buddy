@@ -41,47 +41,45 @@ class StreamingKokoroWrapper:
             if DEBUG:
                 print(f"[StreamingKokoro] 🎭 Voice set to {self.current_voice} ({self.current_lang})")
     
-    def generate_audio_chunk_sync(self, text: str, chunk_id: str) -> Optional[AudioChunk]:
-        """Generate audio for a single chunk using your existing audio.output"""
+    def generate_audio_chunk_sync(self, text: str, chunk_id: str, response_id: str = None) -> Optional[AudioChunk]:
+        """Generate audio for a single chunk using improved audio output system"""
         try:
             start_time = time.time()
-            
-            # ✅ FIXED: Use your existing audio output system
-            from audio.output import speak_async
-            
-            # For now, we'll use the existing speak_async and return metadata
-            # This is a temporary solution until we can directly access Kokoro
             
             if DEBUG:
                 print(f"[StreamingKokoro] 🎵 Generating chunk {chunk_id}: '{text[:30]}...'")
             
-            # Use your existing TTS
-            speak_async(text, self.current_lang.split('-')[0])  # Extract language code
+            # ✅ FIXED: Use improved speak_streaming with response tracking
+            from audio.output import speak_streaming
+            success = speak_streaming(text, self.current_lang.split('-')[0], response_id=response_id)
             
             generation_time = time.time() - start_time
             
-            # Create a placeholder audio chunk (since we can't easily extract the actual audio)
-            # In a full implementation, you'd want to modify audio.output to return the audio data
-            audio_chunk = AudioChunk(
-                audio_data=np.array([]),  # Placeholder - actual audio is played by speak_async
-                sample_rate=16000,
-                chunk_id=chunk_id,
-                text=text,
-                start_time=start_time,
-                generation_time=generation_time
-            )
-            
-            if DEBUG:
-                print(f"[StreamingKokoro] ✅ Played chunk {chunk_id} in {generation_time:.2f}s")
-            
-            return audio_chunk
+            if success:
+                # Create audio chunk metadata (actual audio is handled by speak_streaming)
+                audio_chunk = AudioChunk(
+                    audio_data=np.array([]),  # Placeholder - actual audio is queued by speak_streaming
+                    sample_rate=16000,
+                    chunk_id=chunk_id,
+                    text=text,
+                    start_time=start_time,
+                    generation_time=generation_time
+                )
+                
+                if DEBUG:
+                    print(f"[StreamingKokoro] ✅ Queued chunk {chunk_id} in {generation_time:.2f}s")
+                
+                return audio_chunk
+            else:
+                print(f"[StreamingKokoro] ❌ Failed to queue chunk {chunk_id}")
+                return None
             
         except Exception as e:
             print(f"[StreamingKokoro] ❌ Error generating audio for chunk {chunk_id}: {e}")
             return None
     
-    def stream_text_chunks(self, text_chunks: List[str], lang: str = "en") -> Generator[AudioChunk, None, None]:
-        """Stream audio generation for text chunks"""
+    def stream_text_chunks(self, text_chunks: List[str], lang: str = "en", response_id: str = None) -> Generator[AudioChunk, None, None]:
+        """Stream audio generation for text chunks with proper response tracking"""
         self.set_voice_settings(lang)
         self.is_streaming = True
         
@@ -97,13 +95,15 @@ class StreamingKokoroWrapper:
             
             if DEBUG:
                 print(f"[StreamingKokoro] 🎵 Streaming {len(all_chunks)} chunks")
+                if response_id:
+                    print(f"[StreamingKokoro] 📊 Response ID: {response_id}")
             
             # Process chunks with timing
             for i, chunk in enumerate(all_chunks):
                 chunk_id = f"chunk_{i}"
                 
-                # Generate and play audio
-                audio_chunk = self.generate_audio_chunk_sync(chunk.text, chunk_id)
+                # Generate and queue audio with response tracking
+                audio_chunk = self.generate_audio_chunk_sync(chunk.text, chunk_id, response_id)
                 
                 if audio_chunk:
                     yield audio_chunk
@@ -128,18 +128,29 @@ class StreamingKokoroWrapper:
 # Global streaming Kokoro instance
 streaming_kokoro = StreamingKokoroWrapper()
 
-def stream_speak_chunks(text_chunks: List[str], lang: str = "en"):
-    """FIXED: High-level function to stream speak text chunks"""
+def stream_speak_chunks(text_chunks: List[str], lang: str = "en", response_id: str = None):
+    """✅ FIXED: High-level function to stream speak text chunks with response tracking"""
+    from audio.output import complete_streaming_response
+    
     kokoro = streaming_kokoro
     
     if DEBUG:
         print(f"[StreamSpeak] 🌊 Starting to stream {len(text_chunks)} text chunks")
+        if response_id:
+            print(f"[StreamSpeak] 📊 Response ID: {response_id}")
     
     chunk_count = 0
-    for audio_chunk in kokoro.stream_text_chunks(text_chunks, lang):
-        chunk_count += 1
+    try:
+        for audio_chunk in kokoro.stream_text_chunks(text_chunks, lang, response_id):
+            chunk_count += 1
+            if DEBUG:
+                print(f"[StreamSpeak] 🎵 Completed chunk {chunk_count}: '{audio_chunk.text[:30]}...'")
+    finally:
+        # Mark the response as complete when all chunks are processed
+        if response_id:
+            complete_streaming_response(response_id)
+        
         if DEBUG:
-            print(f"[StreamSpeak] 🎵 Completed chunk {chunk_count}: '{audio_chunk.text[:30]}...'")
-    
-    if DEBUG:
-        print(f"[StreamSpeak] ✅ Completed streaming {chunk_count} chunks")
+            print(f"[StreamSpeak] ✅ Completed streaming {chunk_count} chunks")
+            if response_id:
+                print(f"[StreamSpeak] 🏁 Response {response_id} marked complete")
