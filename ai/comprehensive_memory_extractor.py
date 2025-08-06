@@ -111,15 +111,15 @@ class ComprehensiveMemoryExtractor:
                 complexity_score = self._calculate_complexity_score(text)
                 word_count = len(text.split())
                 
-                # Choose extraction tier based on complexity with TIER 3 limiting
-                if complexity_score <= 3 and word_count <= 8:
-                    # TIER 1: Simple extraction (70 tokens total)
+                # Enhanced tier selection based on complexity with refined thresholds
+                if complexity_score <= 1 and word_count <= 6:
+                    # TIER 1: Simple extraction (70 tokens total) - basic states, simple reads
                     result = self._tier1_simple_extraction(text)
-                elif complexity_score <= 6 and word_count <= 20:
-                    # TIER 2: Medium extraction (150 tokens total)  
+                elif complexity_score <= 4 and word_count <= 15:
+                    # TIER 2: Medium extraction (150 tokens total) - location visits, ongoing activities  
                     result = self._tier2_medium_extraction(text)
                 else:
-                    # TIER 3: Complex extraction (300 tokens total - comprehensive)
+                    # TIER 3: Complex extraction (300 tokens total) - planning, multiple people/times
                     # Check if we should limit TIER 3 extractions to prevent loops
                     if self._should_allow_tier3_extraction(text):
                         result = self._tier3_comprehensive_extraction(text, conversation_context)
@@ -132,6 +132,7 @@ class ComprehensiveMemoryExtractor:
                 # Store any memory events in regular memory system
                 for event in result.memory_events:
                     self._add_to_regular_memory(event)
+                    self._save_to_smart_memory_files(event)
                 
                 # Save conversation threading data
                 if result.conversation_thread_id or result.memory_enhancements:
@@ -380,36 +381,54 @@ Return ONLY valid JSON. Extract ALL relevant details."""
         return recent_memories[-10:]  # Return last 10 recent memories
     
     def _calculate_complexity_score(self, text: str) -> int:
-        """Calculate text complexity for tier selection"""
+        """
+        Calculate text complexity for tier selection
+        Enhanced to properly detect activity types and complexity
+        """
         text_lower = text.lower()
         score = 0
         
-        # Time references (+2)
-        time_indicators = ['tomorrow', 'today', 'yesterday', 'next week', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday', 'at ', 'pm', 'am', 'o\'clock']
+        # Time references (+3) - High complexity
+        time_indicators = ['tomorrow', 'today', 'yesterday', 'next week', 'next weekend', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday', 'at ', 'pm', 'am', 'o\'clock', 'later', 'earlier']
         if any(indicator in text_lower for indicator in time_indicators):
-            score += 2
+            score += 3
         
-        # People mentioned (+2)  
-        people_indicators = ['with', 'friend', 'family', 'mom', 'dad', 'sister', 'brother', 'francesco', 'sarah', 'john']
+        # People mentioned (+3) - High complexity  
+        people_indicators = ['with', 'friend', 'family', 'mom', 'dad', 'sister', 'brother', 'francesco', 'sarah', 'john', 'we', 'us', 'them']
         if any(person in text_lower for person in people_indicators):
+            score += 3
+        
+        # Planning/Future activities (+2) - Medium-high complexity
+        planning_indicators = ['planning', 'will', 'going to', 'next', 'plan to', 'want to', 'thinking about']
+        if any(plan in text_lower for plan in planning_indicators):
             score += 2
         
-        # Locations (+1)
-        locations = ['mcdonald', 'restaurant', 'store', 'work', 'home', 'school', 'park', 'mall']
+        # Ongoing activities (+2) - Medium-high complexity
+        ongoing_indicators = ['been reading', 'been learning', 'been studying', 'currently', 'still', 'continuing']
+        if any(ongoing in text_lower for ongoing in ongoing_indicators):
+            score += 2
+        
+        # Locations (+2) - Medium complexity
+        locations = ['mcdonald', 'restaurant', 'store', 'work', 'home', 'school', 'park', 'mall', 'place']
         if any(location in text_lower for location in locations):
+            score += 2
+        
+        # Past activities (+1) - Basic complexity
+        past_activities = ['went', 'visited', 'read', 'finished', 'completed', 'did']
+        if any(activity in text_lower for activity in past_activities):
             score += 1
         
-        # Events/activities (+1)
-        activities = ['went', 'going', 'visit', 'meeting', 'appointment', 'party', 'birthday', 'dinner', 'lunch']
-        if any(activity in text_lower for activity in activities):
+        # Current states (+1) - Basic complexity
+        current_states = ['learning', 'studying', 'working', 'doing']
+        if any(state in text_lower for state in current_states):
             score += 1
         
-        # Emotional content (+1)
-        emotions = ['happy', 'sad', 'excited', 'worried', 'nervous', 'love', 'hate', 'stressed']
+        # Emotional content (+1) - Basic complexity
+        emotions = ['happy', 'sad', 'excited', 'worried', 'nervous', 'love', 'hate', 'stressed', 'enjoy', 'like']
         if any(emotion in text_lower for emotion in emotions):
             score += 1
         
-        return min(score, 8)  # Cap at 8
+        return min(score, 10)  # Cap at 10 for very complex scenarios
     
     def _is_casual_conversation(self, text: str) -> bool:
         """Filter out pure casual conversation"""
@@ -620,4 +639,40 @@ Return ONLY valid JSON. Extract ALL relevant details."""
                          if timestamp < cutoff_time]
         for key in keys_to_remove:
             del self.extraction_cache[key]
-            print(f"[ComprehensiveExtractor] ⚠️ Save error: {e}")
+    
+    def _save_to_smart_memory_files(self, event: Dict[str, Any]):
+        """Save event to appropriate smart memory file based on type"""
+        try:
+            event_type = event.get('type', 'unknown').lower()
+            
+            # Determine which file to save to based on event type and properties
+            if 'appointment' in event_type or event.get('time'):
+                filename = 'smart_appointments.json'
+            elif any(keyword in event_type for keyword in ['plan', 'future', 'will']) or event.get('status') == 'future':
+                filename = 'smart_life_events.json'
+            elif any(keyword in event_type for keyword in ['visit', 'location', 'went', 'been']):
+                filename = 'smart_life_events.json'
+            else:
+                filename = 'smart_highlights.json'
+            
+            # Load existing data
+            existing_events = self.load_memory(filename)
+            
+            # Add timestamp if missing
+            if 'timestamp' not in event:
+                event['timestamp'] = datetime.now().isoformat()
+            
+            # Add unique ID if missing
+            if 'id' not in event:
+                event['id'] = f"{event_type}_{int(datetime.now().timestamp())}"
+            
+            # Add to existing events
+            existing_events.append(event)
+            
+            # Save back to file
+            self.save_memory(existing_events, filename)
+            
+            print(f"[ComprehensiveExtractor] 💾 Saved to {filename}: {event.get('topic', 'unknown')}")
+            
+        except Exception as e:
+            print(f"[ComprehensiveExtractor] ⚠️ Smart memory save error: {e}")

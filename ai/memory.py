@@ -1291,12 +1291,32 @@ class UserMemorySystem:
             (r"been to mcdonald'?s? with (\w+)", "activities", "been_to_mcdonalds_with_{0}", EntityStatus.CURRENT),
             (r"(\w+ to \w+) with (\w+)", "activities", "{0}_with_{1}", EntityStatus.CURRENT),
             # Special patterns for common places MUST come first to match before generic patterns
-            (r"went to mcdonalds", "activities", "visited_mcdonalds", EntityStatus.CURRENT),
-            (r"went to mcdonald's", "activities", "visited_mcdonalds", EntityStatus.CURRENT), 
-            (r"went to mcdonald", "activities", "visited_mcdonalds", EntityStatus.CURRENT),
-            (r"been to mcdonalds", "activities", "visited_mcdonalds", EntityStatus.CURRENT),
-            (r"been to mcdonald's", "activities", "visited_mcdonalds", EntityStatus.CURRENT),
+            (r"went to mcdonalds?(?:\s+earlier)?", "activities", "visited_mcdonalds", EntityStatus.CURRENT),
+            (r"went to mcdonald'?s?(?:\s+earlier)?", "activities", "visited_mcdonalds", EntityStatus.CURRENT), 
+            (r"went to mcdonald(?:\s+earlier)?", "activities", "visited_mcdonalds", EntityStatus.CURRENT),
+            (r"been to mcdonalds?", "activities", "visited_mcdonalds", EntityStatus.CURRENT),
+            (r"been to mcdonald'?s?", "activities", "visited_mcdonalds", EntityStatus.CURRENT),
             (r"been to mcdonald", "activities", "visited_mcdonalds", EntityStatus.CURRENT),
+            
+            # Reading activities - enhanced for casual speech and missing pronouns
+            (r"(?:i'?ve\s+)?read\s+(?:a\s+)?(\w+)", "activities", "read_{0}", EntityStatus.CURRENT),
+            (r"(?:i'?ve\s+)?been\s+reading\s+(?:a\s+)?(\w+)", "activities", "reading_{0}", EntityStatus.CURRENT),
+            (r"(?:i'?m\s+)?reading\s+(?:a\s+)?(\w+)", "activities", "reading_{0}", EntityStatus.CURRENT),
+            (r"finished\s+reading\s+(?:a\s+)?(\w+)", "activities", "finished_reading_{0}", EntityStatus.CURRENT),
+            
+            # Learning and current states - enhanced for casual speech  
+            (r"(?:i'?m\s+)?learning\s+(\w+)", "activities", "learning_{0}", EntityStatus.CURRENT),
+            (r"(?:i'?m\s+)?studying\s+(\w+)", "activities", "studying_{0}", EntityStatus.CURRENT),
+            (r"currently\s+learning\s+(\w+)", "activities", "learning_{0}", EntityStatus.CURRENT),
+            (r"(?:i'?m\s+)?taking\s+(\w+)\s+(?:classes?|lessons?)", "activities", "learning_{0}", EntityStatus.CURRENT),
+            
+            # Future plans and activities - enhanced for casual speech
+            (r"(?:we'?re?\s+)?planning\s+to\s+go\s+on\s+(\w+)\s+(next\s+\w+)", "plans", "plan_{0}_{1}", EntityStatus.PLANNED),
+            (r"(?:we'?re?\s+)?planning\s+to\s+(\w+)\s+(next\s+\w+)", "plans", "plan_{0}_{1}", EntityStatus.PLANNED),
+            (r"(?:we'?re?\s+)?going\s+to\s+(\w+)\s+(next\s+\w+)", "plans", "plan_{0}_{1}", EntityStatus.PLANNED),
+            (r"will\s+(\w+)\s+(next\s+\w+)", "plans", "will_{0}_{1}", EntityStatus.PLANNED),
+            (r"want\s+to\s+(\w+)\s+(next\s+\w+)", "plans", "want_to_{0}_{1}", EntityStatus.PLANNED),
+            
             # Generic patterns after specific ones
             (r"i went to (\w+)", "activities", "visited_{0}", EntityStatus.CURRENT),
             (r"went to (\w+)", "activities", "visited_{0}", EntityStatus.CURRENT),
@@ -1317,11 +1337,21 @@ class UserMemorySystem:
                     value = "mcdonalds"  # Fixed value for McDonald's patterns without capture groups
                 elif "mcdonalds_with_" in key_template:
                     value = f"mcdonalds with {match.group(1)}"  # McDonald's with companion
+                elif "read_" in key_template or "reading_" in key_template:
+                    value = f"{match.group(1)}" if match.groups() else "book"  # Reading activities
+                elif "learning_" in key_template or "studying_" in key_template:
+                    value = f"{match.group(1)}" if match.groups() else "subject"  # Learning activities
+                elif "plan_" in key_template and len(match.groups()) >= 2:
+                    value = f"{match.group(1)} {match.group(2)}"  # Future plans with time
                 elif match.groups():
                     if len(match.groups()) == 1:
                         value = match.group(1)  # Single capture group
                     elif len(match.groups()) == 2:
-                        value = f"{match.group(1)} with {match.group(2)}"  # Activity with companion
+                        # Check if it's a plan pattern or activity with companion
+                        if "plan_" in key_template or "will_" in key_template or "want_to_" in key_template:
+                            value = f"{match.group(1)} {match.group(2)}"  # Future plans
+                        else:
+                            value = f"{match.group(1)} with {match.group(2)}"  # Activity with companion
                     else:
                         value = " ".join(match.groups())  # Multiple capture groups
                 else:
