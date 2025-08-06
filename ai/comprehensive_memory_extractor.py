@@ -1,7 +1,7 @@
 """
-Comprehensive Memory Extractor - Single LLM call for all extraction types
-Created: 2025-01-22
-Purpose: Replace multiple extraction systems with one unified, context-aware system
+Comprehensive Memory Extractor - Pattern-first approach with LLM fallback
+Created: 2025-01-22  
+Purpose: Replace multiple extraction systems with unified, pattern-first system
 """
 
 import json
@@ -14,6 +14,7 @@ from dataclasses import dataclass, asdict
 
 from ai.chat import ask_kobold
 from ai.memory import get_user_memory
+from ai.pattern_memory_extractor import PatternMemoryExtractor
 
 @dataclass
 class ExtractionResult:
@@ -28,13 +29,10 @@ class ExtractionResult:
 
 class ComprehensiveMemoryExtractor:
     """
-    🧠 Single LLM call for ALL extraction types:
-    - Memory events (appointments, life events, highlights)  
-    - Intent detection
-    - Emotional analysis
-    - Conversation threading
-    - Memory enhancements
-    - Context keywords
+    🧠 Pattern-first extraction with LLM fallback:
+    1. Try pattern recognition for common cases (fast, accurate)
+    2. Fall back to LLM only when needed (context-aware tiers)
+    3. Single extraction lock to prevent redundancy
     """
     
     # Class-level lock to ensure only one extraction happens at a time
@@ -47,6 +45,9 @@ class ComprehensiveMemoryExtractor:
         
         # Get existing memory systems
         self.mega_memory = get_user_memory(username)
+        
+        # Initialize pattern-first extractor
+        self.pattern_extractor = PatternMemoryExtractor()
         
         # Conversation threading storage
         self.conversation_threads = self.load_memory('conversation_threads.json')
@@ -61,18 +62,20 @@ class ComprehensiveMemoryExtractor:
         self.tier3_limit_window = 120  # 2 minutes between TIER 3 extractions
         self.max_tier3_per_minute = 1
         
-        print(f"[ComprehensiveExtractor] 🧠 Initialized unified extraction for {username}")
+        print(f"[ComprehensiveExtractor] 🧠 Initialized pattern-first extraction for {username}")
     
     def extract_all_from_text(self, text: str, conversation_context: str = "") -> ExtractionResult:
         """
-        🎯 Single LLM call for ALL extraction types with context awareness
-        Uses locking to ensure only one extraction happens at a time
+        🎯 Pattern-first extraction with LLM fallback
+        1. Try pattern recognition first (fast, no LLM call)
+        2. Use LLM only when pattern matching fails
+        3. Locking to ensure only one extraction at a time
         """
         # Use class-level lock to prevent multiple parallel extractions
         with self._extraction_lock:
             print(f"[ComprehensiveExtractor] 🔒 Extraction lock acquired for: '{text[:50]}...'")
             
-            # Check deduplication cache
+            # Check deduplication cache first
             text_hash = hash(text.lower().strip())
             current_time = datetime.now().timestamp()
             
@@ -89,7 +92,7 @@ class ComprehensiveMemoryExtractor:
             self.extraction_cache[text_hash] = current_time
             
             try:
-                # Check if this is a memory enhancement (follow-up to existing memory)
+                # Check if this is a memory enhancement first
                 enhancement_result = self._check_memory_enhancement(text)
                 if enhancement_result:
                     print(f"[ComprehensiveExtractor] 🔗 Enhanced existing memory: {enhancement_result['enhanced_memory']}")
@@ -105,22 +108,48 @@ class ComprehensiveMemoryExtractor:
                 
                 # Filter out pure casual conversation
                 if self._is_casual_conversation(text):
+                    print(f"[ComprehensiveExtractor] 💬 Pure casual conversation detected")
                     return ExtractionResult([], "casual_conversation", {}, None, [], [], [])
                 
-                # Determine complexity and optimize tokens
+                # TRY PATTERN-FIRST APPROACH
+                pattern_result = self.pattern_extractor.extract_if_pattern_matches(text)
+                if pattern_result and pattern_result.matched:
+                    print(f"[ComprehensiveExtractor] ⚡ Pattern extraction successful (no LLM needed)")
+                    
+                    # Convert pattern result to ExtractionResult format
+                    extraction_result = ExtractionResult(
+                        memory_events=pattern_result.memory_events,
+                        intent_classification=pattern_result.intent_classification,
+                        emotional_state=pattern_result.emotional_state,
+                        conversation_thread_id=None,
+                        memory_enhancements=[],
+                        context_keywords=pattern_result.context_keywords,
+                        follow_up_suggestions=[]
+                    )
+                    
+                    # Store memory events
+                    for event in extraction_result.memory_events:
+                        self._add_to_regular_memory(event)
+                        self._save_to_smart_memory_files(event)
+                    
+                    return extraction_result
+                
+                # FALLBACK TO LLM if patterns don't match
+                print(f"[ComprehensiveExtractor] 🤖 Falling back to LLM extraction")
+                
+                # Determine complexity for LLM extraction
                 complexity_score = self._calculate_complexity_score(text)
                 word_count = len(text.split())
                 
-                # Choose extraction tier based on complexity with TIER 3 limiting
-                if complexity_score <= 3 and word_count <= 8:
-                    # TIER 1: Simple extraction (70 tokens total)
+                # Simplified tier selection - prefer lower tiers
+                if complexity_score <= 2 and word_count <= 8:
+                    # TIER 1: Simple extraction (minimal tokens)
                     result = self._tier1_simple_extraction(text)
-                elif complexity_score <= 6 and word_count <= 20:
-                    # TIER 2: Medium extraction (150 tokens total)  
+                elif complexity_score <= 5 and word_count <= 20:
+                    # TIER 2: Medium extraction (reduced tokens)
                     result = self._tier2_medium_extraction(text)
                 else:
-                    # TIER 3: Complex extraction (300 tokens total - comprehensive)
-                    # Check if we should limit TIER 3 extractions to prevent loops
+                    # TIER 3: Complex extraction (only when absolutely needed)
                     if self._should_allow_tier3_extraction(text):
                         result = self._tier3_comprehensive_extraction(text, conversation_context)
                         self._record_tier3_extraction(text)
@@ -132,6 +161,7 @@ class ComprehensiveMemoryExtractor:
                 # Store any memory events in regular memory system
                 for event in result.memory_events:
                     self._add_to_regular_memory(event)
+                    self._save_to_smart_memory_files(event)
                 
                 # Save conversation threading data
                 if result.conversation_thread_id or result.memory_enhancements:
@@ -146,172 +176,181 @@ class ComprehensiveMemoryExtractor:
                 return ExtractionResult([], "error", {"primary_emotion": "neutral"}, None, [], [], [])
     
     def _tier1_simple_extraction(self, text: str) -> ExtractionResult:
-        """Simple extraction for basic inputs (70 tokens)"""
-        prompt = f"""Analyze user input for basic info:
-Text: "{text}"
+        """Simple extraction for basic inputs (minimal tokens)"""
+        prompt = f"""Extract basic info from: "{text}"
 Date: {datetime.now().strftime('%Y-%m-%d')}
 
 JSON format:
-{{
-  "events": [{{"type": "highlight", "topic": "brief", "date": "YYYY-MM-DD", "emotion": "casual"}}],
-  "intent": "question|statement|request|casual",
-  "emotion": "happy|neutral|stressed|excited",
-  "keywords": ["key1", "key2"]
-}}"""
+{{"events": [{{"type": "highlight", "topic": "brief_desc", "date": "YYYY-MM-DD", "emotion": "neutral"}}], "intent": "statement", "emotion": "neutral", "keywords": ["key1"]}}"""
         
-        print(f"[ComprehensiveExtractor] ⚡ TIER 1 extraction (70 tokens)")
+        print(f"[ComprehensiveExtractor] ⚡ TIER 1 extraction (minimal tokens)")
         return self._process_llm_response(prompt, text)
     
     def _tier2_medium_extraction(self, text: str) -> ExtractionResult:
-        """Medium extraction for social events (150 tokens)"""
-        prompt = f"""Extract events, intent & emotion from user input:
-
-Text: "{text}"
+        """Medium extraction for social events (reduced tokens)"""
+        prompt = f"""Extract from: "{text}"
 Date: {datetime.now().strftime('%Y-%m-%d')}
 
-EVENTS:
-- appointment: Time-specific (dentist, meeting)
-- life_event: Social/emotional (birthday, visit, McDonald's)
-- highlight: Thoughts/feelings
-
-INTENT: question, request, statement, memory_recall, casual_conversation
-EMOTION: happy, excited, stressed, casual, worried, sad
+Types: appointment, life_event, highlight
+Intent: statement, question, request
+Emotion: happy, neutral, stressed, excited
 
 JSON format:
-{{
-  "events": [{{"type": "life_event", "topic": "brief_desc", "date": "YYYY-MM-DD", "emotion": "happy", "priority": "medium"}}],
-  "intent": "statement", 
-  "emotion": "happy",
-  "confidence": 0.8,
-  "keywords": ["mcdonald", "friends"],
-  "thread_potential": true
-}}"""
+{{"events": [{{"type": "life_event", "topic": "brief_desc", "date": "YYYY-MM-DD", "emotion": "neutral", "priority": "medium"}}], "intent": "statement", "emotion": "neutral", "keywords": ["key1", "key2"]}}"""
         
-        print(f"[ComprehensiveExtractor] ⚡ TIER 2 extraction (150 tokens)")
+        print(f"[ComprehensiveExtractor] ⚡ TIER 2 extraction (reduced tokens)")
         return self._process_llm_response(prompt, text)
     
     def _tier3_comprehensive_extraction(self, text: str, conversation_context: str = "") -> ExtractionResult:
-        """Comprehensive extraction for complex scenarios (300 tokens)"""
+        """Comprehensive extraction for complex scenarios (reduced tokens, no examples)"""
         current_date = datetime.now().strftime('%Y-%m-%d')
-        tomorrow_date = (datetime.now() + timedelta(days=1)).strftime('%Y-%m-%d')
         
         context_section = ""
         if conversation_context:
-            context_section = f"\nConversation Context: {conversation_context[:100]}..."
+            context_section = f"\nContext: {conversation_context[:100]}..."
         
-        prompt = f"""COMPREHENSIVE ANALYSIS: Extract ALL relevant information from user input.
+        prompt = f"""COMPREHENSIVE ANALYSIS: "{text}"{context_section}
+Date: {current_date}
 
-Text: "{text}"{context_section}
-Current Date: {current_date}
-Tomorrow: {tomorrow_date}
-
-EXTRACT:
-1. EVENTS (appointments, life events, highlights, plans)
-2. INTENT CLASSIFICATION (question, request, statement, memory_recall, instruction, casual_conversation)
+Extract ALL relevant information:
+1. EVENTS (appointments, life_events, highlights, plans)
+2. INTENT (question, request, statement, memory_recall, instruction)
 3. EMOTIONAL STATE (emotion, intensity, confidence)
-4. CONVERSATION THREADING (related to previous topics)
-5. CONTEXT KEYWORDS (for future reference)
+4. CONTEXT KEYWORDS
 
-TYPES:
-- appointment: Time-specific events (dentist 2PM, meeting tomorrow)
-- life_event: Social/emotional events (birthday, visit, went to McDonald's with Francesco)
-- highlight: Thoughts, feelings, general information
-
-THREADING: If this relates to previous conversation (McDonald's → what did you have → McFlurry), identify thread.
+Types:
+- appointment: Time-specific events
+- life_event: Social/emotional events  
+- highlight: Thoughts, feelings, information
 
 JSON format:
 {{
-  "events": [
-    {{
-      "type": "life_event",
-      "topic": "McDonald's visit with Francesco", 
-      "date": "{current_date}",
-      "time": null,
-      "emotion": "casual",
-      "priority": "medium",
-      "people": ["Francesco"],
-      "location": "McDonald's",
-      "details": "went together",
-      "original_text": "{text}"
-    }}
-  ],
+  "events": [{{
+    "type": "life_event",
+    "topic": "activity_description", 
+    "date": "{current_date}",
+    "time": null,
+    "emotion": "neutral",
+    "priority": "medium",
+    "people": [],
+    "location": "location_if_mentioned",
+    "details": "additional_info",
+    "original_text": "{text}"
+  }}],
   "intent": "statement",
   "emotional_state": {{
-    "primary_emotion": "casual",
-    "intensity": 0.6,
-    "confidence": 0.9,
-    "secondary_emotions": ["content"]
+    "primary_emotion": "neutral",
+    "intensity": 0.5,
+    "confidence": 0.8
   }},
-  "conversation_thread": {{
-    "is_continuation": false,
-    "thread_topic": "food_social_activities",
-    "thread_id": "mcdonald_francesco_2025_01_22",
-    "connects_to": []
-  }},
-  "context_keywords": ["mcdonald", "francesco", "together", "food", "social"],
-  "follow_up_potential": ["what did you have", "how was it", "who else was there"],
-  "memory_enhancement_target": null
+  "context_keywords": ["keyword1", "keyword2"],
+  "follow_up_potential": []
 }}
 
-Return ONLY valid JSON. Extract ALL relevant details."""
+Return ONLY valid JSON."""
         
-        print(f"[ComprehensiveExtractor] ⚡ TIER 3 comprehensive extraction (300 tokens)")
+        print(f"[ComprehensiveExtractor] ⚡ TIER 3 comprehensive extraction (reduced tokens)")
         return self._process_llm_response(prompt, text, is_comprehensive=True)
     
     def _process_llm_response(self, prompt: str, original_text: str, is_comprehensive: bool = False) -> ExtractionResult:
-        """Process LLM response and create ExtractionResult"""
+        """Process LLM response with improved JSON validation and error handling"""
         try:
             # Format prompt as messages array for kobold
             messages = [{"role": "system", "content": prompt}]
             llm_response = ask_kobold(messages)
             
-            # Clean and parse JSON
+            # Clean and parse JSON with improved validation
             llm_response = self._clean_json_response(llm_response)
             
-            try:
-                data = json.loads(llm_response)
-            except json.JSONDecodeError as e:
-                print(f"[ComprehensiveExtractor] ❌ JSON parsing failed: {e}")
-                print(f"[ComprehensiveExtractor] 📄 Raw response: {llm_response[:200]}...")
-                # Return fallback extraction result
-                return ExtractionResult(
-                    memory_events=[],
-                    intent_classification='casual_conversation',
-                    emotional_state={'primary_emotion': 'neutral'},
-                    conversation_thread_id=None,
-                    memory_enhancements=[],
-                    context_keywords=[],
-                    follow_up_suggestions=[]
-                )
+            # Multiple JSON parsing attempts with fallbacks
+            data = self._parse_json_with_fallbacks(llm_response, original_text)
+            if not data:
+                return self._create_fallback_result(original_text)
             
-            # Extract data based on tier
+            # Validate and extract data based on tier
             if is_comprehensive:
-                return ExtractionResult(
-                    memory_events=data.get('events', []),
-                    intent_classification=data.get('intent', 'casual_conversation'),
-                    emotional_state=data.get('emotional_state', {'primary_emotion': 'neutral'}),
-                    conversation_thread_id=data.get('conversation_thread', {}).get('thread_id'),
-                    memory_enhancements=[],
-                    context_keywords=data.get('context_keywords', []),
-                    follow_up_suggestions=data.get('follow_up_potential', [])
-                )
+                return self._extract_comprehensive_data(data, original_text)
             else:
-                return ExtractionResult(
-                    memory_events=data.get('events', []),
-                    intent_classification=data.get('intent', 'casual_conversation'),
-                    emotional_state={'primary_emotion': data.get('emotion', 'neutral'), 'confidence': data.get('confidence', 0.7)},
-                    conversation_thread_id=None,
-                    memory_enhancements=[],
-                    context_keywords=data.get('keywords', []),
-                    follow_up_suggestions=[]
-                )
+                return self._extract_simple_data(data, original_text)
                 
         except Exception as e:
             print(f"[ComprehensiveExtractor] ❌ LLM processing error: {e}")
-            return ExtractionResult([], "error", {"primary_emotion": "neutral"}, None, [], [], [])
+            return self._create_fallback_result(original_text)
+    
+    def _parse_json_with_fallbacks(self, response: str, original_text: str) -> Optional[Dict]:
+        """Parse JSON with multiple fallback strategies"""
+        # Attempt 1: Direct parsing
+        try:
+            return json.loads(response)
+        except json.JSONDecodeError:
+            pass
+        
+        # Attempt 2: Extract JSON from markdown code blocks
+        try:
+            json_match = re.search(r'```(?:json)?\s*(\{.*\})\s*```', response, re.DOTALL)
+            if json_match:
+                return json.loads(json_match.group(1))
+        except json.JSONDecodeError:
+            pass
+        
+        # Attempt 3: Find first JSON object in response
+        try:
+            start = response.find('{')
+            end = response.rfind('}') + 1
+            if start >= 0 and end > start:
+                return json.loads(response[start:end])
+        except json.JSONDecodeError:
+            pass
+        
+        # Attempt 4: Clean and retry
+        try:
+            cleaned = re.sub(r'[^\x20-\x7E]', '', response)  # Remove non-printable chars
+            return json.loads(cleaned)
+        except json.JSONDecodeError:
+            pass
+        
+        print(f"[ComprehensiveExtractor] ❌ All JSON parsing attempts failed")
+        print(f"[ComprehensiveExtractor] 📄 Raw response: {response[:200]}...")
+        return None
+    
+    def _extract_comprehensive_data(self, data: Dict, original_text: str) -> ExtractionResult:
+        """Extract data from comprehensive tier response"""
+        return ExtractionResult(
+            memory_events=data.get('events', []),
+            intent_classification=data.get('intent', 'casual_conversation'),
+            emotional_state=data.get('emotional_state', {'primary_emotion': 'neutral'}),
+            conversation_thread_id=data.get('conversation_thread', {}).get('thread_id'),
+            memory_enhancements=[],
+            context_keywords=data.get('context_keywords', []),
+            follow_up_suggestions=data.get('follow_up_potential', [])
+        )
+    
+    def _extract_simple_data(self, data: Dict, original_text: str) -> ExtractionResult:
+        """Extract data from simple tier response"""
+        return ExtractionResult(
+            memory_events=data.get('events', []),
+            intent_classification=data.get('intent', 'casual_conversation'),
+            emotional_state={'primary_emotion': data.get('emotion', 'neutral'), 'confidence': data.get('confidence', 0.7)},
+            conversation_thread_id=None,
+            memory_enhancements=[],
+            context_keywords=data.get('keywords', []),
+            follow_up_suggestions=[]
+        )
+    
+    def _create_fallback_result(self, original_text: str) -> ExtractionResult:
+        """Create fallback result when JSON parsing fails"""
+        return ExtractionResult(
+            memory_events=[],
+            intent_classification='casual_conversation',
+            emotional_state={'primary_emotion': 'neutral', 'confidence': 0.5},
+            conversation_thread_id=None,
+            memory_enhancements=[],
+            context_keywords=original_text.lower().split()[:3],  # Basic keywords from input
+            follow_up_suggestions=[]
+        )
     
     def _check_memory_enhancement(self, text: str) -> Optional[Dict[str, Any]]:
-        """Check if text enhances existing memory (McDonald's → McFlurry example)"""
+        """Check if text enhances existing memory (location → food example)"""
         text_lower = text.lower()
         
         # Get recent memories for enhancement opportunities
@@ -320,7 +359,7 @@ Return ONLY valid JSON. Extract ALL relevant details."""
         for memory in recent_memories:
             memory_topic = memory.get('topic', '').lower()
             
-            # Check for McDonald's enhancement example
+            # Check for restaurant enhancement example
             if 'mcdonald' in memory_topic and any(food in text_lower for food in ['mcflurry', 'burger', 'fries', 'chips', 'drink']):
                 enhanced_topic = f"{memory['topic']} (with {text.strip()})"
                 
@@ -380,36 +419,54 @@ Return ONLY valid JSON. Extract ALL relevant details."""
         return recent_memories[-10:]  # Return last 10 recent memories
     
     def _calculate_complexity_score(self, text: str) -> int:
-        """Calculate text complexity for tier selection"""
+        """
+        Calculate text complexity for tier selection
+        Enhanced to properly detect activity types and complexity
+        """
         text_lower = text.lower()
         score = 0
         
-        # Time references (+2)
-        time_indicators = ['tomorrow', 'today', 'yesterday', 'next week', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday', 'at ', 'pm', 'am', 'o\'clock']
+        # Time references (+3) - High complexity
+        time_indicators = ['tomorrow', 'today', 'yesterday', 'next week', 'next weekend', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday', 'at ', 'pm', 'am', 'o\'clock', 'later', 'earlier']
         if any(indicator in text_lower for indicator in time_indicators):
-            score += 2
+            score += 3
         
-        # People mentioned (+2)  
-        people_indicators = ['with', 'friend', 'family', 'mom', 'dad', 'sister', 'brother', 'francesco', 'sarah', 'john']
+        # People mentioned (+3) - High complexity  
+        people_indicators = ['with', 'friend', 'family', 'mom', 'dad', 'sister', 'brother', 'francesco', 'sarah', 'john', 'we', 'us', 'them']
         if any(person in text_lower for person in people_indicators):
+            score += 3
+        
+        # Planning/Future activities (+2) - Medium-high complexity
+        planning_indicators = ['planning', 'will', 'going to', 'next', 'plan to', 'want to', 'thinking about']
+        if any(plan in text_lower for plan in planning_indicators):
             score += 2
         
-        # Locations (+1)
-        locations = ['mcdonald', 'restaurant', 'store', 'work', 'home', 'school', 'park', 'mall']
+        # Ongoing activities (+2) - Medium-high complexity
+        ongoing_indicators = ['been reading', 'been learning', 'been studying', 'currently', 'still', 'continuing']
+        if any(ongoing in text_lower for ongoing in ongoing_indicators):
+            score += 2
+        
+        # Locations (+2) - Medium complexity
+        locations = ['mcdonald', 'restaurant', 'store', 'work', 'home', 'school', 'park', 'mall', 'place']
         if any(location in text_lower for location in locations):
+            score += 2
+        
+        # Past activities (+1) - Basic complexity
+        past_activities = ['went', 'visited', 'read', 'finished', 'completed', 'did']
+        if any(activity in text_lower for activity in past_activities):
             score += 1
         
-        # Events/activities (+1)
-        activities = ['went', 'going', 'visit', 'meeting', 'appointment', 'party', 'birthday', 'dinner', 'lunch']
-        if any(activity in text_lower for activity in activities):
+        # Current states (+1) - Basic complexity
+        current_states = ['learning', 'studying', 'working', 'doing']
+        if any(state in text_lower for state in current_states):
             score += 1
         
-        # Emotional content (+1)
-        emotions = ['happy', 'sad', 'excited', 'worried', 'nervous', 'love', 'hate', 'stressed']
+        # Emotional content (+1) - Basic complexity
+        emotions = ['happy', 'sad', 'excited', 'worried', 'nervous', 'love', 'hate', 'stressed', 'enjoy', 'like']
         if any(emotion in text_lower for emotion in emotions):
             score += 1
         
-        return min(score, 8)  # Cap at 8
+        return min(score, 10)  # Cap at 10 for very complex scenarios
     
     def _is_casual_conversation(self, text: str) -> bool:
         """Filter out pure casual conversation"""
@@ -448,14 +505,16 @@ Return ONLY valid JSON. Extract ALL relevant details."""
             memory_value = self._create_memory_value(event)
             
             fact = PersonalFact(
+                category="activities",  # Default category
                 key=topic,
                 value=memory_value,
+                confidence=0.9,
                 date_learned=event.get('date', datetime.now().strftime('%Y-%m-%d')),
-                confidence=0.9
+                last_mentioned=datetime.now().strftime('%Y-%m-%d'),
+                source_context=event.get('original_text', '')
             )
             
             fact.emotional_significance = 0.7 if event.get('emotion') in ['happy', 'excited'] else 0.3
-            fact.source_context = event.get('original_text', '')
             
             self.mega_memory.personal_facts[topic] = fact
             print(f"[ComprehensiveExtractor] ➕ Added to memory: {topic} = {memory_value}")
@@ -620,4 +679,40 @@ Return ONLY valid JSON. Extract ALL relevant details."""
                          if timestamp < cutoff_time]
         for key in keys_to_remove:
             del self.extraction_cache[key]
-            print(f"[ComprehensiveExtractor] ⚠️ Save error: {e}")
+    
+    def _save_to_smart_memory_files(self, event: Dict[str, Any]):
+        """Save event to appropriate smart memory file based on type"""
+        try:
+            event_type = event.get('type', 'unknown').lower()
+            
+            # Determine which file to save to based on event type and properties
+            if 'appointment' in event_type or event.get('time'):
+                filename = 'smart_appointments.json'
+            elif any(keyword in event_type for keyword in ['plan', 'future', 'will']) or event.get('status') == 'future':
+                filename = 'smart_life_events.json'
+            elif any(keyword in event_type for keyword in ['visit', 'location', 'went', 'been']):
+                filename = 'smart_life_events.json'
+            else:
+                filename = 'smart_highlights.json'
+            
+            # Load existing data
+            existing_events = self.load_memory(filename)
+            
+            # Add timestamp if missing
+            if 'timestamp' not in event:
+                event['timestamp'] = datetime.now().isoformat()
+            
+            # Add unique ID if missing
+            if 'id' not in event:
+                event['id'] = f"{event_type}_{int(datetime.now().timestamp())}"
+            
+            # Add to existing events
+            existing_events.append(event)
+            
+            # Save back to file
+            self.save_memory(existing_events, filename)
+            
+            print(f"[ComprehensiveExtractor] 💾 Saved to {filename}: {event.get('topic', 'unknown')}")
+            
+        except Exception as e:
+            print(f"[ComprehensiveExtractor] ⚠️ Smart memory save error: {e}")

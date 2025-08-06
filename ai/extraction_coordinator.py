@@ -53,7 +53,9 @@ except ImportError:
                 self.follow_up_suggestions = []
 
 try:
-    from ai.unified_memory_manager import get_unified_memory_extractor
+    from ai.comprehensive_memory_extractor import ComprehensiveMemoryExtractor
+    def get_unified_memory_extractor(username):
+        return ComprehensiveMemoryExtractor(username)
 except ImportError:
     def get_unified_memory_extractor(username=None):
         return None
