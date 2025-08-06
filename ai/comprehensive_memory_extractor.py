@@ -169,9 +169,15 @@ JSON format:
 Text: "{text}"
 Date: {datetime.now().strftime('%Y-%m-%d')}
 
+CLASSIFICATION RULES:
+- "I went to X" = life_event (location/activity)
+- "I visited X" = life_event (social activity)  
+- "I had Y at Z" = life_event (dining/activity)
+- NOT casual conversation if location/activity mentioned
+
 EVENTS:
 - appointment: Time-specific (dentist, meeting)
-- life_event: Social/emotional (birthday, visit, McDonald's)
+- life_event: Social/emotional (birthday, visit, McDonald's, restaurants, activities)
 - highlight: Thoughts/feelings
 
 INTENT: question, request, statement, memory_recall, casual_conversation
@@ -179,11 +185,11 @@ EMOTION: happy, excited, stressed, casual, worried, sad
 
 JSON format:
 {{
-  "events": [{{"type": "life_event", "topic": "brief_desc", "date": "YYYY-MM-DD", "emotion": "happy", "priority": "medium"}}],
+  "events": [{{"type": "life_event", "topic": "brief_desc", "date": "YYYY-MM-DD", "emotion": "casual", "priority": "medium"}}],
   "intent": "statement", 
-  "emotion": "happy",
+  "emotion": "casual",
   "confidence": 0.8,
-  "keywords": ["mcdonald", "friends"],
+  "keywords": ["mcdonald", "visit"],
   "thread_potential": true
 }}"""
         
@@ -260,6 +266,17 @@ Return ONLY valid JSON. Extract ALL relevant details."""
     
     def _process_llm_response(self, prompt: str, original_text: str, is_comprehensive: bool = False) -> ExtractionResult:
         """Process LLM response and create ExtractionResult"""
+        # Quick check if LLM is available by testing the connection
+        try:
+            from ai.chat import is_kobold_available
+            if not is_kobold_available():
+                print(f"[ComprehensiveExtractor] ⚠️ LLM not available, using intelligent fallback")
+                return self._create_fallback_result(original_text)
+        except:
+            # If we can't even check availability, use fallback
+            print(f"[ComprehensiveExtractor] ⚠️ Cannot check LLM availability, using intelligent fallback")
+            return self._create_fallback_result(original_text)
+        
         try:
             # Format prompt as messages array for kobold
             messages = [{"role": "system", "content": prompt}]
@@ -274,15 +291,7 @@ Return ONLY valid JSON. Extract ALL relevant details."""
                 print(f"[ComprehensiveExtractor] ❌ JSON parsing failed: {e}")
                 print(f"[ComprehensiveExtractor] 📄 Raw response: {llm_response[:200]}...")
                 # Return fallback extraction result
-                return ExtractionResult(
-                    memory_events=[],
-                    intent_classification='casual_conversation',
-                    emotional_state={'primary_emotion': 'neutral'},
-                    conversation_thread_id=None,
-                    memory_enhancements=[],
-                    context_keywords=[],
-                    follow_up_suggestions=[]
-                )
+                return self._create_fallback_result(original_text)
             
             # Extract data based on tier
             if is_comprehensive:
@@ -308,7 +317,88 @@ Return ONLY valid JSON. Extract ALL relevant details."""
                 
         except Exception as e:
             print(f"[ComprehensiveExtractor] ❌ LLM processing error: {e}")
-            return ExtractionResult([], "error", {"primary_emotion": "neutral"}, None, [], [], [])
+            return self._create_fallback_result(original_text)
+    
+    def _create_fallback_result(self, text: str) -> ExtractionResult:
+        """Create intelligent fallback result when LLM is not available"""
+        text_lower = text.lower()
+        
+        # Use complexity analysis to determine if this should be a memory event
+        complexity_score = self._calculate_complexity_score(text)
+        
+        # Check for location/activity patterns that should be life events
+        locations = ['mcdonald', 'restaurant', 'store', 'work', 'home', 'school', 'park', 'mall', 'office', 'gym', 'hospital', 'bank', 'cafe', 'bar', 'hotel']
+        activities = ['went', 'going', 'visit', 'visited', 'meeting', 'appointment', 'party', 'birthday', 'dinner', 'lunch', 'breakfast', 'shopping', 'traveled', 'drove']
+        
+        has_location = any(loc in text_lower for loc in locations)
+        has_activity = any(act in text_lower for act in activities)
+        
+        if complexity_score >= 4 and (has_location or has_activity):
+            # Create a life event
+            event_topic = self._generate_fallback_topic(text, has_location, has_activity, locations, activities)
+            
+            event = {
+                "type": "life_event",
+                "topic": event_topic,
+                "date": datetime.now().strftime('%Y-%m-%d'),
+                "emotion": "casual",
+                "priority": "medium",
+                "original_text": text
+            }
+            
+            # Add location if detected
+            detected_location = next((loc for loc in locations if loc in text_lower), None)
+            if detected_location:
+                event["location"] = detected_location.title()
+            
+            print(f"[ComprehensiveExtractor] 🔧 Created fallback life_event: {event_topic}")
+            
+            return ExtractionResult(
+                memory_events=[event],
+                intent_classification="statement",
+                emotional_state={'primary_emotion': 'casual', 'confidence': 0.8},
+                conversation_thread_id=None,
+                memory_enhancements=[],
+                context_keywords=text_lower.split()[:5],
+                follow_up_suggestions=[]
+            )
+        else:
+            # Return basic result for casual conversation
+            return ExtractionResult(
+                memory_events=[],
+                intent_classification='casual_conversation',
+                emotional_state={'primary_emotion': 'neutral', 'confidence': 0.7},
+                conversation_thread_id=None,
+                memory_enhancements=[],
+                context_keywords=[],
+                follow_up_suggestions=[]
+            )
+    
+    def _generate_fallback_topic(self, text: str, has_location: bool, has_activity: bool, locations: list, activities: list) -> str:
+        """Generate a meaningful topic for fallback results"""
+        text_lower = text.lower()
+        
+        if has_location and has_activity:
+            # Find the specific location and activity
+            location = next((loc for loc in locations if loc in text_lower), "location")
+            activity = next((act for act in activities if act in text_lower), "activity")
+            
+            if activity in ['went', 'going']:
+                return f"{location.title()} visit"
+            elif activity in ['visited']:
+                return f"{location.title()} visit"
+            else:
+                return f"{activity} at {location.title()}"
+        elif has_location:
+            location = next((loc for loc in locations if loc in text_lower), "location")
+            return f"{location.title()} visit"
+        elif has_activity:
+            activity = next((act for act in activities if act in text_lower), "activity")
+            return f"{activity} activity"
+        else:
+            # Fallback to first few words
+            words = text.split()[:3]
+            return ' '.join(words).title()
     
     def _check_memory_enhancement(self, text: str) -> Optional[Dict[str, Any]]:
         """Check if text enhances existing memory (McDonald's → McFlurry example)"""

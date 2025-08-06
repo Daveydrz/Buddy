@@ -122,6 +122,7 @@ class QueryComplexityAnalyzer:
         """Analyze query complexity and determine optimal extraction depth"""
         complexity_score = 0
         factors = {}
+        text_lower = text.lower()
         
         # Text length factor
         text_length = len(text.split())
@@ -135,9 +136,37 @@ class QueryComplexityAnalyzer:
             complexity_score += 1
             factors['short_text'] = text_length
         
+        # Time references (+2) - critical for memory events
+        time_indicators = ['tomorrow', 'today', 'yesterday', 'next week', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday', 'at ', 'pm', 'am', 'o\'clock', 'earlier', 'later', 'morning', 'afternoon', 'evening', 'night']
+        time_matches = [indicator for indicator in time_indicators if indicator in text_lower]
+        if time_matches:
+            complexity_score += 2
+            factors['time_references'] = time_matches
+        
+        # People mentioned (+2) - important for social events
+        people_indicators = ['with', 'friend', 'family', 'mom', 'dad', 'sister', 'brother', 'francesco', 'sarah', 'john', 'together', 'accompanied']
+        people_matches = [person for person in people_indicators if person in text_lower]
+        if people_matches:
+            complexity_score += 2
+            factors['people_mentioned'] = people_matches
+        
+        # Locations (+2) - key for life events like McDonald's
+        locations = ['mcdonald', 'restaurant', 'store', 'work', 'home', 'school', 'park', 'mall', 'office', 'gym', 'hospital', 'bank', 'cafe', 'bar', 'hotel']
+        location_matches = [location for location in locations if location in text_lower]
+        if location_matches:
+            complexity_score += 2
+            factors['locations'] = location_matches
+        
+        # Events/activities (+2) - critical for life event detection
+        activities = ['went', 'going', 'visit', 'visited', 'meeting', 'appointment', 'party', 'birthday', 'dinner', 'lunch', 'breakfast', 'shopping', 'traveled', 'drove']
+        activity_matches = [activity for activity in activities if activity in text_lower]
+        if activity_matches:
+            complexity_score += 2
+            factors['activities'] = activity_matches
+        
         # Question complexity
         question_words = ['what', 'why', 'how', 'when', 'where', 'who', 'which']
-        question_count = sum(1 for word in question_words if word in text.lower())
+        question_count = sum(1 for word in question_words if word in text_lower)
         if question_count > 2:
             complexity_score += 2
             factors['multiple_questions'] = question_count
@@ -156,20 +185,27 @@ class QueryComplexityAnalyzer:
         
         # Memory-related keywords
         memory_keywords = ['remember', 'recall', 'mentioned', 'said', 'told', 'discussed']
-        memory_refs = sum(1 for word in memory_keywords if word in text.lower())
+        memory_refs = sum(1 for word in memory_keywords if word in text_lower)
         if memory_refs > 0:
             complexity_score += memory_refs
             factors['memory_references'] = memory_refs
         
-        # Determine extraction depth
-        if complexity_score <= 2:
-            depth = "minimal"  # Simple queries, direct answers
-        elif complexity_score <= 5:
-            depth = "standard"  # Normal conversation
+        # Emotional content (+1)
+        emotions = ['happy', 'sad', 'excited', 'worried', 'nervous', 'love', 'hate', 'stressed', 'angry', 'disappointed', 'surprised']
+        emotion_matches = [emotion for emotion in emotions if emotion in text_lower]
+        if emotion_matches:
+            complexity_score += 1
+            factors['emotions'] = emotion_matches
+        
+        # Determine extraction depth - aligned with ComprehensiveMemoryExtractor tiers
+        if complexity_score <= 3:
+            depth = "minimal"  # TIER 1: Simple queries, direct answers
+        elif complexity_score <= 6:
+            depth = "standard"  # TIER 2: Normal conversation with some complexity
         elif complexity_score <= 8:
-            depth = "comprehensive"  # Complex queries
+            depth = "comprehensive"  # TIER 3: Complex queries
         else:
-            depth = "deep"  # Very complex, multi-part queries
+            depth = "deep"  # Beyond TIER 3: Very complex, multi-part queries
         
         return {
             'complexity_score': complexity_score,
@@ -300,8 +336,43 @@ class ExtractionCoordinator:
             extractor = get_unified_memory_extractor(request.username)
             
             if extractor:
-                # Use actual extractor
+                # Use actual extractor with enhanced depth handling
                 result = extractor.extract_all_from_text(request.text, request.conversation_context)
+                
+                # If the extractor didn't produce proper memory events but the depth suggests it should,
+                # enhance the result based on coordinator analysis
+                complexity_analysis = request.metadata.get('complexity_analysis', {})
+                if (len(result.memory_events) == 0 or 
+                    all(event.get('type') == 'mock_memory' for event in result.memory_events)):
+                    
+                    # Check if this should be a life event based on complexity factors
+                    factors = complexity_analysis.get('factors', {})
+                    if ('activities' in factors or 'locations' in factors or 
+                        'time_references' in factors or 'people_mentioned' in factors):
+                        
+                        print(f"[ExtractionCoordinator] 🔧 Enhancing extraction result based on {depth} depth analysis")
+                        
+                        # Create proper life event based on detected factors
+                        enhanced_event = {
+                            "type": "life_event",
+                            "topic": self._create_topic_from_text(request.text, factors),
+                            "date": datetime.now().strftime('%Y-%m-%d'),
+                            "emotion": "casual",
+                            "priority": "medium",
+                            "original_text": request.text
+                        }
+                        
+                        # Add location if detected
+                        if 'locations' in factors:
+                            enhanced_event["location"] = factors['locations'][0].title()
+                        
+                        # Add people if detected
+                        if 'people_mentioned' in factors:
+                            enhanced_event["people"] = [p.title() for p in factors['people_mentioned'] if p not in ['with', 'together']]
+                        
+                        result.memory_events = [enhanced_event]
+                        result.intent_classification = "statement"
+                        
             else:
                 # Create mock result for testing with correct interface
                 result = ExtractionResult(
@@ -323,6 +394,32 @@ class ExtractionCoordinator:
         except Exception as e:
             print(f"[ExtractionCoordinator] ❌ Context-aware extraction failed: {e}")
             return self._create_error_result(request, str(e))
+    
+    def _create_topic_from_text(self, text: str, factors: Dict[str, Any]) -> str:
+        """Create a meaningful topic from text and detected factors"""
+        text_words = text.lower().split()
+        
+        # Start with activity if present
+        activities = factors.get('activities', [])
+        locations = factors.get('locations', [])
+        
+        if activities and locations:
+            # "went to McDonald's" -> "McDonald's visit"
+            activity = activities[0]
+            location = locations[0].title()
+            if activity in ['went', 'going']:
+                return f"{location} visit"
+            elif activity in ['visited']:
+                return f"{location} visit"
+            else:
+                return f"{activity} at {location}"
+        elif activities:
+            return f"{activities[0]} activity"
+        elif locations:
+            return f"{locations[0].title()} visit"
+        else:
+            # Fallback to first few words
+            return ' '.join(text_words[:4]).title()
     
     def _create_error_result(self, request: ExtractionRequest, error_msg: str) -> ExtractionResult:
         """Create error result for failed extractions"""

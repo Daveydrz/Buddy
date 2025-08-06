@@ -14,13 +14,6 @@ import time
 # Import enterprise-grade extraction coordinator
 ENTERPRISE_EXTRACTION_AVAILABLE = False
 try:
-    from ai.extraction_coordinator import (
-        get_extraction_coordinator, 
-        extract_with_enterprise_coordination,
-        ExtractionPriority, 
-        InteractionType,
-        get_extraction_performance_report
-    )
     from ai.memory_cache_manager import (
         get_memory_cache_manager,
         cache_memory_intelligent,
@@ -31,6 +24,23 @@ try:
     print("[UnifiedMemory] 🏢 Enterprise-grade extraction coordination available")
 except ImportError as e:
     print(f"[UnifiedMemory] ⚠️ Enterprise extraction not available: {e}")
+
+# Delayed import of extraction coordinator to avoid circular imports
+def _get_extraction_coordinator():
+    """Lazy import of extraction coordinator to avoid circular imports"""
+    try:
+        from ai.extraction_coordinator import (
+            get_extraction_coordinator, 
+            extract_with_enterprise_coordination,
+            ExtractionPriority, 
+            InteractionType,
+            get_extraction_performance_report
+        )
+        return (get_extraction_coordinator, extract_with_enterprise_coordination, 
+                ExtractionPriority, InteractionType, get_extraction_performance_report)
+    except ImportError as e:
+        print(f"[UnifiedMemory] ⚠️ Extraction coordinator import failed: {e}")
+        return None, None, None, None, None
 
 # Global unified memory instances - shared across all modules
 _unified_extractors = {}
@@ -60,84 +70,88 @@ def extract_all_from_text(username: str, text: str, conversation_context: str = 
     """
     
     if ENTERPRISE_EXTRACTION_AVAILABLE and ENTERPRISE_MODE:
-        # Use enterprise-grade extraction coordination
+        # Use enterprise-grade extraction coordination with lazy import
+        coordinator_imports = _get_extraction_coordinator()
+        get_extraction_coordinator, extract_with_enterprise_coordination, ExtractionPriority, InteractionType, get_extraction_performance_report = coordinator_imports
         
-        # Map string parameters to enums
-        interaction_type_mapping = {
-            "voice_to_speech": InteractionType.VOICE_TO_SPEECH,
-            "text_chat": InteractionType.TEXT_CHAT,
-            "background": InteractionType.BACKGROUND_PROCESSING,
-            "batch": InteractionType.BATCH_OPERATION,
-            "consciousness": InteractionType.CONSCIOUSNESS_UPDATE
-        }
-        
-        priority_mapping = {
-            "critical": ExtractionPriority.CRITICAL,
-            "high": ExtractionPriority.HIGH,
-            "normal": ExtractionPriority.NORMAL,
-            "low": ExtractionPriority.LOW
-        }
-        
-        mapped_interaction_type = interaction_type_mapping.get(interaction_type, InteractionType.TEXT_CHAT)
-        mapped_priority = priority_mapping.get(priority, ExtractionPriority.NORMAL)
-        
-        # Check intelligent cache first
-        cache_key = f"extract_{username}_{hash(text + conversation_context)}"
-        cached_result = get_cached_memory_intelligent(
-            cache_key, 
-            context_tags={username, interaction_type, "extraction"}
-        )
-        
-        if cached_result:
-            print(f"[UnifiedMemory] 🚀 Enterprise cache hit: {text[:30]}...")
-            return cached_result
-        
-        # Use enterprise extraction coordination
-        future_result = extract_with_enterprise_coordination(
-            username=username,
-            text=text,
-            interaction_type=mapped_interaction_type,
-            priority=mapped_priority,
-            conversation_context=conversation_context,
-            timeout_seconds=30 if mapped_interaction_type == InteractionType.VOICE_TO_SPEECH else 60
-        )
-        
-        # Get the actual result from the Future
-        try:
-            result = future_result.result(timeout=60)  # Wait up to 60 seconds for result
-        except Exception as e:
-            print(f"[UnifiedMemory] ❌ Enterprise extraction failed: {e}")
-            # Fallback to standard extraction
-            extractor = get_unified_memory_extractor(username)
-            result = extractor.extract_all_from_text(text, conversation_context)
-            print(f"[UnifiedMemory] 🔄 Fallback to standard extraction completed")
+        if extract_with_enterprise_coordination:
+            # Map string parameters to enums
+            interaction_type_mapping = {
+                "voice_to_speech": InteractionType.VOICE_TO_SPEECH,
+                "text_chat": InteractionType.TEXT_CHAT,
+                "background": InteractionType.BACKGROUND_PROCESSING,
+                "batch": InteractionType.BATCH_OPERATION,
+                "consciousness": InteractionType.CONSCIOUSNESS_UPDATE
+            }
+            
+            priority_mapping = {
+                "critical": ExtractionPriority.CRITICAL,
+                "high": ExtractionPriority.HIGH,
+                "normal": ExtractionPriority.NORMAL,
+                "low": ExtractionPriority.LOW
+            }
+            
+            mapped_interaction_type = interaction_type_mapping.get(interaction_type, InteractionType.TEXT_CHAT)
+            mapped_priority = priority_mapping.get(priority, ExtractionPriority.NORMAL)
+            
+            # Check intelligent cache first
+            cache_key = f"extract_{username}_{hash(text + conversation_context)}"
+            cached_result = get_cached_memory_intelligent(
+                cache_key, 
+                context_tags={username, interaction_type, "extraction"}
+            )
+            
+            if cached_result:
+                print(f"[UnifiedMemory] 🚀 Enterprise cache hit: {text[:30]}...")
+                return cached_result
+            
+            # Use enterprise extraction coordination
+            future_result = extract_with_enterprise_coordination(
+                username=username,
+                text=text,
+                interaction_type=mapped_interaction_type,
+                priority=mapped_priority,
+                conversation_context=conversation_context,
+                timeout_seconds=30 if mapped_interaction_type == InteractionType.VOICE_TO_SPEECH else 60
+            )
+            
+            # Get the actual result from the Future
+            try:
+                result = future_result.result(timeout=60)  # Wait up to 60 seconds for result
+            except Exception as e:
+                print(f"[UnifiedMemory] ❌ Enterprise extraction failed: {e}")
+                # Fallback to standard extraction
+                extractor = get_unified_memory_extractor(username)
+                result = extractor.extract_all_from_text(text, conversation_context)
+                print(f"[UnifiedMemory] 🔄 Fallback to standard extraction completed")
+                return result
+            
+            # Cache result intelligently
+            cache_memory_intelligent(
+                cache_key,
+                result,
+                context_tags={username, interaction_type, "extraction", "enterprise"},
+                invalidation_triggers={"user_logout", "context_change", "system_restart"}
+            )
+            
+            print(f"[UnifiedMemory] 🏢 Enterprise extraction: {len(result.memory_events)} events, "
+                  f"intent={result.intent_classification}")
+            
             return result
-        
-        # Cache result intelligently
-        cache_memory_intelligent(
-            cache_key,
-            result,
-            context_tags={username, interaction_type, "extraction", "enterprise"},
-            invalidation_triggers={"user_logout", "context_change", "system_restart"}
-        )
-        
-        print(f"[UnifiedMemory] 🏢 Enterprise extraction: {len(result.memory_events)} events, "
-              f"intent={result.intent_classification}")
-        
-        return result
+        else:
+            print(f"[UnifiedMemory] ⚠️ Enterprise coordinator not available, falling back to standard")
     
-    else:
-        # Fallback to standard extraction
-        extractor = get_unified_memory_extractor(username)
-        result = extractor.extract_all_from_text(text, conversation_context)
-        
-        # Cache result for other modules that might need it
-        text_hash = hash(text.lower().strip())
-        _extraction_results_cache[text_hash] = result
-        
-        print(f"[UnifiedMemory] ✅ Standard extraction: {len(result.memory_events)} events, "
-              f"intent={result.intent_classification}, emotion={result.emotional_state.get('primary_emotion', 'unknown')}")
-        return result
+    # Fallback to standard extraction
+    extractor = get_unified_memory_extractor(username)
+    result = extractor.extract_all_from_text(text, conversation_context)
+    
+    # Cache result for other modules that might need it
+    text_hash = hash(text.lower().strip())
+    _extraction_results_cache[text_hash] = result
+    
+    print(f"[UnifiedMemory] ✅ Standard extraction: {len(result.memory_events)} events, "
+          f"intent={result.intent_classification}, emotion={result.emotional_state.get('primary_emotion', 'unknown')}")
+    return result
 
 def extract_for_voice_interaction(username: str, text: str, conversation_context: str = "") -> ExtractionResult:
     """Optimized extraction for voice-to-speech interactions with critical priority"""
@@ -186,14 +200,18 @@ def get_memory_stats() -> dict:
     
     if ENTERPRISE_EXTRACTION_AVAILABLE:
         try:
-            # Add enterprise performance metrics
-            enterprise_metrics = get_extraction_performance_report()
-            cache_metrics = get_memory_cache_performance()
+            # Add enterprise performance metrics with lazy import
+            coordinator_imports = _get_extraction_coordinator()
+            get_extraction_coordinator, extract_with_enterprise_coordination, ExtractionPriority, InteractionType, get_extraction_performance_report = coordinator_imports
             
-            basic_stats.update({
-                "enterprise_extraction": enterprise_metrics,
-                "intelligent_cache": cache_metrics
-            })
+            if get_extraction_performance_report:
+                enterprise_metrics = get_extraction_performance_report()
+                cache_metrics = get_memory_cache_performance()
+                
+                basic_stats.update({
+                    "enterprise_extraction": enterprise_metrics,
+                    "intelligent_cache": cache_metrics
+                })
         except Exception as e:
             print(f"[UnifiedMemory] ⚠️ Could not get enterprise metrics: {e}")
     
@@ -252,6 +270,12 @@ def get_enterprise_performance_summary() -> Dict[str, Any]:
         return {"error": "Enterprise features not available"}
     
     try:
+        coordinator_imports = _get_extraction_coordinator()
+        get_extraction_coordinator, extract_with_enterprise_coordination, ExtractionPriority, InteractionType, get_extraction_performance_report = coordinator_imports
+        
+        if not get_extraction_performance_report:
+            return {"error": "Enterprise coordinator not available"}
+            
         extraction_metrics = get_extraction_performance_report()
         cache_metrics = get_memory_cache_performance()
         memory_stats = get_memory_stats()
