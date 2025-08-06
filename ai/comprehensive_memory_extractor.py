@@ -89,15 +89,18 @@ class LocationNormalizer:
             'bar': ['pub', 'tavern', 'club']
         }
         
-        # Activity-to-location mappings
+        # Enhanced activity-to-location mappings
         self.activity_locations = {
             'ate': ['restaurant', 'cafe', 'food court'],
             'food': ['restaurant', 'cafe', 'food court'],
             'coffee': ['starbucks', 'cafe', 'coffee shop'],
             'shopping': ['mall', 'store', 'target', 'walmart'],
+            'stuff': ['target', 'walmart', 'store'],  # "getting stuff"
             'groceries': ['grocery_store', 'supermarket'],
             'fuel': ['gas_station'],
+            'gas': ['gas_station'],
             'medicine': ['pharmacy'],
+            'prescription': ['pharmacy'],
             'money': ['bank', 'atm'],
             'workout': ['gym'],
             'movie': ['movie_theater', 'cinema'],
@@ -131,10 +134,11 @@ class LocationNormalizer:
             if re.search(pattern, text_lower):
                 detected_locations.append(normalized)
         
-        # Activity-based location inference
-        for activity, locations in self.activity_locations.items():
-            if activity in text_lower:
-                detected_locations.extend(locations)
+        # Activity-based location inference (only if no direct locations found)
+        if not detected_locations:
+            for activity, locations in self.activity_locations.items():
+                if activity in text_lower:
+                    detected_locations.extend(locations)
         
         # Remove duplicates while preserving order
         seen = set()
@@ -173,23 +177,27 @@ class CasualSpeechDetector:
         
         # Comprehensive patterns for casual mentions
         self.casual_patterns = [
-            # Past activities with locations
+            # Past activities with locations - Enhanced
             (r'(?:i\s+)?(?:went\s+(?:to\s+)?|visited\s+|been\s+(?:to\s+)?|was\s+at\s+)(\w+)', 'past_visit'),
             (r'(?:i\s+)?(?:had\s+\w+\s+at\s+|ate\s+at\s+|grabbed\s+\w+\s+at\s+)(\w+)', 'past_activity'),
             (r'(?:i\s+)?(?:stopped\s+(?:by\s+|at\s+)?|hit\s+up\s+)(\w+)', 'past_visit'),
             
-            # Food-related activities
+            # Enhanced patterns for fragmented sentences
+            (r'(?:but|and|then)\s+(?:went\s+)(\w+)', 'compound_location'),
+            (r'(?:but|and|then)\s+(?:hit\s+up\s+)(\w+)', 'compound_location'),
+            (r'(?:but|and|then)\s+(?:was\s+at\s+)(\w+)', 'compound_location'),
+            
+            # Food-related activities - Enhanced
             (r'(?:i\s+)?(?:had\s+(?:some\s+)?food|ate|grabbed\s+(?:some\s+)?food)', 'food_activity'),
             (r'(?:i\s+)?(?:got\s+coffee|grabbed\s+coffee|had\s+coffee)', 'coffee_activity'),
             (r'(?:i\s+)?(?:picked\s+up\s+\w+|bought\s+\w+|got\s+\w+)', 'shopping_activity'),
             
-            # Location mentions without explicit action
+            # Shopping and getting stuff
+            (r'(?:i\s+)?(?:getting\s+stuff|getting\s+\w+|shopping)', 'shopping_activity'),
+            
+            # Location mentions without explicit action - Enhanced
             (r'(?:at\s+)?(\w+)\s+(?:earlier|today|yesterday|this\s+morning|this\s+afternoon)', 'time_location'),
             (r'(?:from\s+|to\s+)(\w+)(?:\s+and|\s+but|\s+then|$)', 'location_mention'),
-            
-            # Compound statements - extract location part
-            (r'(?:but|and|then)\s+(?:went\s+(?:to\s+)?|was\s+at\s+|hit\s+up\s+)(\w+)', 'compound_location'),
-            (r'(?:but|and|then)\s+(?:had\s+\w+\s+at\s+|ate\s+at\s+)(\w+)', 'compound_food'),
         ]
         
         # Patterns for extracting activities
@@ -238,6 +246,12 @@ class CasualSpeechDetector:
             implied_event = self._detect_implied_location_event(text_lower, current_date)
             if implied_event:
                 events.append(implied_event)
+        
+        # Step 6: Final fallback - try to extract any mentioned locations even without strong patterns
+        if not events:
+            fallback_event = self._extract_fallback_location_mention(text_lower, current_date)
+            if fallback_event:
+                events.append(fallback_event)
         
         return events
     
@@ -293,18 +307,22 @@ class CasualSpeechDetector:
         # Determine event type and topic
         if locations:
             primary_location = locations[0]
-            if 'food' in text or 'ate' in text or 'restaurant' in primary_location:
+            # Check for food-related context
+            if any(word in text for word in ['food', 'ate', 'lunch', 'dinner', 'meal']):
                 event_type = 'life_event'
                 topic = f"had food at {primary_location.replace('_', ' ')}"
-            elif 'coffee' in text and ('starbucks' in primary_location or 'cafe' in primary_location):
+            elif any(word in text for word in ['coffee', 'latte', 'cappuccino', 'espresso']):
                 event_type = 'life_event'
                 topic = f"got coffee at {primary_location.replace('_', ' ')}"
-            elif 'shopping' in text or any(shop in primary_location for shop in ['target', 'walmart', 'mall']):
+            elif any(word in text for word in ['shopping', 'bought', 'purchased', 'got']):
                 event_type = 'life_event'
                 topic = f"went shopping at {primary_location.replace('_', ' ')}"
-            else:
+            elif any(word in text for word in ['went', 'visited', 'hit up', 'stopped by']):
                 event_type = 'life_event'
                 topic = f"visited {primary_location.replace('_', ' ')}"
+            else:
+                event_type = 'life_event'
+                topic = f"was at {primary_location.replace('_', ' ')}"
         else:
             event_type = 'highlight'
             topic = activities[0] if activities else "general activity"
@@ -363,6 +381,64 @@ class CasualSpeechDetector:
                 'original_text': text,
                 'extraction_method': 'implied_location'
             }
+        
+        return None
+    
+    def _extract_fallback_location_mention(self, text: str, date: str) -> Optional[Dict[str, Any]]:
+        """Fallback to extract any location mention even with weak patterns"""
+        
+        # Look for any word that might be a location after common prepositions
+        location_prepositions = ['at', 'to', 'from', 'by']
+        words = text.split()
+        
+        for i, word in enumerate(words):
+            if word in location_prepositions and i + 1 < len(words):
+                potential_location = words[i + 1]
+                
+                # Clean the potential location
+                potential_location = potential_location.strip('.,!?')
+                
+                # Skip common non-location words
+                skip_words = ['the', 'a', 'an', 'my', 'some', 'this', 'that', 'it', 'work', 'home']
+                if potential_location.lower() in skip_words:
+                    continue
+                
+                # If it's at least 3 characters, treat it as a potential location
+                if len(potential_location) >= 3:
+                    return {
+                        'type': 'life_event',
+                        'topic': f"was at {potential_location}",
+                        'date': date,
+                        'time': None,
+                        'emotion': 'casual',
+                        'priority': 'low',
+                        'people': self._extract_people(text),
+                        'location': potential_location.lower(),
+                        'details': 'location mention detected',
+                        'original_text': text,
+                        'extraction_method': 'fallback_location'
+                    }
+        
+        # Look for "went" followed by a word that could be a location
+        went_pattern = r'went\s+(\w+)'
+        match = re.search(went_pattern, text)
+        if match:
+            potential_location = match.group(1)
+            skip_words = ['there', 'back', 'home', 'out', 'away']
+            if potential_location.lower() not in skip_words:
+                return {
+                    'type': 'life_event',
+                    'topic': f"went to {potential_location}",
+                    'date': date,
+                    'time': None,
+                    'emotion': 'casual',
+                    'priority': 'medium',
+                    'people': self._extract_people(text),
+                    'location': potential_location.lower(),
+                    'details': 'destination detected',
+                    'original_text': text,
+                    'extraction_method': 'fallback_went'
+                }
         
         return None
     
@@ -979,27 +1055,38 @@ Return ONLY valid JSON. Extract ALL relevant details."""
         return min(score, 10)  # Cap at 10
     
     def _is_casual_conversation(self, text: str) -> bool:
-        """Filter out pure casual conversation"""
+        """Enhanced casual conversation detection that considers pattern matches"""
         text_lower = text.lower().strip()
         
-        # Pure casual patterns only
+        # First check if we have memory-worthy content with our enhanced patterns
+        if self.casual_speech_detector.detect_memory_events(text_lower):
+            return False  # Has memory events, not casual
+            
+        if self.location_normalizer.normalize_location(text_lower):
+            return False  # Has locations, not casual
+        
+        # Pure casual patterns only (more comprehensive)
         casual_patterns = [
-            r'^(hi|hello|hey)\s*$',
-            r'^(thanks?|thank\s+you)\s*$', 
-            r'^(bye|goodbye)\s*$',
-            r'^(yes|yeah|yep|no|nope)\s*$',
-            r'^(okay|ok|alright)\s*$',
-            r'^how.+are.+you',
-            r'^what.+about.+you',
-            r'^nothing.+much\s*$'
+            r'^(hi|hello|hey|yo)\s*$',
+            r'^(thanks?|thank\s+you|ty)\s*$', 
+            r'^(bye|goodbye|see\s+ya|later)\s*$',
+            r'^(yes|yeah|yep|yup|no|nope|nah)\s*$',
+            r'^(okay|ok|alright|sure|fine)\s*$',
+            r'^how\s+(are\s+you|you\s+doing)',
+            r'^what\s+(about\s+you|up)',
+            r'^nothing\s+(much|special)\s*$',
+            r'^not\s+much\s*$',
+            r'^good\s+(morning|afternoon|evening|night)\s*$',
+            r'^(nice|cool|awesome|great)\s*$',
+            r'^(lol|haha|hmm|oh|ah)\s*$'
         ]
         
         for pattern in casual_patterns:
             if re.search(pattern, text_lower):
                 return True
         
-        # Too short
-        if len(text.split()) < 3:
+        # Too short without meaningful content
+        if len(text.split()) < 3 and not any(word in text_lower for word in ['went', 'had', 'got', 'was']):
             return True
             
         return False
