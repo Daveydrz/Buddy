@@ -989,11 +989,17 @@ def handle_streaming_response(text, current_user):
         
         # ✅ ENHANCED: MANDATORY Consciousness-integrated LLM handler with token optimization
         consciousness_success = False
+        streaming_response_id = None
         try:
             if CONSCIOUSNESS_LLM_AVAILABLE:
                 from ai.llm_handler import generate_consciousness_integrated_response
+                # ✅ NEW: Start streaming response tracking
+                from audio.output import start_streaming_response, complete_streaming_response
+                streaming_response_id = start_streaming_response(text, current_user, DEFAULT_LANG)
+                
                 print("[AdvancedResponse] 🧠 Using MANDATORY CONSCIOUSNESS-INTEGRATED LLM HANDLER")
                 print("[AdvancedResponse] 🏷️ Token optimization: ACTIVE (40-85% reduction target)")
+                print(f"[AdvancedResponse] 📊 Streaming response ID: {streaming_response_id}")
                 
                 full_response = ""
                 chunk_count = 0
@@ -1029,8 +1035,8 @@ def handle_streaming_response(text, current_user):
                             print(f"[MegaMemory] ⚠️ Validation error for chunk {chunk_count}: {validation_error}")
                             # Continue with original chunk if validation fails
                         
-                        # ✅ SPEAK CHUNK (now validated and consciousness-enhanced)
-                        speak_streaming(chunk_text)
+                        # ✅ SPEAK CHUNK (now validated and consciousness-enhanced) with response tracking
+                        speak_streaming(chunk_text, response_id=streaming_response_id)
                         full_response += chunk_text + " "
                         
                         # ✅ CRITICAL: Check AGAIN after queueing and break if interrupted
@@ -1046,15 +1052,34 @@ def handle_streaming_response(text, current_user):
                 print(f"[AdvancedResponse] ✅ CONSCIOUSNESS-INTEGRATED response complete - {chunk_count} segments")
                 consciousness_success = True
                 
+                # ✅ NEW: Mark streaming response as complete
+                if streaming_response_id and not response_interrupted:
+                    complete_streaming_response(streaming_response_id)
+                    print(f"[AdvancedResponse] 🏁 Streaming response {streaming_response_id} marked complete")
+                
             else:
                 print("[AdvancedResponse] ⚠️ Consciousness LLM handler not available - module loading issue")
                 
         except Exception as consciousness_error:
             print(f"[AdvancedResponse] ❌ Consciousness integration failed: {consciousness_error}")
             print("[AdvancedResponse] 🔄 Falling back to ENHANCED consciousness fusion")
+            # ✅ NEW: Mark response as interrupted on error
+            if streaming_response_id:
+                from audio.streaming_response_manager import get_streaming_manager
+                get_streaming_manager().mark_response_interrupted(streaming_response_id)
         
         # ✅ ENHANCED FALLBACK: If consciousness handler fails, use enhanced fusion with consciousness integration
+        fallback_response_id = None
         if not consciousness_success:
+            print("[AdvancedResponse] 🧠 Using ENHANCED consciousness fusion with token optimization")
+            
+            # ✅ NEW: Start fallback streaming response if not already started
+            if not streaming_response_id:
+                from audio.output import start_streaming_response
+                fallback_response_id = start_streaming_response(text, current_user, DEFAULT_LANG)
+                print(f"[AdvancedResponse] 📊 Fallback streaming response ID: {fallback_response_id}")
+            else:
+                fallback_response_id = streaming_response_id
             print("[AdvancedResponse] 🧠 Using ENHANCED consciousness fusion with token optimization")
             
             # ✅ ENHANCED CONSCIOUSNESS FUSION: Inject consciousness data into fusion system
@@ -1161,8 +1186,8 @@ def handle_streaming_response(text, current_user):
                         print(f"[MegaMemory] ⚠️ Validation error for chunk {chunk_count}: {validation_error}")
                         # Continue with original chunk if validation fails
                     
-                    # ✅ SPEAK CHUNK (now validated and entropy-enhanced)
-                    speak_streaming(chunk_text)
+                    # ✅ SPEAK CHUNK (now validated and entropy-enhanced) with response tracking
+                    speak_streaming(chunk_text, response_id=fallback_response_id)
                     full_response += chunk_text + " "
                     
                     # ✅ CRITICAL: Check AGAIN after queueing and break if interrupted
@@ -1223,7 +1248,7 @@ def handle_streaming_response(text, current_user):
                         response_interrupted = True
                         break  # ✅ CRITICAL: Break immediately!
                     
-                    speak_streaming(sentence.strip())
+                    speak_streaming(sentence.strip(), response_id=fallback_response_id)
                     
                     # ✅ Check again after queueing
                     if full_duplex_manager and full_duplex_manager.speech_interrupted:
@@ -1234,6 +1259,11 @@ def handle_streaming_response(text, current_user):
                     time.sleep(0.1)
             
             full_response = response
+            
+            # ✅ NEW: Mark fallback streaming response as complete
+            if fallback_response_id and not response_interrupted:
+                complete_streaming_response(fallback_response_id)
+                print(f"[AdvancedResponse] 🏁 Fallback streaming response {fallback_response_id} marked complete")
         
         # ✅ HANDLE COMPLETION: Only if not interrupted
         if not response_interrupted:

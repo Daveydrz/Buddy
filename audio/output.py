@@ -30,6 +30,11 @@ audio_lock = threading.Lock()
 buddy_talking = threading.Event()
 playback_start_time = None
 
+# ✅ NEW: Streaming response tracking
+from audio.streaming_response_manager import get_streaming_manager
+streaming_manager = get_streaming_manager()
+current_response_id = None
+
 # ✅ NEW: Kokoro-FastAPI configuration
 KOKORO_API_BASE_URL = getattr(globals(), 'KOKORO_API_BASE_URL', "http://127.0.0.1:8880")
 KOKORO_API_TIMEOUT = getattr(globals(), 'KOKORO_API_TIMEOUT', 10)
@@ -52,12 +57,34 @@ KOKORO_API_VOICES = {
 
 # Initialize Kokoro-FastAPI connection
 kokoro_api_available = False
+kokoro_session = None  # ✅ NEW: Persistent HTTP session for connection reuse
+
+def get_kokoro_session():
+    """Get or create a persistent HTTP session for Kokoro API"""
+    global kokoro_session
+    if kokoro_session is None:
+        kokoro_session = requests.Session()
+        # Set session defaults for better connection management
+        kokoro_session.headers.update({
+            'Content-Type': 'application/json',
+            'Connection': 'keep-alive'
+        })
+        # Configure connection pooling
+        adapter = requests.adapters.HTTPAdapter(
+            pool_connections=1,
+            pool_maxsize=5,
+            max_retries=1
+        )
+        kokoro_session.mount('http://', adapter)
+        kokoro_session.mount('https://', adapter)
+    return kokoro_session
 
 def test_kokoro_api():
     """Test if Kokoro-FastAPI is available"""
     global kokoro_api_available
     try:
-        response = requests.get(f"{KOKORO_API_BASE_URL}/health", timeout=5)
+        session = get_kokoro_session()
+        response = session.get(f"{KOKORO_API_BASE_URL}/health", timeout=5)
         if response.status_code == 200:
             kokoro_api_available = True
             print(f"[Buddy V2] ✅ Kokoro-FastAPI connected at {KOKORO_API_BASE_URL}")
@@ -70,7 +97,7 @@ def test_kokoro_api():
     return False
 
 def generate_tts(text, lang=DEFAULT_LANG):
-    """Generate TTS audio using Kokoro-FastAPI"""
+    """Generate TTS audio using Kokoro-FastAPI with persistent connection"""
     try:
         if not kokoro_api_available:
             if not test_kokoro_api():
@@ -87,8 +114,9 @@ def generate_tts(text, lang=DEFAULT_LANG):
             "response_format": "wav"
         }
         
-        # Call Kokoro-FastAPI
-        response = requests.post(
+        # ✅ NEW: Use persistent session for connection reuse
+        session = get_kokoro_session()
+        response = session.post(
             f"{KOKORO_API_BASE_URL}/v1/audio/speech",
             json=payload,
             timeout=KOKORO_API_TIMEOUT
@@ -159,8 +187,10 @@ def speak_async(text, lang=DEFAULT_LANG):
     
     threading.Thread(target=tts_worker, daemon=True).start()
 
-def speak_streaming(text, voice=None, lang=DEFAULT_LANG):
-    """✅ FIXED: Queue text chunk for immediate streaming TTS"""
+def speak_streaming(text, voice=None, lang=DEFAULT_LANG, response_id=None):
+    """✅ FIXED: Queue text chunk for immediate streaming TTS with response tracking"""
+    global current_response_id
+    
     if not text or len(text.strip()) < 2:
         return False
         
@@ -170,6 +200,10 @@ def speak_streaming(text, voice=None, lang=DEFAULT_LANG):
                 if not test_kokoro_api():
                     return False
             
+            # ✅ FIX: Track this chunk in the streaming manager
+            if response_id and streaming_manager.is_response_active(response_id):
+                streaming_manager.add_chunk(response_id)
+            
             # ✅ FIX: Properly handle voice parameter
             selected_voice = voice  # Use provided voice
             if selected_voice is None:
@@ -177,14 +211,15 @@ def speak_streaming(text, voice=None, lang=DEFAULT_LANG):
                 detected_lang = lang or detect(text)
                 selected_voice = KOKORO_API_VOICES.get(detected_lang, KOKORO_DEFAULT_VOICE)
             
-            # Quick API call for streaming
+            # ✅ NEW: Use persistent session for connection reuse
             payload = {
                 "input": text.strip(),
-                "voice": selected_voice,  # ✅ Use selected_voice instead of voice
+                "voice": selected_voice,
                 "response_format": "wav"
             }
             
-            response = requests.post(
+            session = get_kokoro_session()
+            response = session.post(
                 f"{KOKORO_API_BASE_URL}/v1/audio/speech",
                 json=payload,
                 timeout=5  # Shorter timeout for streaming
@@ -213,8 +248,8 @@ def speak_streaming(text, voice=None, lang=DEFAULT_LANG):
                 if channels == 2:
                     audio_data = audio_data.reshape(-1, 2)[:, 0]
                 
-                # Queue immediately
-                audio_queue.put((audio_data, sample_rate))
+                # ✅ FIX: Queue audio with response tracking
+                audio_queue.put((audio_data, sample_rate, response_id))
                 
                 # Cleanup
                 try:
@@ -223,7 +258,10 @@ def speak_streaming(text, voice=None, lang=DEFAULT_LANG):
                     pass
                 
                 if DEBUG:
-                    print(f"[StreamingTTS] ✅ Queued chunk: '{text[:50]}...' with voice: {selected_voice}")
+                    chunk_info = f"'{text[:50]}...'" if len(text) > 50 else f"'{text}'"
+                    print(f"[StreamingTTS] ✅ Queued chunk: {chunk_info} with voice: {selected_voice}")
+                    if response_id:
+                        print(f"[StreamingTTS] 📊 Response: {response_id}")
                 
                 return True
             else:
@@ -334,24 +372,33 @@ def notify_full_duplex_manager_stopped():
         print(f"[Audio] ❌ Error notifying speaking stop: {e}")
 
 def audio_worker():
-    """✅ SIMPLE FIX: Audio worker that STOPS IMMEDIATELY on interrupt"""
+    """✅ FIXED: Audio worker with proper streaming response completion tracking"""
     global current_audio_playback, playback_start_time
     
-    print(f"[Buddy V2] 🎵 Simple Audio Worker started")
+    print(f"[Buddy V2] 🎵 Enhanced Audio Worker started with streaming tracking")
     
     while True:
         try:
             item = audio_queue.get(timeout=0.1)
             if item is None:
                 break
-                
-            pcm, sr = item
             
+            # ✅ FIX: Handle new queue format with response tracking
+            if len(item) == 3:
+                pcm, sr, response_id = item
+            else:
+                # Legacy format for backward compatibility
+                pcm, sr = item
+                response_id = None
+                
             # ✅ SIMPLE: Check interrupt before playing
             if FULL_DUPLEX_MODE:
                 from audio.full_duplex_manager import full_duplex_manager
                 if full_duplex_manager and getattr(full_duplex_manager, 'speech_interrupted', False):
                     print("[Audio] 🛑 INTERRUPT - Skipping chunk")
+                    # Mark as interrupted if we have a response ID
+                    if response_id:
+                        streaming_manager.mark_response_interrupted(response_id)
                     audio_queue.task_done()
                     continue
             
@@ -367,6 +414,8 @@ def audio_worker():
                 
                 try:
                     print(f"[Audio] 🎵 Playing chunk: {len(pcm)} samples")
+                    if response_id:
+                        print(f"[Audio] 📊 Response ID: {response_id}")
                     
                     if SIMPLEAUDIO_AVAILABLE:
                         current_audio_playback = sa.play_buffer(pcm.tobytes(), 1, 2, sr)
@@ -380,11 +429,18 @@ def audio_worker():
                                         print("[Audio] ⚡ IMMEDIATE STOP - Interrupt detected!")
                                         current_audio_playback.stop()
                                         
+                                        # Mark current response as interrupted
+                                        if response_id:
+                                            streaming_manager.mark_response_interrupted(response_id)
+                                        
                                         # Clear ALL remaining chunks
                                         cleared = 0
                                         while not audio_queue.empty():
                                             try:
-                                                audio_queue.get_nowait()
+                                                item = audio_queue.get_nowait()
+                                                # Mark any other response chunks as interrupted
+                                                if len(item) == 3 and item[2]:
+                                                    streaming_manager.mark_response_interrupted(item[2])
                                                 audio_queue.task_done()
                                                 cleared += 1
                                             except queue.Empty:
@@ -399,6 +455,11 @@ def audio_worker():
                         
                         if current_audio_playback and not current_audio_playback.is_playing():
                             print(f"[Audio] ✅ Chunk completed")
+                            # ✅ FIX: Mark chunk as played in streaming manager
+                            if response_id:
+                                chunk_completed_response = streaming_manager.mark_chunk_played(response_id)
+                                if chunk_completed_response:
+                                    print(f"[Audio] 🏁 Response {response_id} fully completed")
                     else:
                         print("[Audio] ⚠️ simpleaudio not available - skipping audio playback")
                     
@@ -421,28 +482,37 @@ def audio_worker():
                         if full_duplex_manager and getattr(full_duplex_manager, 'speech_interrupted', False):
                             print("[Audio] 🛑 Post-chunk interrupt detected")
                             
+                            # Mark response as interrupted
+                            if response_id:
+                                streaming_manager.mark_response_interrupted(response_id)
+                            
                             # Clear remaining queue
                             while not audio_queue.empty():
                                 try:
-                                    audio_queue.get_nowait()
+                                    item = audio_queue.get_nowait()
+                                    # Mark any response chunks as interrupted
+                                    if len(item) == 3 and item[2]:
+                                        streaming_manager.mark_response_interrupted(item[2])
                                     audio_queue.task_done()
                                 except queue.Empty:
                                     break
                             
-                            notify_full_duplex_manager_stopped()
+                            # ✅ FIX: Only notify stopped if all responses are complete
+                            if streaming_manager.should_notify_completion():
+                                notify_full_duplex_manager_stopped()
                             audio_queue.task_done()
                             continue
                     
-                    # Normal completion - notify stopped only if queue empty
+                    # ✅ FIX: Only notify completion when all streaming responses are done
                     if FULL_DUPLEX_MODE and audio_queue.empty():
                         from audio.full_duplex_manager import full_duplex_manager
                         is_interrupted = full_duplex_manager and getattr(full_duplex_manager, 'speech_interrupted', False)
                         
-                        if not is_interrupted:
-                            print("[Audio] 🏁 All chunks completed normally")
+                        if not is_interrupted and streaming_manager.should_notify_completion():
+                            print("[Audio] 🏁 All streaming responses completed")
                             notify_full_duplex_manager_stopped()
                     
-                    if not FULL_DUPLEX_MODE and audio_queue.empty():
+                    if not FULL_DUPLEX_MODE and audio_queue.empty() and streaming_manager.should_notify_completion():
                         buddy_talking.clear()
                     
                     playback_start_time = None
@@ -458,9 +528,9 @@ def audio_worker():
                 if current_audio_playback:
                     current_audio_playback.stop()
                     current_audio_playback = None
-                if FULL_DUPLEX_MODE:
+                if FULL_DUPLEX_MODE and streaming_manager.should_notify_completion():
                     notify_full_duplex_manager_stopped()
-                else:
+                elif not FULL_DUPLEX_MODE:
                     buddy_talking.clear()
             except:
                 pass
@@ -547,8 +617,8 @@ def force_buddy_stop_notification():
     notify_full_duplex_manager_stopped()
 
 def get_audio_stats():
-    """Get audio system statistics"""
-    return {
+    """Get audio system statistics with streaming response info"""
+    stats = {
         "queue_size": audio_queue.qsize(),
         "is_playing": current_audio_playback is not None and current_audio_playback.is_playing() if current_audio_playback else False,
         "buddy_talking": buddy_talking.is_set(),
@@ -556,8 +626,39 @@ def get_audio_stats():
         "current_time": time.time(),
         "mode": "FULL_DUPLEX" if FULL_DUPLEX_MODE else "HALF_DUPLEX",
         "kokoro_api_available": kokoro_api_available,
-        "api_url": KOKORO_API_BASE_URL
+        "api_url": KOKORO_API_BASE_URL,
+        "current_response_id": current_response_id,
+        "streaming_stats": streaming_manager.get_active_response_stats()
     }
+    return stats
+
+def log_audio_playback_verification():
+    """Log comprehensive audio playback verification"""
+    if DEBUG:
+        stats = get_audio_stats()
+        print("=" * 60)
+        print("🔊 AUDIO PLAYBACK VERIFICATION")
+        print("=" * 60)
+        print(f"📊 Queue Size: {stats['queue_size']}")
+        print(f"🎵 Currently Playing: {stats['is_playing']}")
+        print(f"🤖 Buddy Talking: {stats['buddy_talking']}")
+        print(f"🌐 Kokoro API Available: {stats['kokoro_api_available']}")
+        print(f"📡 API URL: {stats['api_url']}")
+        print(f"🆔 Current Response ID: {stats['current_response_id']}")
+        
+        streaming_stats = stats['streaming_stats']
+        print(f"📈 Active Responses: {streaming_stats['active_responses']}")
+        
+        if streaming_stats['responses']:
+            print("📋 Response Details:")
+            for resp_id, resp_data in streaming_stats['responses'].items():
+                print(f"  - {resp_id}:")
+                print(f"    User: {resp_data['user']}")
+                print(f"    Chunks: {resp_data['chunks_played']}/{resp_data['chunks_received']}")
+                print(f"    Complete: {resp_data['is_complete']}")
+                print(f"    Duration: {resp_data['duration']:.2f}s")
+        
+        print("=" * 60)
 
 def generate_and_play_kokoro(text, voice=None, lang=DEFAULT_LANG):
     """✅ FIX: Generate and play TTS using Kokoro - called after LLM generation is complete"""
@@ -579,12 +680,37 @@ def generate_and_play_kokoro(text, voice=None, lang=DEFAULT_LANG):
         return False
 
 def start_streaming_response(user_input, current_user, language):
-    """Start a streaming response with immediate TTS"""
-    pass
+    """Start a streaming response with proper tracking"""
+    global current_response_id
+    current_response_id = streaming_manager.start_response(current_user)
+    if DEBUG:
+        print(f"[Audio] 🚀 Started streaming response {current_response_id} for {current_user}")
+    return current_response_id
 
-def queue_text_chunk(text_chunk, voice=None):
-    """Queue a text chunk for immediate TTS processing"""
-    return speak_streaming(text_chunk, voice)
+def queue_text_chunk(text_chunk, voice=None, response_id=None):
+    """Queue a text chunk for immediate TTS processing with response tracking"""
+    global current_response_id
+    if response_id is None:
+        response_id = current_response_id
+    return speak_streaming(text_chunk, voice, response_id=response_id)
+
+def complete_streaming_response(response_id=None):
+    """Mark a streaming response as complete (no more chunks)"""
+    global current_response_id
+    if response_id is None:
+        response_id = current_response_id
+    
+    if response_id:
+        completed = streaming_manager.mark_response_complete(response_id)
+        if DEBUG:
+            print(f"[Audio] ✅ Marked response {response_id} as complete")
+        
+        # Clear current response if this was it
+        if response_id == current_response_id:
+            current_response_id = None
+        
+        return completed
+    return False
 
 # Initialize API connection on module load
 test_kokoro_api()
