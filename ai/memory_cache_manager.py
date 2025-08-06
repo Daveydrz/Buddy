@@ -23,6 +23,32 @@ from concurrent.futures import ThreadPoolExecutor, Future
 import os
 import pickle
 
+class SerializableLock:
+    """Thread-safe lock that can be safely serialized/pickled"""
+    
+    def __init__(self):
+        self._lock = threading.RLock()
+    
+    def __enter__(self):
+        return self._lock.__enter__()
+    
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        return self._lock.__exit__(exc_type, exc_val, exc_tb)
+    
+    def acquire(self, blocking=True, timeout=-1):
+        return self._lock.acquire(blocking, timeout)
+    
+    def release(self):
+        return self._lock.release()
+    
+    def __getstate__(self):
+        # Return an empty state when pickling
+        return {}
+    
+    def __setstate__(self, state):
+        # Recreate the lock when unpickling
+        self._lock = threading.RLock()
+
 @dataclass
 class CacheEntry:
     """Cached memory entry with metadata"""
@@ -64,13 +90,14 @@ class MemoryCacheManager:
         # Cache storage with LRU eviction
         self.cache: OrderedDict[str, CacheEntry] = OrderedDict()
         self.cache_size_bytes = 0
-        self.cache_lock = threading.RLock()
+        # Use a custom lock class that can be serialized safely
+        self.cache_lock = SerializableLock()
         
         # Operation batching
         self.pending_batches: Dict[str, MemoryOperationBatch] = {}
         self.batch_threshold = 3  # Minimum operations to form a batch
         self.batch_timeout = 2.0  # Maximum wait time for batching
-        self.batch_lock = threading.Lock()
+        self.batch_lock = SerializableLock()
         
         # Context pattern learning
         self.access_patterns: Dict[str, List[str]] = defaultdict(list)  # user -> access sequence
