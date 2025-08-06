@@ -1,0 +1,2 @@
+# Comment: 
+I'll be implementing a proper audio playback system with smoothing that fixes the fundamental issue with chunks being sent but not played properly.
