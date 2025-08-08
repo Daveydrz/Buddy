@@ -150,3 +150,11 @@ if __name__ != "__main__":
     core_startup()
     audio_startup()
     models_startup()
+
+# Additional variables needed for backward compatibility
+MEMORY_EXTRACTION_ENABLED = True
+MEMORY_DEBUG = True
+ADVANCED_AI_ASSISTANT = True
+ALEXA_SIRI_LEVEL_INTELLIGENCE = True
+ANONYMOUS_CLUSTERING_ENABLED = True
+ENHANCED_VOICE_SYSTEM = True
