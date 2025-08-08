@@ -1,0 +1,39 @@
+# Buddy Voice Assistant - Clean Architecture Requirements
+# Pinned versions for stability and reproducible builds
+
+# Core async and networking
+aiohttp==3.9.1
+websockets==12.0
+asyncio-timeout==4.0.3
+
+# HTTP client with retries
+requests==2.31.0
+urllib3==2.1.0
+
+# Audio processing
+numpy==1.24.3
+scipy==1.11.4
+
+# Audio playback (optional)
+simpleaudio==1.0.4
+
+# Language detection for TTS
+langdetect==1.0.9
+
+# Time and location utilities
+pytz==2023.3
+
+# Voice activity detection (optional)
+webrtcvad==2.0.10
+
+# Wake word detection (optional)
+pvporcupine==3.0.0
+
+# Voice recognition (optional)
+resemblyzer==0.1.1
+
+# Development and testing
+pytest==7.4.3
+pytest-asyncio==0.21.1
+black==23.11.0
+flake8==6.1.0
