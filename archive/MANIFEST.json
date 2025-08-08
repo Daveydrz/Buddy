@@ -1,0 +1,571 @@
+{
+  "archival_metadata": {
+    "created_at": "2025-08-08T02:48:51.661041Z",
+    "reason": "Architectural refactoring - moved unreachable files",
+    "source_analysis": "comprehensive_dependency_analysis.py",
+    "entry_point": "main.py",
+    "total_archived": 80
+  },
+  "archived_files": [
+    {
+      "file": "ai/__init__.py",
+      "original_path": "ai/__init__.py",
+      "archived_path": "archive/ai/__init__.py",
+      "reason": "unreachable from main.py at time of archival",
+      "archived_at": "2025-08-08T02:48:51.653824Z"
+    },
+    {
+      "file": "ai/attention_manager.py",
+      "original_path": "ai/attention_manager.py",
+      "archived_path": "archive/ai/attention_manager.py",
+      "reason": "unreachable from main.py at time of archival",
+      "archived_at": "2025-08-08T02:48:51.653957Z"
+    },
+    {
+      "file": "ai/autonomous_action_planner.py",
+      "original_path": "ai/autonomous_action_planner.py",
+      "archived_path": "archive/ai/autonomous_action_planner.py",
+      "reason": "unreachable from main.py at time of archival",
+      "archived_at": "2025-08-08T02:48:51.654050Z"
+    },
+    {
+      "file": "ai/belief_reinforcement.py",
+      "original_path": "ai/belief_reinforcement.py",
+      "archived_path": "archive/ai/belief_reinforcement.py",
+      "reason": "unreachable from main.py at time of archival",
+      "archived_at": "2025-08-08T02:48:51.654138Z"
+    },
+    {
+      "file": "ai/chat_enhanced.py",
+      "original_path": "ai/chat_enhanced.py",
+      "archived_path": "archive/ai/chat_enhanced.py",
+      "reason": "unreachable from main.py at time of archival",
+      "archived_at": "2025-08-08T02:48:51.654225Z"
+    },
+    {
+      "file": "ai/class5_consciousness_integration.py",
+      "original_path": "ai/class5_consciousness_integration.py",
+      "archived_path": "archive/ai/class5_consciousness_integration.py",
+      "reason": "unreachable from main.py at time of archival",
+      "archived_at": "2025-08-08T02:48:51.654314Z"
+    },
+    {
+      "file": "ai/conscious_prompt_builder_backup.py",
+      "original_path": "ai/conscious_prompt_builder_backup.py",
+      "archived_path": "archive/ai/conscious_prompt_builder_backup.py",
+      "reason": "unreachable from main.py at time of archival",
+      "archived_at": "2025-08-08T02:48:51.654401Z"
+    },
+    {
+      "file": "ai/consciousness_health_score.py",
+      "original_path": "ai/consciousness_health_score.py",
+      "archived_path": "archive/ai/consciousness_health_score.py",
+      "reason": "unreachable from main.py at time of archival",
+      "archived_at": "2025-08-08T02:48:51.654487Z"
+    },
+    {
+      "file": "ai/consciousness_integrator.py",
+      "original_path": "ai/consciousness_integrator.py",
+      "archived_path": "archive/ai/consciousness_integrator.py",
+      "reason": "unreachable from main.py at time of archival",
+      "archived_at": "2025-08-08T02:48:51.654572Z"
+    },
+    {
+      "file": "ai/context_manager.py",
+      "original_path": "ai/context_manager.py",
+      "archived_path": "archive/ai/context_manager.py",
+      "reason": "unreachable from main.py at time of archival",
+      "archived_at": "2025-08-08T02:48:51.654658Z"
+    },
+    {
+      "file": "ai/continuous_consciousness_loop.py",
+      "original_path": "ai/continuous_consciousness_loop.py",
+      "archived_path": "archive/ai/continuous_consciousness_loop.py",
+      "reason": "unreachable from main.py at time of archival",
+      "archived_at": "2025-08-08T02:48:51.654743Z"
+    },
+    {
+      "file": "ai/dream_processor.py",
+      "original_path": "ai/dream_processor.py",
+      "archived_path": "archive/ai/dream_processor.py",
+      "reason": "unreachable from main.py at time of archival",
+      "archived_at": "2025-08-08T02:48:51.654830Z"
+    },
+    {
+      "file": "ai/internal_state_verbalizer.py",
+      "original_path": "ai/internal_state_verbalizer.py",
+      "archived_path": "archive/ai/internal_state_verbalizer.py",
+      "reason": "unreachable from main.py at time of archival",
+      "archived_at": "2025-08-08T02:48:51.654919Z"
+    },
+    {
+      "file": "ai/lucid_awareness_loop.py",
+      "original_path": "ai/lucid_awareness_loop.py",
+      "archived_path": "archive/ai/lucid_awareness_loop.py",
+      "reason": "unreachable from main.py at time of archival",
+      "archived_at": "2025-08-08T02:48:51.655040Z"
+    },
+    {
+      "file": "ai/main.py",
+      "original_path": "ai/main.py",
+      "archived_path": "archive/ai/main.py",
+      "reason": "unreachable from main.py at time of archival",
+      "archived_at": "2025-08-08T02:48:51.655127Z"
+    },
+    {
+      "file": "ai/memory_profile_continuity_manager.py",
+      "original_path": "ai/memory_profile_continuity_manager.py",
+      "archived_path": "archive/ai/memory_profile_continuity_manager.py",
+      "reason": "unreachable from main.py at time of archival",
+      "archived_at": "2025-08-08T02:48:51.655217Z"
+    },
+    {
+      "file": "ai/performance_optimizer.py",
+      "original_path": "ai/performance_optimizer.py",
+      "archived_path": "archive/ai/performance_optimizer.py",
+      "reason": "unreachable from main.py at time of archival",
+      "archived_at": "2025-08-08T02:48:51.655305Z"
+    },
+    {
+      "file": "ai/qualia_manager.py",
+      "original_path": "ai/qualia_manager.py",
+      "archived_path": "archive/ai/qualia_manager.py",
+      "reason": "unreachable from main.py at time of archival",
+      "archived_at": "2025-08-08T02:48:51.655395Z"
+    },
+    {
+      "file": "ai/symbolic_grounding.py",
+      "original_path": "ai/symbolic_grounding.py",
+      "archived_path": "archive/ai/symbolic_grounding.py",
+      "reason": "unreachable from main.py at time of archival",
+      "archived_at": "2025-08-08T02:48:51.655484Z"
+    },
+    {
+      "file": "ai/system_prompts.py",
+      "original_path": "ai/system_prompts.py",
+      "archived_path": "archive/ai/system_prompts.py",
+      "reason": "unreachable from main.py at time of archival",
+      "archived_at": "2025-08-08T02:48:51.655575Z"
+    },
+    {
+      "file": "ai/template_sanitization_validator.py",
+      "original_path": "ai/template_sanitization_validator.py",
+      "archived_path": "archive/ai/template_sanitization_validator.py",
+      "reason": "unreachable from main.py at time of archival",
+      "archived_at": "2025-08-08T02:48:51.655662Z"
+    },
+    {
+      "file": "ai/user_identification.py",
+      "original_path": "ai/user_identification.py",
+      "archived_path": "archive/ai/user_identification.py",
+      "reason": "unreachable from main.py at time of archival",
+      "archived_at": "2025-08-08T02:48:51.655751Z"
+    },
+    {
+      "file": "analyze_buddy_complete.py",
+      "original_path": "analyze_buddy_complete.py",
+      "archived_path": "archive/analyze_buddy_complete.py",
+      "reason": "unreachable from main.py at time of archival",
+      "archived_at": "2025-08-08T02:48:51.655842Z"
+    },
+    {
+      "file": "audio/__init__.py",
+      "original_path": "audio/__init__.py",
+      "archived_path": "archive/audio/__init__.py",
+      "reason": "unreachable from main.py at time of archival",
+      "archived_at": "2025-08-08T02:48:51.655974Z"
+    },
+    {
+      "file": "audio/aec.py",
+      "original_path": "audio/aec.py",
+      "archived_path": "archive/audio/aec.py",
+      "reason": "unreachable from main.py at time of archival",
+      "archived_at": "2025-08-08T02:48:51.656061Z"
+    },
+    {
+      "file": "audio/full_duplex_aec.py",
+      "original_path": "audio/full_duplex_aec.py",
+      "archived_path": "archive/audio/full_duplex_aec.py",
+      "reason": "unreachable from main.py at time of archival",
+      "archived_at": "2025-08-08T02:48:51.656151Z"
+    },
+    {
+      "file": "audio/kyutai_coordinator.py",
+      "original_path": "audio/kyutai_coordinator.py",
+      "archived_path": "archive/audio/kyutai_coordinator.py",
+      "reason": "unreachable from main.py at time of archival",
+      "archived_at": "2025-08-08T02:48:51.656236Z"
+    },
+    {
+      "file": "audio/streaming_kokoro.py",
+      "original_path": "audio/streaming_kokoro.py",
+      "archived_path": "archive/audio/streaming_kokoro.py",
+      "reason": "unreachable from main.py at time of archival",
+      "archived_at": "2025-08-08T02:48:51.656319Z"
+    },
+    {
+      "file": "audio/voice_fingerprint.py",
+      "original_path": "audio/voice_fingerprint.py",
+      "archived_path": "archive/audio/voice_fingerprint.py",
+      "reason": "unreachable from main.py at time of archival",
+      "archived_at": "2025-08-08T02:48:51.656401Z"
+    },
+    {
+      "file": "buddy_comprehensive_analysis.py",
+      "original_path": "buddy_comprehensive_analysis.py",
+      "archived_path": "archive/buddy_comprehensive_analysis.py",
+      "reason": "unreachable from main.py at time of archival",
+      "archived_at": "2025-08-08T02:48:51.656487Z"
+    },
+    {
+      "file": "buddy_final_analysis.py",
+      "original_path": "buddy_final_analysis.py",
+      "archived_path": "archive/buddy_final_analysis.py",
+      "reason": "unreachable from main.py at time of archival",
+      "archived_at": "2025-08-08T02:48:51.656577Z"
+    },
+    {
+      "file": "buddy_qa_agent.py",
+      "original_path": "buddy_qa_agent.py",
+      "archived_path": "archive/buddy_qa_agent.py",
+      "reason": "unreachable from main.py at time of archival",
+      "archived_at": "2025-08-08T02:48:51.656667Z"
+    },
+    {
+      "file": "cognitive_modules/__init__.py",
+      "original_path": "cognitive_modules/__init__.py",
+      "archived_path": "archive/cognitive_modules/__init__.py",
+      "reason": "unreachable from main.py at time of archival",
+      "archived_at": "2025-08-08T02:48:51.656785Z"
+    },
+    {
+      "file": "cognitive_modules/experience_bank.py",
+      "original_path": "cognitive_modules/experience_bank.py",
+      "archived_path": "archive/cognitive_modules/experience_bank.py",
+      "reason": "unreachable from main.py at time of archival",
+      "archived_at": "2025-08-08T02:48:51.656869Z"
+    },
+    {
+      "file": "cognitive_modules/goal_bank.py",
+      "original_path": "cognitive_modules/goal_bank.py",
+      "archived_path": "archive/cognitive_modules/goal_bank.py",
+      "reason": "unreachable from main.py at time of archival",
+      "archived_at": "2025-08-08T02:48:51.656968Z"
+    },
+    {
+      "file": "cognitive_modules/memory_prioritization.py",
+      "original_path": "cognitive_modules/memory_prioritization.py",
+      "archived_path": "archive/cognitive_modules/memory_prioritization.py",
+      "reason": "unreachable from main.py at time of archival",
+      "archived_at": "2025-08-08T02:48:51.657054Z"
+    },
+    {
+      "file": "cognitive_modules/self_model.py",
+      "original_path": "cognitive_modules/self_model.py",
+      "archived_path": "archive/cognitive_modules/self_model.py",
+      "reason": "unreachable from main.py at time of archival",
+      "archived_at": "2025-08-08T02:48:51.657137Z"
+    },
+    {
+      "file": "cognitive_modules/thought_loop.py",
+      "original_path": "cognitive_modules/thought_loop.py",
+      "archived_path": "archive/cognitive_modules/thought_loop.py",
+      "reason": "unreachable from main.py at time of archival",
+      "archived_at": "2025-08-08T02:48:51.657219Z"
+    },
+    {
+      "file": "comprehensive_buddy_test.py",
+      "original_path": "comprehensive_buddy_test.py",
+      "archived_path": "archive/comprehensive_buddy_test.py",
+      "reason": "unreachable from main.py at time of archival",
+      "archived_at": "2025-08-08T02:48:51.657305Z"
+    },
+    {
+      "file": "consciousness_fixes_demo.py",
+      "original_path": "consciousness_fixes_demo.py",
+      "archived_path": "archive/consciousness_fixes_demo.py",
+      "reason": "unreachable from main.py at time of archival",
+      "archived_at": "2025-08-08T02:48:51.657390Z"
+    },
+    {
+      "file": "demo_enterprise_extraction.py",
+      "original_path": "demo_enterprise_extraction.py",
+      "archived_path": "archive/demo_enterprise_extraction.py",
+      "reason": "unreachable from main.py at time of archival",
+      "archived_at": "2025-08-08T02:48:51.657473Z"
+    },
+    {
+      "file": "demo_multi_context_intelligence.py",
+      "original_path": "demo_multi_context_intelligence.py",
+      "archived_path": "archive/demo_multi_context_intelligence.py",
+      "reason": "unreachable from main.py at time of archival",
+      "archived_at": "2025-08-08T02:48:51.657559Z"
+    },
+    {
+      "file": "demo_professional_audio_smoothing.py",
+      "original_path": "demo_professional_audio_smoothing.py",
+      "archived_path": "archive/demo_professional_audio_smoothing.py",
+      "reason": "unreachable from main.py at time of archival",
+      "archived_at": "2025-08-08T02:48:51.657643Z"
+    },
+    {
+      "file": "integration_checker.py",
+      "original_path": "integration_checker.py",
+      "archived_path": "archive/integration_checker.py",
+      "reason": "unreachable from main.py at time of archival",
+      "archived_at": "2025-08-08T02:48:51.657730Z"
+    },
+    {
+      "file": "integration_complete.py",
+      "original_path": "integration_complete.py",
+      "archived_path": "archive/integration_complete.py",
+      "reason": "unreachable from main.py at time of archival",
+      "archived_at": "2025-08-08T02:48:51.657815Z"
+    },
+    {
+      "file": "mock_hardware_test.py",
+      "original_path": "mock_hardware_test.py",
+      "archived_path": "archive/mock_hardware_test.py",
+      "reason": "unreachable from main.py at time of archival",
+      "archived_at": "2025-08-08T02:48:51.657902Z"
+    },
+    {
+      "file": "mock_llm_server.py",
+      "original_path": "mock_llm_server.py",
+      "archived_path": "archive/mock_llm_server.py",
+      "reason": "unreachable from main.py at time of archival",
+      "archived_at": "2025-08-08T02:48:51.658006Z"
+    },
+    {
+      "file": "simple_autonomous_test.py",
+      "original_path": "simple_autonomous_test.py",
+      "archived_path": "archive/simple_autonomous_test.py",
+      "reason": "unreachable from main.py at time of archival",
+      "archived_at": "2025-08-08T02:48:51.658093Z"
+    },
+    {
+      "file": "test_buddy_comprehensive_flow.py",
+      "original_path": "test_buddy_comprehensive_flow.py",
+      "archived_path": "archive/test_buddy_comprehensive_flow.py",
+      "reason": "unreachable from main.py at time of archival",
+      "archived_at": "2025-08-08T02:48:51.658177Z"
+    },
+    {
+      "file": "test_buddy_integration.py",
+      "original_path": "test_buddy_integration.py",
+      "archived_path": "archive/test_buddy_integration.py",
+      "reason": "unreachable from main.py at time of archival",
+      "archived_at": "2025-08-08T02:48:51.658264Z"
+    },
+    {
+      "file": "test_comprehensive_buddy.py",
+      "original_path": "test_comprehensive_buddy.py",
+      "archived_path": "archive/test_comprehensive_buddy.py",
+      "reason": "unreachable from main.py at time of archival",
+      "archived_at": "2025-08-08T02:48:51.658349Z"
+    },
+    {
+      "file": "test_comprehensive_retrieval.py",
+      "original_path": "test_comprehensive_retrieval.py",
+      "archived_path": "archive/test_comprehensive_retrieval.py",
+      "reason": "unreachable from main.py at time of archival",
+      "archived_at": "2025-08-08T02:48:51.658435Z"
+    },
+    {
+      "file": "test_consciousness_fixes.py",
+      "original_path": "test_consciousness_fixes.py",
+      "archived_path": "archive/test_consciousness_fixes.py",
+      "reason": "unreachable from main.py at time of archival",
+      "archived_at": "2025-08-08T02:48:51.658523Z"
+    },
+    {
+      "file": "test_consciousness_fixes_integration.py",
+      "original_path": "test_consciousness_fixes_integration.py",
+      "archived_path": "archive/test_consciousness_fixes_integration.py",
+      "reason": "unreachable from main.py at time of archival",
+      "archived_at": "2025-08-08T02:48:51.658612Z"
+    },
+    {
+      "file": "test_direct_incomplete_read.py",
+      "original_path": "test_direct_incomplete_read.py",
+      "archived_path": "archive/test_direct_incomplete_read.py",
+      "reason": "unreachable from main.py at time of archival",
+      "archived_at": "2025-08-08T02:48:51.658699Z"
+    },
+    {
+      "file": "test_enterprise_extraction.py",
+      "original_path": "test_enterprise_extraction.py",
+      "archived_path": "archive/test_enterprise_extraction.py",
+      "reason": "unreachable from main.py at time of archival",
+      "archived_at": "2025-08-08T02:48:51.658785Z"
+    },
+    {
+      "file": "test_enterprise_extraction_complete.py",
+      "original_path": "test_enterprise_extraction_complete.py",
+      "archived_path": "archive/test_enterprise_extraction_complete.py",
+      "reason": "unreachable from main.py at time of archival",
+      "archived_at": "2025-08-08T02:48:51.658876Z"
+    },
+    {
+      "file": "test_extended_memory_flow.py",
+      "original_path": "test_extended_memory_flow.py",
+      "archived_path": "archive/test_extended_memory_flow.py",
+      "reason": "unreachable from main.py at time of archival",
+      "archived_at": "2025-08-08T02:48:51.658983Z"
+    },
+    {
+      "file": "test_final_integration.py",
+      "original_path": "test_final_integration.py",
+      "archived_path": "archive/test_final_integration.py",
+      "reason": "unreachable from main.py at time of archival",
+      "archived_at": "2025-08-08T02:48:51.659071Z"
+    },
+    {
+      "file": "test_final_universal_memory.py",
+      "original_path": "test_final_universal_memory.py",
+      "archived_path": "archive/test_final_universal_memory.py",
+      "reason": "unreachable from main.py at time of archival",
+      "archived_at": "2025-08-08T02:48:51.659156Z"
+    },
+    {
+      "file": "test_kobold_connection_improvements.py",
+      "original_path": "test_kobold_connection_improvements.py",
+      "archived_path": "archive/test_kobold_connection_improvements.py",
+      "reason": "unreachable from main.py at time of archival",
+      "archived_at": "2025-08-08T02:48:51.659243Z"
+    },
+    {
+      "file": "test_kobold_connection_validation.py",
+      "original_path": "test_kobold_connection_validation.py",
+      "archived_path": "archive/test_kobold_connection_validation.py",
+      "reason": "unreachable from main.py at time of archival",
+      "archived_at": "2025-08-08T02:48:51.659334Z"
+    },
+    {
+      "file": "test_llm_connection.py",
+      "original_path": "test_llm_connection.py",
+      "archived_path": "archive/test_llm_connection.py",
+      "reason": "unreachable from main.py at time of archival",
+      "archived_at": "2025-08-08T02:48:51.659421Z"
+    },
+    {
+      "file": "test_main_flow.py",
+      "original_path": "test_main_flow.py",
+      "archived_path": "archive/test_main_flow.py",
+      "reason": "unreachable from main.py at time of archival",
+      "archived_at": "2025-08-08T02:48:51.659508Z"
+    },
+    {
+      "file": "test_memory_flow.py",
+      "original_path": "test_memory_flow.py",
+      "archived_path": "archive/test_memory_flow.py",
+      "reason": "unreachable from main.py at time of archival",
+      "archived_at": "2025-08-08T02:48:51.659594Z"
+    },
+    {
+      "file": "test_pattern_first_extraction.py",
+      "original_path": "test_pattern_first_extraction.py",
+      "archived_path": "archive/test_pattern_first_extraction.py",
+      "reason": "unreachable from main.py at time of archival",
+      "archived_at": "2025-08-08T02:48:51.659682Z"
+    },
+    {
+      "file": "test_professional_audio_smoothing.py",
+      "original_path": "test_professional_audio_smoothing.py",
+      "archived_path": "archive/test_professional_audio_smoothing.py",
+      "reason": "unreachable from main.py at time of archival",
+      "archived_at": "2025-08-08T02:48:51.659768Z"
+    },
+    {
+      "file": "test_progressive_memory_extraction.py",
+      "original_path": "test_progressive_memory_extraction.py",
+      "archived_path": "archive/test_progressive_memory_extraction.py",
+      "reason": "unreachable from main.py at time of archival",
+      "archived_at": "2025-08-08T02:48:51.659855Z"
+    },
+    {
+      "file": "test_reactive_simple.py",
+      "original_path": "test_reactive_simple.py",
+      "archived_path": "archive/test_reactive_simple.py",
+      "reason": "unreachable from main.py at time of archival",
+      "archived_at": "2025-08-08T02:48:51.659957Z"
+    },
+    {
+      "file": "test_rule_based_validation.py",
+      "original_path": "test_rule_based_validation.py",
+      "archived_path": "archive/test_rule_based_validation.py",
+      "reason": "unreachable from main.py at time of archival",
+      "archived_at": "2025-08-08T02:48:51.660045Z"
+    },
+    {
+      "file": "test_stability_fixes.py",
+      "original_path": "test_stability_fixes.py",
+      "archived_path": "archive/test_stability_fixes.py",
+      "reason": "unreachable from main.py at time of archival",
+      "archived_at": "2025-08-08T02:48:51.660133Z"
+    },
+    {
+      "file": "test_streaming_audio_fixes.py",
+      "original_path": "test_streaming_audio_fixes.py",
+      "archived_path": "archive/test_streaming_audio_fixes.py",
+      "reason": "unreachable from main.py at time of archival",
+      "archived_at": "2025-08-08T02:48:51.660219Z"
+    },
+    {
+      "file": "test_unified_memory_system.py",
+      "original_path": "test_unified_memory_system.py",
+      "archived_path": "archive/test_unified_memory_system.py",
+      "reason": "unreachable from main.py at time of archival",
+      "archived_at": "2025-08-08T02:48:51.660306Z"
+    },
+    {
+      "file": "test_universal_memory_extraction.py",
+      "original_path": "test_universal_memory_extraction.py",
+      "archived_path": "archive/test_universal_memory_extraction.py",
+      "reason": "unreachable from main.py at time of archival",
+      "archived_at": "2025-08-08T02:48:51.660393Z"
+    },
+    {
+      "file": "utils/__init__.py",
+      "original_path": "utils/__init__.py",
+      "archived_path": "archive/utils/__init__.py",
+      "reason": "unreachable from main.py at time of archival",
+      "archived_at": "2025-08-08T02:48:51.660516Z"
+    },
+    {
+      "file": "utils/gps_location_manager.py",
+      "original_path": "utils/gps_location_manager.py",
+      "archived_path": "archive/utils/gps_location_manager.py",
+      "reason": "unreachable from main.py at time of archival",
+      "archived_at": "2025-08-08T02:48:51.660602Z"
+    },
+    {
+      "file": "validate_consciousness_fixes.py",
+      "original_path": "validate_consciousness_fixes.py",
+      "archived_path": "archive/validate_consciousness_fixes.py",
+      "reason": "unreachable from main.py at time of archival",
+      "archived_at": "2025-08-08T02:48:51.660692Z"
+    },
+    {
+      "file": "voice/__init__.py",
+      "original_path": "voice/__init__.py",
+      "archived_path": "archive/voice/__init__.py",
+      "reason": "unreachable from main.py at time of archival",
+      "archived_at": "2025-08-08T02:48:51.660810Z"
+    },
+    {
+      "file": "voice/debug_voice.py",
+      "original_path": "voice/debug_voice.py",
+      "archived_path": "archive/voice/debug_voice.py",
+      "reason": "unreachable from main.py at time of archival",
+      "archived_at": "2025-08-08T02:48:51.660894Z"
+    },
+    {
+      "file": "voice/manager_core.py",
+      "original_path": "voice/manager_core.py",
+      "archived_path": "archive/voice/manager_core.py",
+      "reason": "unreachable from main.py at time of archival",
+      "archived_at": "2025-08-08T02:48:51.661004Z"
+    }
+  ]
+}
