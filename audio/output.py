@@ -8,6 +8,8 @@ import queue
 import array
 import struct
 
+_kokoro_lock = threading.Lock()
+
 # ✅ Professional audio smoothing system
 from audio.professional_smoothing import (
     get_professional_audio_queue, 
@@ -42,6 +44,12 @@ import tempfile
 import os
 from langdetect import detect
 from config import *
+
+try:
+    from config import AUDIO_PLAYBACK_GRACE_MS
+    _GRACE_MS = AUDIO_PLAYBACK_GRACE_MS
+except Exception:
+    _GRACE_MS = 350
 
 # Global audio state with professional enhancement
 audio_queue = queue.Queue()
@@ -309,122 +317,106 @@ def speak_streaming(text, voice=None, lang=DEFAULT_LANG, response_id=None, use_p
             }
             
             session = get_kokoro_session()
-            response = session.post(
-                f"{KOKORO_API_BASE_URL}/v1/audio/speech",
-                json=payload,
-                timeout=5  # Shorter timeout for streaming
-            )
-            
-            if response.status_code == 200:
-                # Process audio quickly for streaming
-                with tempfile.NamedTemporaryFile(delete=False, suffix='.wav') as temp_file:
-                    temp_file.write(response.content)
-                    temp_path = temp_file.name
-                
-                import wave
-                with wave.open(temp_path, 'rb') as wav_file:
-                    frames = wav_file.readframes(wav_file.getnframes())
-                    sample_rate = wav_file.getframerate()
-                    channels = wav_file.getnchannels()
-                    sample_width = wav_file.getsampwidth()
-                
-                # ✅ ENHANCED: Professional audio processing for streaming
-                if use_professional_smoothing:
-                    # Increment chunk sequence for seamless tracking
-                    chunk_sequence_number += 1
-                    
-                    # Convert frames to audio array for professional processing
+            with _kokoro_lock:
+                response = session.post(
+                    f"{KOKORO_API_BASE_URL}/v1/audio/speech",
+                    json=payload,
+                    timeout=5
+                )
+
+                if response.status_code == 200:
+                    with tempfile.NamedTemporaryFile(delete=False, suffix='.wav') as temp_file:
+                        temp_file.write(response.content)
+                        temp_path = temp_file.name
+
+                    import wave
+                    with wave.open(temp_path, 'rb') as wav_file:
+                        frames = wav_file.readframes(wav_file.getnframes())
+                        sample_rate = wav_file.getframerate()
+                        channels = wav_file.getnchannels()
+                        sample_width = wav_file.getsampwidth()
+
                     if NUMPY_AVAILABLE:
                         if sample_width == 2:
-                            audio_data = np.frombuffer(frames, dtype=np.int16)
+                            audio_np = np.frombuffer(frames, dtype=np.int16)
                         else:
-                            audio_data = np.frombuffer(frames, dtype=np.uint8)
-                            audio_data = ((audio_data.astype(np.int16) - 128) * 256)
-                        
-                        if channels == 2:
-                            audio_data = audio_data.reshape(-1, 2)[:, 0]
-                        
-                        audio_array = array.array('h', audio_data)
+                            audio_np = np.frombuffer(frames, dtype=np.uint8)
+                            audio_np = ((audio_np.astype(np.int16) - 128) * 256)
+                        if channels > 1:
+                            audio_np = audio_np.reshape(-1, channels).mean(axis=1).astype(np.int16)
+                        if sample_rate != 48000:
+                            try:
+                                from scipy.signal import resample_poly
+                                audio_np = resample_poly(audio_np, 48000, sample_rate).astype(np.int16)
+                            except Exception:
+                                length = int(len(audio_np) * 48000 / sample_rate)
+                                audio_np = np.interp(
+                                    np.linspace(0, len(audio_np), length, endpoint=False),
+                                    np.arange(len(audio_np)),
+                                    audio_np
+                                ).astype(np.int16)
+                        audio_array = array.array('h')
+                        audio_array.frombytes(audio_np.tobytes())
                     else:
-                        # Pure Python conversion
                         if sample_width == 2:
                             audio_array = array.array('h')
                             for i in range(0, len(frames), 2):
                                 if i + 1 < len(frames):
-                                    sample = struct.unpack('<h', frames[i:i+2])[0]
-                                    audio_array.append(sample)
+                                    audio_array.append(struct.unpack('<h', frames[i:i+2])[0])
                         else:
                             audio_array = array.array('h')
-                            for byte in frames:
-                                sample = (byte - 128) * 256
-                                audio_array.append(sample)
-                        
-                        # Handle stereo to mono
-                        if channels == 2:
-                            mono_array = array.array('h')
-                            for i in range(0, len(audio_array), 2):
-                                if i + 1 < len(audio_array):
-                                    mono_array.append(audio_array[i])
-                            audio_array = mono_array
-                    
-                    # ✅ NEW: Professional processing with seamless transitions
-                    # Determine if this is first or last chunk in sequence
-                    is_first_chunk = (chunk_sequence_number == 1)
-                    # Note: We can't easily determine if it's the last chunk in streaming,
-                    # so we'll let the completion handler manage that
-                    
-                    processed_audio = process_audio_chunk_professionally(
-                        audio_data=audio_array,
-                        sample_rate=sample_rate,
-                        chunk_id=f"stream_{response_id}_{chunk_sequence_number}",
-                        apply_normalization=True,
-                        crossfade_enabled=True,
-                        is_first=is_first_chunk,
-                        is_last=False  # Will be handled by completion
-                    )
-                    
-                    # ✅ FIX: Queue professionally processed audio with response tracking
-                    audio_queue.put((processed_audio, sample_rate, response_id))
-                else:
-                    # Legacy processing for compatibility
-                    if sample_width == 2:
-                        audio_data = array.array('h')
-                        for i in range(0, len(frames), 2):
-                            if i + 1 < len(frames):
-                                sample = struct.unpack('<h', frames[i:i+2])[0]
-                                audio_data.append(sample)
+                            for b in frames:
+                                audio_array.append((b - 128) * 256)
+                        if channels > 1:
+                            mono = array.array('h')
+                            for i in range(0, len(audio_array), channels):
+                                total = 0
+                                count = 0
+                                for c in range(channels):
+                                    if i + c < len(audio_array):
+                                        total += audio_array[i + c]
+                                        count += 1
+                                mono.append(int(total / count))
+                            audio_array = mono
+                        if sample_rate != 48000:
+                            ratio = 48000 / sample_rate
+                            resampled = array.array('h')
+                            src_len = len(audio_array)
+                            for i in range(int(src_len * ratio)):
+                                idx = int(i / ratio)
+                                if idx >= src_len:
+                                    idx = src_len - 1
+                                resampled.append(audio_array[idx])
+                            audio_array = resampled
+                    sample_rate = 48000
+                    print(f"[Audio] normalized to 48kHz mono int16 ({len(audio_array)} samples)")
+
+                    if use_professional_smoothing:
+                        chunk_sequence_number += 1
+                        is_first_chunk = (chunk_sequence_number == 1)
+                        processed_audio = process_audio_chunk_professionally(
+                            audio_data=audio_array,
+                            sample_rate=sample_rate,
+                            chunk_id=f"stream_{response_id}_{chunk_sequence_number}",
+                            apply_normalization=True,
+                            crossfade_enabled=True,
+                            is_first=is_first_chunk,
+                            is_last=False
+                        )
+                        audio_queue.put((processed_audio, sample_rate, response_id))
                     else:
-                        audio_data = array.array('h')
-                        for byte in frames:
-                            sample = (byte - 128) * 256
-                            audio_data.append(sample)
-                    
-                    if channels == 2:
-                        mono_array = array.array('h')
-                        for i in range(0, len(audio_data), 2):
-                            if i + 1 < len(audio_data):
-                                mono_array.append(audio_data[i])
-                        audio_data = mono_array
-                    
-                    audio_queue.put((audio_data.tobytes(), sample_rate, response_id))
-                
-                # Cleanup
-                try:
-                    os.unlink(temp_path)
-                except:
-                    pass
-                
-                if DEBUG:
-                    chunk_info = f"'{text[:50]}...'" if len(text) > 50 else f"'{text}'"
-                    smoothing_status = "with professional smoothing" if use_professional_smoothing else "legacy mode"
-                    print(f"[StreamingTTS] ✅ Queued chunk: {chunk_info} {smoothing_status}")
-                    print(f"[StreamingTTS] 🎵 Voice: {selected_voice}, Chunk #{chunk_sequence_number}")
-                    if response_id:
-                        print(f"[StreamingTTS] 📊 Response: {response_id}")
-                
-                return True
-            else:
-                print(f"[StreamingTTS] ❌ API Error {response.status_code}: {response.text}")
+                        audio_queue.put((audio_array.tobytes(), sample_rate, response_id))
+
+                    try:
+                        os.unlink(temp_path)
+                    except:
+                        pass
+
+                    print(f"[Audio] queued chunk ({len(audio_array)} samples, response {response_id})")
+                    return True
+                else:
+                    print(f"[StreamingTTS] ❌ API Error {response.status_code}: {response.text}")
+                    return False
                 
         except Exception as e:
             print(f"[StreamingTTS] ❌ Error: {e}")
@@ -532,10 +524,13 @@ def notify_full_duplex_manager_stopped():
 
 def audio_worker():
     """✅ ENHANCED: Audio worker with professional smoothing and seamless transitions"""
-    global current_audio_playback, playback_start_time
-    
+    global current_audio_playback, playback_start_time, current_response_id
+
     print(f"[Buddy V2] 🎵 Enhanced Audio Worker started with professional smoothing")
-    
+
+    grace_deadline = 0
+    grace_logged = False
+
     while True:
         try:
             item = audio_queue.get(timeout=0.1)
@@ -546,9 +541,20 @@ def audio_worker():
             if len(item) == 3:
                 audio_data, sr, response_id = item
             else:
-                # Legacy format for backward compatibility
                 audio_data, sr = item
                 response_id = None
+
+            if response_id != current_response_id:
+                current_response_id = response_id
+                grace_deadline = time.time() + (_GRACE_MS / 1000.0)
+                grace_logged = False
+                if FULL_DUPLEX_MODE:
+                    try:
+                        from audio.full_duplex_manager import full_duplex_manager
+                        if full_duplex_manager:
+                            full_duplex_manager.clear_interrupt()
+                    except Exception:
+                        pass
             
             # ✅ ENHANCED: Convert audio data to proper format for playback
             if isinstance(audio_data, (array.array, list)):
@@ -568,12 +574,15 @@ def audio_worker():
             if FULL_DUPLEX_MODE:
                 from audio.full_duplex_manager import full_duplex_manager
                 if full_duplex_manager and getattr(full_duplex_manager, 'speech_interrupted', False):
-                    print("[Audio] 🛑 INTERRUPT - Skipping chunk")
-                    # Mark as interrupted if we have a response ID
-                    if response_id:
-                        streaming_manager.mark_response_interrupted(response_id)
-                    audio_queue.task_done()
-                    continue
+                    if time.time() >= grace_deadline:
+                        print("[Audio] 🛑 INTERRUPT - Skipping chunk")
+                        if response_id:
+                            streaming_manager.mark_response_interrupted(response_id)
+                        audio_queue.task_done()
+                        continue
+                    elif not grace_logged:
+                        print("[Audio] grace active, skipping interrupts")
+                        grace_logged = True
             
             with audio_lock:
                 # Notify once when starting
@@ -589,50 +598,49 @@ def audio_worker():
                     print(f"[Audio] 🎵 Playing professionally smoothed chunk: {len(pcm_bytes)} bytes")
                     if response_id:
                         print(f"[Audio] 📊 Response ID: {response_id}")
-                    
+
                     if SIMPLEAUDIO_AVAILABLE:
-                        current_audio_playback = sa.play_buffer(pcm_bytes, 1, 2, sr)
-                        
-                        # ✅ CRITICAL: Check for interrupt every 1ms during playback
+                        print(f"[Audio] play_buffer sr=48000 channels=1 bps=2")
+                        current_audio_playback = sa.play_buffer(pcm_bytes, 1, 2, 48000)
+
                         while current_audio_playback and current_audio_playback.is_playing():
                             if FULL_DUPLEX_MODE:
                                 try:
                                     from audio.full_duplex_manager import full_duplex_manager
                                     if full_duplex_manager and getattr(full_duplex_manager, 'speech_interrupted', False):
-                                        print("[Audio] ⚡ IMMEDIATE STOP - Interrupt detected!")
-                                        current_audio_playback.stop()
-                                        
-                                        # Mark current response as interrupted
-                                        if response_id:
-                                            streaming_manager.mark_response_interrupted(response_id)
-                                        
-                                        # Clear ALL remaining chunks
-                                        cleared = 0
-                                        while not audio_queue.empty():
-                                            try:
-                                                item = audio_queue.get_nowait()
-                                                # Mark any other response chunks as interrupted
-                                                if len(item) == 3 and item[2]:
-                                                    streaming_manager.mark_response_interrupted(item[2])
-                                                audio_queue.task_done()
-                                                cleared += 1
-                                            except queue.Empty:
-                                                break
-                                        
-                                        print(f"[Audio] 🗑️ Cleared {cleared} remaining chunks")
-                                        
-                                        # Reset professional queue state
-                                        professional_audio_queue.clear()
-                                        
-                                        break
+                                        if time.time() >= grace_deadline:
+                                            print("[Audio] ⚡ IMMEDIATE STOP - Interrupt detected!")
+                                            current_audio_playback.stop()
+
+                                            if response_id:
+                                                streaming_manager.mark_response_interrupted(response_id)
+
+                                            cleared = 0
+                                            while not audio_queue.empty():
+                                                try:
+                                                    item = audio_queue.get_nowait()
+                                                    if len(item) == 3 and item[2]:
+                                                        streaming_manager.mark_response_interrupted(item[2])
+                                                    audio_queue.task_done()
+                                                    cleared += 1
+                                                except queue.Empty:
+                                                    break
+
+                                            print(f"[Audio] 🗑️ Cleared {cleared} remaining chunks")
+
+                                            professional_audio_queue.clear()
+
+                                            break
+                                        elif not grace_logged:
+                                            print("[Audio] grace active, skipping interrupts")
+                                            grace_logged = True
                                 except Exception:
                                     pass
-                            
-                            time.sleep(0.001)  # Check every 1 millisecond
-                        
+
+                            time.sleep(0.001)
+
                         if current_audio_playback and not current_audio_playback.is_playing():
                             print(f"[Audio] ✅ Professional chunk completed seamlessly")
-                            # ✅ FIX: Mark chunk as played in streaming manager
                             if response_id:
                                 chunk_completed_response = streaming_manager.mark_chunk_played(response_id)
                                 if chunk_completed_response:
@@ -656,34 +664,33 @@ def audio_worker():
                     except:
                         pass
                     
-                    # Check if interrupted after chunk
                     if FULL_DUPLEX_MODE:
                         from audio.full_duplex_manager import full_duplex_manager
                         if full_duplex_manager and getattr(full_duplex_manager, 'speech_interrupted', False):
-                            print("[Audio] 🛑 Post-chunk interrupt detected")
-                            
-                            # Mark response as interrupted
-                            if response_id:
-                                streaming_manager.mark_response_interrupted(response_id)
-                            
-                            # Clear remaining queue and reset professional state
-                            while not audio_queue.empty():
-                                try:
-                                    item = audio_queue.get_nowait()
-                                    # Mark any response chunks as interrupted
-                                    if len(item) == 3 and item[2]:
-                                        streaming_manager.mark_response_interrupted(item[2])
-                                    audio_queue.task_done()
-                                except queue.Empty:
-                                    break
-                            
-                            professional_audio_queue.clear()
-                            
-                            # ✅ FIX: Only notify stopped if all responses are complete
-                            if streaming_manager.should_notify_completion():
-                                notify_full_duplex_manager_stopped()
-                            audio_queue.task_done()
-                            continue
+                            if time.time() >= grace_deadline:
+                                print("[Audio] 🛑 Post-chunk interrupt detected")
+
+                                if response_id:
+                                    streaming_manager.mark_response_interrupted(response_id)
+
+                                while not audio_queue.empty():
+                                    try:
+                                        item = audio_queue.get_nowait()
+                                        if len(item) == 3 and item[2]:
+                                            streaming_manager.mark_response_interrupted(item[2])
+                                        audio_queue.task_done()
+                                    except queue.Empty:
+                                        break
+
+                                professional_audio_queue.clear()
+
+                                if streaming_manager.should_notify_completion():
+                                    notify_full_duplex_manager_stopped()
+                                audio_queue.task_done()
+                                continue
+                            elif not grace_logged:
+                                print("[Audio] grace active, skipping interrupts")
+                                grace_logged = True
                     
                     # ✅ FIX: Only notify completion when all streaming responses are done
                     if FULL_DUPLEX_MODE and audio_queue.empty():
