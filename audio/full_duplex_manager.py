@@ -123,6 +123,11 @@ class FullDuplexManager:
         with self.interrupt_lock:
             return self.speech_interrupted
 
+    def clear_interrupt(self):
+        """Clear any pending interrupt"""
+        with self.interrupt_lock:
+            self.speech_interrupted = False
+
     def start(self):
         """Start the turn-based manager"""
         if self.running:
