@@ -8,6 +8,15 @@ import re
 import os
 from datetime import datetime
 
+# Helper to ensure an event loop exists
+def _ensure_loop():
+    try:
+        return asyncio.get_running_loop()
+    except RuntimeError:
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+        return loop
+
 async def whisper_stt_async(audio):
     """Transcribe audio using Whisper WebSocket"""
     try:
@@ -177,27 +186,16 @@ def identify_user(spoken_input: str, system_username: str) -> str:
 def transcribe_audio(audio):
     """Synchronous wrapper for Whisper STT with proper event loop handling"""
     try:
-        # ✅ FIXED: Better event loop detection and handling
-        current_loop = None
-        loop_is_running = False
-        
-        try:
-            # Try to get the current running loop (Python 3.7+)
-            current_loop = asyncio.get_running_loop()
-            loop_is_running = True
-        except RuntimeError:
-            # No running loop, which is fine
-            pass
-        
-        if loop_is_running:
+        loop = _ensure_loop()
+        if loop.is_running():
             # Running in an async context, use thread executor to avoid conflicts
             import concurrent.futures
             with concurrent.futures.ThreadPoolExecutor() as executor:
                 future = executor.submit(lambda: asyncio.run(whisper_stt_async(audio)))
                 return future.result(timeout=30)  # 30 second timeout for safety
         else:
-            # No running loop, safe to use asyncio.run
-            return asyncio.run(whisper_stt_async(audio))
+            # No running loop, safe to run coroutine directly
+            return loop.run_until_complete(whisper_stt_async(audio))
             
     except Exception as e:
         print(f"[Speech] ❌ Async event loop error: {e}")

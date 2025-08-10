@@ -33,6 +33,15 @@ except ImportError:
 import traceback
 from contextlib import asynccontextmanager
 
+# Helper to ensure an event loop exists
+def _ensure_loop():
+    try:
+        return asyncio.get_running_loop()
+    except RuntimeError:
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+        return loop
+
 # Import reactive components
 from ai.reactive_neural_architecture import (
     EventBus, AsyncNeuralPathways, WorkStealingThreadPool, OptimizedMemoryManager,
@@ -734,11 +743,17 @@ class ReactiveIntegrationLayer:
     
     def get_system_health(self) -> Dict[str, Any]:
         """Get comprehensive system health metrics"""
+        loop = _ensure_loop()
+        async_pathways_stats = (
+            loop.run_until_complete(self.async_pathways.get_stats())
+            if self.initialized else {}
+        )
+
         return {
             'backpressure': self.backpressure_manager.get_metrics(),
             'telemetry': self.telemetry_collector.get_metrics_summary(),
             'event_bus': self.event_bus.get_stats(),
-            'async_pathways': asyncio.create_task(self.async_pathways.get_stats()) if self.initialized else {},
+            'async_pathways': async_pathways_stats,
             'work_stealing_pool': self.work_stealing_pool.get_stats(),
             'memory_manager': self.memory_manager.get_memory_stats(),
             'parallel_processor': self.parallel_processor.get_performance_report() if hasattr(self.parallel_processor, 'get_performance_report') else {},
