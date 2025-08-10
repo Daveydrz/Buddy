@@ -136,13 +136,28 @@ def generate_tts(text, lang=DEFAULT_LANG):
             "response_format": "wav"
         }
         
-        # ✅ NEW: Use persistent session for connection reuse
-        session = get_kokoro_session()
-        response = session.post(
-            f"{KOKORO_API_BASE_URL}/v1/audio/speech",
-            json=payload,
-            timeout=KOKORO_API_TIMEOUT
-        )
+        result = {}
+
+        def _request():
+            session = get_kokoro_session()
+            try:
+                result['response'] = session.post(
+                    f"{KOKORO_API_BASE_URL}/v1/audio/speech",
+                    json=payload,
+                    timeout=(3.0, 8.0)
+                )
+            except requests.RequestException as e:
+                result['error'] = e
+
+        thread = threading.Thread(target=_request, daemon=True)
+        thread.start()
+        thread.join()
+
+        if 'error' in result:
+            print("[TTS] timeout: falling back to text-only")
+            return None, None
+
+        response = result.get('response')
         
         if response.status_code == 200:
             # Save audio to temporary file
