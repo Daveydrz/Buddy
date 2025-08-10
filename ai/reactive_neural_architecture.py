@@ -40,6 +40,15 @@ except ImportError:
     psutil = None
 import gc
 
+# Helper to ensure an event loop exists
+def _ensure_loop():
+    try:
+        return asyncio.get_running_loop()
+    except RuntimeError:
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+        return loop
+
 # Setup logging
 logger = logging.getLogger(__name__)
 
@@ -154,13 +163,14 @@ class EventBus:
         """Initialize async components"""
         if self.event_queue is None:
             self.event_queue = asyncio.Queue(maxsize=self.max_queue_size)
-            
+
             # Initialize priority queues
             for priority in EventPriority:
                 self.priority_queues[priority] = asyncio.Queue(maxsize=self.max_queue_size // 4)
-            
+
             # Start event processing loop
-            asyncio.create_task(self._event_processing_loop())
+            loop = _ensure_loop()
+            loop.create_task(self._event_processing_loop())
             logger.info("[EventBus] 🔄 Async event processing initialized")
     
     def subscribe(self, pattern: str, subscriber: Union[EventSubscriber, Callable]):
@@ -342,21 +352,12 @@ class EventBus:
 
 class AsyncNeuralPathways:
     """Async Neural Pathways for high-throughput I/O operations"""
-    
+
     def __init__(self, max_concurrent: int = 100, loop: Optional[asyncio.AbstractEventLoop] = None):
         self.max_concurrent = max_concurrent
-        
+
         # Safe event loop handling
-        try:
-            # Try to get the current running loop
-            self.loop = asyncio.get_running_loop()
-        except RuntimeError:
-            # No running loop, use provided loop or create new one
-            if loop:
-                self.loop = loop
-            else:
-                # Create a new event loop but don't set it as the current loop yet
-                self.loop = asyncio.new_event_loop()
+        self.loop = loop or _ensure_loop()
         
         self.semaphore = asyncio.Semaphore(max_concurrent)
         self.active_operations: Dict[str, asyncio.Task] = {}
@@ -400,9 +401,10 @@ class AsyncNeuralPathways:
                     current_concurrent = len(self.active_operations)
                     if current_concurrent > self.operation_stats['concurrent_peak']:
                         self.operation_stats['concurrent_peak'] = current_concurrent
-                
+
                 # Create and track task
-                task = asyncio.create_task(self._run_async_operation(func, *args, **kwargs))
+                loop = _ensure_loop()
+                task = loop.create_task(self._run_async_operation(func, *args, **kwargs))
                 self.active_operations[operation_id] = task
                 
                 try:
@@ -435,14 +437,8 @@ class AsyncNeuralPathways:
     async def _run_async_operation(self, func: Callable, *args, **kwargs) -> Any:
         """Run operation, converting sync functions to async if needed with proper event loop handling"""
         try:
-            # Get the current event loop or create a new one
-            try:
-                loop = asyncio.get_running_loop()
-            except RuntimeError:
-                # No event loop running in current thread, create one
-                loop = asyncio.new_event_loop()
-                asyncio.set_event_loop(loop)
-            
+            loop = _ensure_loop()
+
             if asyncio.iscoroutinefunction(func):
                 # Ensure the coroutine runs in the correct event loop
                 if loop != self.loop:
